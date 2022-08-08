@@ -72,7 +72,7 @@
 
                                     <div class="p-field">
                                         <p:outputLabel for="descricao_create">Descrição</p:outputLabel>
-                                        <p:inputText id="descricao_create" value="#{turmaController.turma.descricao}" required="true"/>
+                                        <p:inputText id="descricao_create" value="#{turmaController.turma.descricao}" required="true" onblur="value=value.toUpperCase()"/>
                                     </div>
 
                                     <div class="p-field">
