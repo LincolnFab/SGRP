@@ -67,21 +67,31 @@
 
                                     <div class="p-field">
                                         <p:outputLabel for="sigla_create">Sigla</p:outputLabel>
-                                        <p:inputText id="sigla_create" value="#{disciplinaController.disciplina.sigla}" required="true"/>
+                                        <p:inputText id="sigla_create" value="#{disciplinaController.disciplina.sigla}" required="true" onblur="value = value.toUpperCase()"/>
                                     </div>
-                                    
+
                                     <div class="p-field">
                                         <p:outputLabel for="nome_create">Nome</p:outputLabel>
                                         <p:inputText id="nome_create" value="#{disciplinaController.disciplina.nome}" required="true"/>
                                     </div>
 
+                                    <div class="p-field">
+                                        <p:outputLabel for="curso_create">Curso</p:outputLabel>
+                                        <p:selectOneMenu id="curso_create" value="#{disciplinaController.disciplina.cursoId}"
+                                                         required="true" requiredMessage="Selecione um Curso" converter="#{cursoId}">
+                                            <f:selectItem itemLabel="Selecione o Curso" itemValue=""/>
+                                            <f:selectItems value="#{cursoController.cursos}" var="cursoId"
+                                                           itemLabel="#{cursoId.descricao}" itemValue="#{cursoId}"/>
+                                        </p:selectOneMenu>
+                                    </div>
                                 </p:outputPanel>
                             </p:outputPanel>
 
                             <f:facet name="footer">
                                 <p:commandButton value="Cadastrar" icon="pi pi-check" actionListener="#{disciplinaController.cadastrarDisciplina()}"
                                                  update="create-disciplina-content" process="create-disciplina-content @this"/>
-                                <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('createDisciplinaDialog').hide()"
+                                <p:commandButton value="Cancelar" icon="pi pi-times" actionListener="#{disciplinaController.openNew()}"
+                                                 onclick="PF('createDisciplinaDialog').hide()"
                                                  class="ui-button-secondary"/>
                             </f:facet>
                         </p:dialog>
@@ -99,6 +109,16 @@
                                     <div class="p-field">
                                         <p:outputLabel for="nome_edit">Nome</p:outputLabel>
                                         <p:inputText id="nome_edit" value="#{disciplinaController.disciplina.nome}" required="true"/>
+                                    </div>
+
+                                    <div class="p-field">
+                                        <p:outputLabel for="curso_edit">Curso</p:outputLabel>
+                                        <p:selectOneMenu id="curso_edit" value="#{disciplinaController.disciplina.cursoId}"
+                                                         required="true" requiredMessage="Selecione um Curso" converter="#{cursoId}">
+                                            <f:selectItem itemLabel="Selecione o Curso" itemValue=""/>
+                                            <f:selectItems value="#{cursoController.cursos}" var="cursoId"
+                                                           itemLabel="#{cursoId.descricao}" itemValue="#{cursoId}"/>
+                                        </p:selectOneMenu>
                                     </div>
 
                                 </p:outputPanel>
