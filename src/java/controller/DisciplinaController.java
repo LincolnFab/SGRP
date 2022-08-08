@@ -13,6 +13,7 @@ import javax.ejb.EJBException;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import model.Curso;
 import model.Disciplina;
 import org.primefaces.PrimeFaces;
 import util.Util;
@@ -45,6 +46,7 @@ public class DisciplinaController implements Serializable {
 
     public void openNew() {
         disciplina = new Disciplina();
+        disciplina.setCursoId(new Curso());
     }
 
     public void cadastrarDisciplina() {
