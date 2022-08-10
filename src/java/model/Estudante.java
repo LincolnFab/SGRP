@@ -50,7 +50,7 @@ public class Estudante implements Serializable {
     private String prontuario;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 100)
     @Column(name = "nome")
     private String nome;
     @Basic(optional = false)
@@ -60,7 +60,7 @@ public class Estudante implements Serializable {
     private String senha;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 11)
+    @Size(min = 1, max = 14)
     @Column(name = "cpf")
     private String cpf;
     @Basic(optional = false)

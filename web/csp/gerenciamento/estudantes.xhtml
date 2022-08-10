@@ -1,0 +1,222 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+        <ui:composition template="/csp/home.xhtml">
+            <ui:define name="content">
+                <div class="card">
+                    <h:form id="form">
+                        <p:growl id="messages" showDetail="true"/>
+
+                        <p:breadCrumb>
+                            <p:menuitem outcome="/csp/home" value="Home"/>
+                            <p:menuitem outcome="/csp/gerenciamento/estudantes" value="Gerenciamento de Estudantes"/>
+                        </p:breadCrumb>
+
+                        <p:dataTable id="dt-estudantes" widgetVar="dtEstudantes" var="estudante" value="#{estudanteController.estudantes}"
+                                     emptyMessage="Nenhum estudante encontrado" rowKey="#{estudante.prontuario}" styleClass="estudante-table"
+                                     style="margin-top: 10px" paginator="true" rows="10" paginatorPosition="bottom">
+
+                            <f:facet name="header">
+                                <div class="p-d-flex p-ai-center p-jc-between">
+                                    <span>Estudantes</span>
+                                    <div>
+                                        <p:commandButton value="Cadastrar" icon="pi pi-plus" actionListener="#{estudanteController.openNew()}"
+                                                         update=":dialogs:create-estudante-content" oncomplete="PF('createEstudanteDialog').show()"
+                                                         style="margin-right: .5rem">
+                                            <p:resetInput target=":dialogs:create-estudante-content"/>
+                                        </p:commandButton>
+
+                                        <p:commandButton id="toggler" type="button" value="Campos" icon="pi pi-align-justify"/>
+                                        <p:columnToggler datasource="dt-estudantes" trigger="toggler">
+                                            <p:ajax />
+                                        </p:columnToggler>
+                                    </div>
+                                </div>
+                            </f:facet>
+
+                            <p:column headerText="Prontuário" sortBy="#{estudante.prontuario}">
+                                <h:outputText value="#{estudante.prontuario}" />
+                            </p:column>
+
+                            <p:column headerText="Nome" sortBy="#{estudante.nome}">
+                                <h:outputText value="#{estudante.nome}" />
+                            </p:column>
+
+                            <p:column headerText="CPF" sortBy="#{estudante.cpf}">
+                                <h:outputText value="#{estudante.cpf}" />
+                            </p:column>
+
+                            <p:column headerText="Email Pessoal" sortBy="#{estudante.emailPessoal}">
+                                <h:outputText value="#{estudante.emailPessoal}" />
+                            </p:column>
+
+                            <p:column headerText="Email Institucional" sortBy="#{estudante.emailAluno}">
+                                <h:outputText value="#{estudante.emailAluno}" />
+                            </p:column>
+
+                            <p:column headerText="Email Responsável" sortBy="#{estudante.emailResponsavel}">
+                                <h:outputText value="#{estudante.emailResponsavel}" />
+                            </p:column>
+
+                            <p:column headerText="Curso" sortBy="#{estudante.turmaIdturma.cursoId.descricao}">
+                                <h:outputText value="#{estudante.turmaIdturma.cursoId.descricao}" />
+                            </p:column>
+
+                            <p:column headerText="Turma" sortBy="#{estudante.turmaIdturma.descricao}">
+                                <h:outputText value="#{estudante.turmaIdturma.descricao}" />
+                            </p:column>
+
+                            <p:column headerText="Ações" exportable="false">
+                                <p:commandButton icon="pi pi-pencil" update=":dialogs:edit-estudante-content"
+                                                 oncomplete="PF('editEstudanteDialog').show()"
+                                                 styleClass="edit-button rounded-button" process="@this">
+                                    <f:setPropertyActionListener value="#{estudante}" target="#{estudanteController.estudante}"/>
+                                    <p:resetInput target=":dialogs:edit-estudante-content"/>
+                                </p:commandButton>
+
+                                <p:commandButton icon="pi pi-times" style="margin-left: 7px;"
+                                                 oncomplete="PF('deleteEstudanteDialog').show()" 
+                                                 styleClass="ui-button-danger rounded-button" process="@this">
+                                    <f:setPropertyActionListener value="#{estudante}" target="#{estudanteController.estudante}"/>
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+
+                    <h:form id="dialogs">
+                        <p:dialog header="Cadastrar Estudante" showEffect="fade" modal="true"
+                                  widgetVar="createEstudanteDialog" responsive="true">
+                            <p:outputPanel id="create-estudante-content" class="ui-fluid">
+                                <p:outputPanel rendered="#{not empty estudanteController.estudante}">
+
+                                    <div class="p-field">
+                                        <p:outputLabel for="prontuario_create">Prontuário</p:outputLabel>
+                                        <p:inputMask id="prontuario_create" value="#{estudanteController.estudante.prontuario}" mask="AA9999999" validateMask="true" required="true"/>
+                                    </div>
+
+                                    <div class="p-field">
+                                        <p:outputLabel for="nome_create">Nome</p:outputLabel>
+                                        <p:inputText id="nome_create" value="#{estudanteController.estudante.nome}" required="true"/>
+                                    </div>
+
+                                    <div class="p-field">
+                                        <p:outputLabel for="cpf_create">CPF</p:outputLabel>
+                                        <p:inputMask id="cpf_create" value="#{estudanteController.estudante.cpf}" mask="999.999.999-99" validateMask="true" required="true"/>
+                                    </div>
+
+                                    <div class="p-field">
+                                        <p:outputLabel for="email_pessoal_create">Email Pessoal</p:outputLabel>
+                                        <p:inputText id="email_pessoal_create" value="#{estudanteController.estudante.emailPessoal}" required="true"/>
+                                    </div>
+
+                                    <div class="p-field">
+                                        <p:outputLabel for="email_institucional_create">Email Istitucional</p:outputLabel>
+                                        <p:inputText id="email_institucional_create" value="#{estudanteController.estudante.emailAluno}" required="false"/>
+                                    </div>
+
+                                    <div class="p-field">
+                                        <p:outputLabel for="email_responsavel_create">Email Responsável</p:outputLabel>
+                                        <p:inputText id="email_responsavel_create" value="#{estudanteController.estudante.emailResponsavel}" required="false"/>
+                                    </div>
+
+                                    <div class="p-field">
+                                        <p:outputLabel for="turma_create">Turma</p:outputLabel>
+                                        <p:selectOneMenu id="turma_create" value="#{estudanteController.estudante.turmaIdturma}"
+                                                         required="true" requiredMessage="Selecione uma Turma" converter="#{turmaId}">
+                                            <f:selectItem itemLabel="Selecione a Turma" itemValue=""/>
+                                            <f:selectItems value="#{turmaController.turmas}" var="turmaId"
+                                                           itemLabel="#{turmaId.descricao}" itemValue="#{turmaId}"/>
+                                        </p:selectOneMenu>
+                                    </div>
+
+                                    <div class="p-field">
+                                        <p:outputLabel for="senha_create">Senha</p:outputLabel>
+                                        <p:password id="senha_create" value="#{estudanteController.estudante.senha}"/>
+                                    </div>
+
+                                </p:outputPanel>
+                            </p:outputPanel>
+
+                            <f:facet name="footer">
+                                <p:commandButton value="Cadastrar" icon="pi pi-check" actionListener="#{estudanteController.cadastrarEstudante()}"
+                                                 update="create-estudante-content" process="create-estudante-content @this"/>
+                                <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('createEstudanteDialog').hide()"
+                                                 class="ui-button-secondary"/>
+                            </f:facet>
+                        </p:dialog>
+
+                        <p:dialog header="Editar Estudante" showEffect="fade" modal="true"
+                                  widgetVar="editEstudanteDialog" responsive="true">
+                            <p:outputPanel id="edit-estudante-content" class="ui-fluid">
+                                <p:outputPanel rendered="#{not empty estudanteController.estudante}">
+
+                                    <div class="p-field">
+                                        <p:outputLabel for="prontuario_edit">Prontuário</p:outputLabel>
+                                        <p:inputMask id="prontuario_edit" value="#{estudanteController.estudante.prontuario}" mask="AA-9999999" disabled="true"/>
+                                    </div>
+
+                                    <div class="p-field">
+                                        <p:outputLabel for="nome_edit">Nome</p:outputLabel>
+                                        <p:inputText id="nome_edit" value="#{estudanteController.estudante.nome}" required="true"/>
+                                    </div>
+
+                                    <div class="p-field">
+                                        <p:outputLabel for="cpf_edit">CPF</p:outputLabel>
+                                        <p:inputMask id="cpf_edit" value="#{estudanteController.estudante.cpf}" mask="999.999.999-99" disabled="true"/>
+                                    </div>
+
+                                    <div class="p-field">
+                                        <p:outputLabel for="email_pessoal_edit">Email Pessoal</p:outputLabel>
+                                        <p:inputText id="email_pessoal_edit" value="#{estudanteController.estudante.emailPessoal}" required="true"/>
+                                    </div>
+
+                                    <div class="p-field">
+                                        <p:outputLabel for="email_institucional_edit">Email Istitucional</p:outputLabel>
+                                        <p:inputText id="email_institucional_edit" value="#{estudanteController.estudante.emailAluno}" required="false"/>
+                                    </div>
+
+                                    <div class="p-field">
+                                        <p:outputLabel for="email_responsavel_edit">Email Responsável</p:outputLabel>
+                                        <p:inputText id="email_responsavel_edit" value="#{estudanteController.estudante.emailResponsavel}" required="false"/>
+                                    </div>
+
+                                    <div class="p-field">
+                                        <p:outputLabel for="turma_edit">Turma</p:outputLabel>
+                                        <p:selectOneMenu id="turma_edit" value="#{estudanteController.estudante.turmaIdturma}"
+                                                         required="true" requiredMessage="Selecione uma Turma" converter="#{turmaId}">
+                                            <f:selectItem itemLabel="Selecione a Turma" itemValue=""/>
+                                            <f:selectItems value="#{turmaController.turmas}" var="turmaId"
+                                                           itemLabel="#{turmaId.descricao}" itemValue="#{turmaId}"/>
+                                        </p:selectOneMenu>
+                                    </div>
+                                </p:outputPanel>
+                            </p:outputPanel>
+
+                            <f:facet name="footer">
+                                <p:commandButton value="Editar" icon="pi pi-check" actionListener="#{estudanteController.editarEstudante()}"
+                                                 update="edit-estudante-content" process="edit-estudante-content @this"/>
+                                <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('editEstudanteDialog').hide()"
+                                                 class="ui-button-secondary"/>
+                            </f:facet>
+                        </p:dialog>
+
+
+                        <p:confirmDialog widgetVar="deleteEstudanteDialog" showEffect="fade" width="300"
+                                         message="Deseja remover este estudante?" header="Confirmação" severity="warn">
+                            <p:commandButton value="Sim" icon="pi pi-check" actionListener="#{estudanteController.removerEstudante()}"
+                                             process="@this" oncomplete="PF('deleteEstudanteDialog').hide()" update="messages"/>
+                            <p:commandButton value="Não" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                             onclick="PF('deleteEstudanteDialog').hide()"/>
+                        </p:confirmDialog>
+                    </h:form>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>
