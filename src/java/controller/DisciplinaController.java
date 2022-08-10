@@ -34,7 +34,7 @@ public class DisciplinaController implements Serializable {
 
     @PostConstruct
     public void fillCursoList() {
-        for(Disciplina d: disciplinaDAO.buscarTodos()) {
+        for (Disciplina d : disciplinaDAO.buscarTodos()) {
             System.out.println(d.toString());
         }
         disciplinas = disciplinaDAO.buscarTodos();
@@ -50,9 +50,14 @@ public class DisciplinaController implements Serializable {
     }
 
     public void cadastrarDisciplina() {
-        disciplinaDAO.create(disciplina);
-        fillCursoList();
-        Util.addMessageInformation("Disciplina Cadastrada");
+        try {
+            disciplinaDAO.create(disciplina);
+            fillCursoList();
+            Util.addMessageInformation("Disciplina Cadastrada");
+        } catch (EJBException ex) {
+            Util.addMessageError("Sigla de disciplina já existe");
+            PrimeFaces.current().ajax().update("form:messages");
+        }
 
         PrimeFaces.current().executeScript("PF('createDisciplinaDialog').hide()");
         PrimeFaces.current().ajax().update("form:messages", "form:dt-disciplinas");
