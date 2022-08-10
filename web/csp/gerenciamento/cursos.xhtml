@@ -27,9 +27,9 @@
                                     <span>Cursos</span>
                                     <div>
                                         <p:commandButton value="Cadastrar" icon="pi pi-plus" actionListener="#{cursoController.openNew()}"
-                                                         update=":form:create-curso-content" oncomplete="PF('createCursoDialog').show()"
+                                                         update=":dialogs:create-curso-content" oncomplete="PF('createCursoDialog').show()"
                                                          style="margin-right: .5rem">
-                                            <p:resetInput target=":form:create-curso-content"/>
+                                            <p:resetInput target=":dialogs:create-curso-content"/>
                                         </p:commandButton>
                                     </div>
                                 </div>
@@ -44,11 +44,11 @@
                             </p:column>
 
                             <p:column exportable="false">
-                                <p:commandButton icon="pi pi-pencil" update=":form:edit-curso-content"
+                                <p:commandButton icon="pi pi-pencil" update=":dialogs:edit-curso-content"
                                                  oncomplete="PF('editCursoDialog').show()"
                                                  styleClass="edit-button rounded-button" process="@this">
                                     <f:setPropertyActionListener value="#{curso}" target="#{cursoController.curso}"/>
-                                    <p:resetInput target=":form:edit-curso-content"/>
+                                    <p:resetInput target=":dialogs:edit-curso-content"/>
                                 </p:commandButton>
 
                                 <p:commandButton icon="pi pi-times" style="margin-left: 7px;"
@@ -58,8 +58,9 @@
                                 </p:commandButton>
                             </p:column>
                         </p:dataTable>
+                    </h:form>
 
-
+                    <h:form id="dialogs">
                         <p:dialog header="Cadastrar Curso" showEffect="fade" modal="true"
                                   widgetVar="createCursoDialog" responsive="true">
                             <p:outputPanel id="create-curso-content" class="ui-fluid">
@@ -106,7 +107,6 @@
                                                  class="ui-button-secondary"/>
                             </f:facet>
                         </p:dialog>
-
 
                         <p:confirmDialog widgetVar="deleteCursoDialog" showEffect="fade" width="300"
                                          message="Deseja remover este curso?" header="Confirmação" severity="warn">

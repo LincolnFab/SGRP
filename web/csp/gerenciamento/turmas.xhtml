@@ -27,9 +27,9 @@
                                     <span>Turmas</span>
                                     <div>
                                         <p:commandButton value="Cadastrar" icon="pi pi-plus" actionListener="#{turmaController.openNew()}"
-                                                         update=":form:create-turma-content" oncomplete="PF('createTurmaDialog').show()"
+                                                         update=":dialogs:create-turma-content" oncomplete="PF('createTurmaDialog').show()"
                                                          style="margin-right: .5rem">
-                                            <p:resetInput target=":form:create-turma-content"/>
+                                            <p:resetInput target=":dialogs:create-turma-content"/>
                                         </p:commandButton>
                                     </div>
                                 </div>
@@ -48,11 +48,11 @@
                             </p:column>
 
                             <p:column exportable="false">
-                                <p:commandButton icon="pi pi-pencil" update=":form:edit-turma-content"
+                                <p:commandButton icon="pi pi-pencil" update=":dialogs:edit-turma-content"
                                                  oncomplete="PF('editTurmaDialog').show()"
                                                  styleClass="edit-button rounded-button" process="@this">
                                     <f:setPropertyActionListener value="#{turma}" target="#{turmaController.turma}"/>
-                                    <p:resetInput target=":form:edit-turma-content"/>
+                                    <p:resetInput target=":dialogs:edit-turma-content"/>
                                 </p:commandButton>
 
                                 <p:commandButton icon="pi pi-times" style="margin-left: 7px;"
@@ -62,8 +62,9 @@
                                 </p:commandButton>
                             </p:column>
                         </p:dataTable>
+                    </h:form>
 
-
+                    <h:form id="dialogs">
                         <p:dialog header="Cadastrar Turma" showEffect="fade" modal="true"
                                   widgetVar="createTurmaDialog" responsive="true">
                             <p:outputPanel id="create-turma-content" class="ui-fluid">
@@ -71,7 +72,7 @@
 
                                     <div class="p-field">
                                         <p:outputLabel for="descricao_create">Descrição</p:outputLabel>
-                                        <p:inputText id="descricao_create" value="#{turmaController.turma.descricao}" required="true" onblur="value=value.toUpperCase()"/>
+                                        <p:inputText id="descricao_create" value="#{turmaController.turma.descricao}" required="true" onblur="value = value.toUpperCase()"/>
                                     </div>
 
                                     <div class="p-field">

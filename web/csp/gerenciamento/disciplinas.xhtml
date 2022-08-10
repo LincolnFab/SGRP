@@ -27,9 +27,9 @@
                                     <span>Disciplinas</span>
                                     <div>
                                         <p:commandButton value="Cadastrar" icon="pi pi-plus" actionListener="#{disciplinaController.openNew()}"
-                                                         update=":form:create-disciplina-content" oncomplete="PF('createDisciplinaDialog').show()"
+                                                         update=":dialogs:create-disciplina-content" oncomplete="PF('createDisciplinaDialog').show()"
                                                          style="margin-right: .5rem">
-                                            <p:resetInput target=":form:create-disciplina-content"/>
+                                            <p:resetInput target=":dialogs:create-disciplina-content"/>
                                         </p:commandButton>
                                     </div>
                                 </div>
@@ -44,11 +44,11 @@
                             </p:column>
 
                             <p:column exportable="false">
-                                <p:commandButton icon="pi pi-pencil" update=":form:edit-disciplina-content"
+                                <p:commandButton icon="pi pi-pencil" update=":dialogs:edit-disciplina-content"
                                                  oncomplete="PF('editDisciplinaDialog').show()"
                                                  styleClass="edit-button rounded-button" process="@this">
                                     <f:setPropertyActionListener value="#{disciplina}" target="#{disciplinaController.disciplina}"/>
-                                    <p:resetInput target=":form:edit-disciplina-content"/>
+                                    <p:resetInput target=":dialogs:edit-disciplina-content"/>
                                 </p:commandButton>
 
                                 <p:commandButton icon="pi pi-times" style="margin-left: 7px;"
@@ -58,7 +58,9 @@
                                 </p:commandButton>
                             </p:column>
                         </p:dataTable>
+                    </h:form>
 
+                    <h:form id="dialogs">
                         <p:dialog header="Cadastrar Disciplina" showEffect="fade" modal="true"
                                   widgetVar="createDisciplinaDialog" responsive="true">
                             <p:outputPanel id="create-disciplina-content" class="ui-fluid">
@@ -89,8 +91,7 @@
                             <f:facet name="footer">
                                 <p:commandButton value="Cadastrar" icon="pi pi-check" actionListener="#{disciplinaController.cadastrarDisciplina()}"
                                                  update="create-disciplina-content" process="create-disciplina-content @this"/>
-                                <p:commandButton value="Cancelar" icon="pi pi-times" actionListener="#{disciplinaController.openNew()}"
-                                                 onclick="PF('createDisciplinaDialog').hide()"
+                                <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('createDisciplinaDialog').hide()"
                                                  class="ui-button-secondary"/>
                             </f:facet>
                         </p:dialog>
