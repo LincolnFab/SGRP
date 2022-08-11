@@ -42,6 +42,10 @@
                             <p:column headerText="Nome" sortBy="#{disciplina.nome}">
                                 <h:outputText value="#{disciplina.nome}"  />
                             </p:column>
+                            
+                            <p:column headerText="Curso" sortBy="#{disciplina.cursoId.descricao}">
+                                <h:outputText value="#{disciplina.cursoId.descricao}"  />
+                            </p:column>
 
                             <p:column exportable="false">
                                 <p:commandButton icon="pi pi-pencil" update=":dialogs:edit-disciplina-content"
