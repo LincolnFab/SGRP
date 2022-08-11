@@ -29,11 +29,11 @@
                             <p:submenu label="Gerenciamento" icon="pi pi-cog">
                                 <p:menuitem value="Recuperação" icon="pi pi-database"/>
                                 <p:menuitem value="Professores" icon="pi pi-user"/>
-                                <p:menuitem value="Alunos" icon="pi pi-users"/>
+                                <p:menuitem value="Estudantes" icon="pi pi-users"/>
                             </p:submenu>
                             <p:submenu label="Relatórios" icon="pi pi-folder-open">
                                 <p:menuitem value="Listagem RP" icon="pi pi-file-pdf"/>
-                                <p:menuitem value="Listagem Alunos" icon="pi pi-file-pdf"/>
+                                <p:menuitem value="Listagem Estudantes" icon="pi pi-file-pdf"/>
                             </p:submenu>
 
                             <f:facet name="options">
@@ -59,24 +59,44 @@
                                 <p:menuitem value="Consultar" icon="pi pi-fw pi-file"/>
                             </p:submenu>
 
-                            <p:submenu label="Aluno" icon="pi pi-fw pi-user">
+                            <p:submenu label="Estudante" icon="pi pi-fw pi-user">
                                 <p:menuitem value="Consultar" icon="pi pi-fw pi-file"/>
                             </p:submenu>
 
                             <p:submenu label="Relatórios" icon="pi pi-fw pi-file-pdf">
                                 <p:menuitem value="Listagem RP" icon="pi pi-fw pi-list"/>
-                                <p:menuitem value="Listagem Alunos" icon="pi pi-fw pi-list"/>
+                                <p:menuitem value="Listagem Estudantes" icon="pi pi-fw pi-list"/>
                             </p:submenu>
 
                             <p:menuitem value="Quit" icon="pi pi-fw pi-power-off"/>
                         </p:panelMenu>
                     </ui:remove>
 
+                    <ui:remove>
+                        <!-- https://forum.primefaces.org/viewtopic.php?t=39883 -->
+                        <p:tieredMenu id="menu" style="width:50px; min-width: 70px; margin-top: 10px; padding: 0px;">
+                            <p:menuitem outcome="/csp/home" icon="pi pi-home"/>
+                            <p:menuitem icon="pi pi-database"/>
+                            <p:submenu icon="pi pi-cog">
+                                <p:menuitem outcome="/csp/gerenciamento/estudantes" value="Estudantes" icon="pi pi-user-edit"/>
+                                <p:menuitem outcome="/csp/gerenciamento/cursos" value="Cursos" icon="pi pi-sitemap"/>
+                                <p:menuitem outcome="/csp/gerenciamento/disciplinas" value="Disciplinas" icon="pi pi-file"/>
+                                <p:menuitem outcome="/csp/gerenciamento/servidores" value="Servidores" icon="pi pi-id-card"/>
+                                <p:menuitem value="Salas" icon="pi pi-building"/>
+                                <p:menuitem outcome="/csp/gerenciamento/turmas" value="Turmas" icon="pi pi-users"/>
+                            </p:submenu>
+                            <p:submenu icon="pi pi-folder-open">
+                                <p:menuitem value="Listagem RP" icon="pi pi-file-excel"/>
+                                <p:menuitem value="Listagem Estudantes" icon="pi pi-file-excel"/>
+                            </p:submenu>
+                        </p:tieredMenu>
+                    </ui:remove>
+
                     <p:tieredMenu id="menu" style="width:250px; min-width: 250px; margin-top: 10px; padding: 0px;">
                         <p:menuitem outcome="/csp/home" value="Home" icon="pi pi-home"/>
                         <p:menuitem value="Recuperação" icon="pi pi-database"/>
                         <p:submenu label="Gerenciamento" icon="pi pi-cog">
-                            <p:menuitem outcome="/csp/gerenciamento/alunos" value="Alunos" icon="pi pi-user-edit"/>
+                            <p:menuitem outcome="/csp/gerenciamento/estudantes" value="Estudantes" icon="pi pi-user-edit"/>
                             <p:menuitem outcome="/csp/gerenciamento/cursos" value="Cursos" icon="pi pi-sitemap"/>
                             <p:menuitem outcome="/csp/gerenciamento/disciplinas" value="Disciplinas" icon="pi pi-file"/>
                             <p:menuitem outcome="/csp/gerenciamento/servidores" value="Servidores" icon="pi pi-id-card"/>
@@ -85,7 +105,7 @@
                         </p:submenu>
                         <p:submenu label="Relatórios" icon="pi pi-folder-open">
                             <p:menuitem value="Listagem RP" icon="pi pi-file-excel"/>
-                            <p:menuitem value="Listagem Alunos" icon="pi pi-file-excel"/>
+                            <p:menuitem value="Listagem Estudantes" icon="pi pi-file-excel"/>
                         </p:submenu>
 
                         <ui:remove>
@@ -94,19 +114,19 @@
                                 <p:menuitem value="Consultar" icon="pi pi-fw pi-file"/>
                             </p:submenu>
 
-                            <p:submenu label="Aluno" icon="pi pi-fw pi-user">
+                            <p:submenu label="Estudante" icon="pi pi-fw pi-user">
                                 <p:menuitem value="Consultar" icon="pi pi-fw pi-file"/>
                             </p:submenu>
 
                             <p:submenu label="Relatórios" icon="pi pi-fw pi-file-pdf">
                                 <p:menuitem value="Listagem RP" icon="pi pi-fw pi-list"/>
-                                <p:menuitem value="Listagem Alunos" icon="pi pi-fw pi-list"/>
+                                <p:menuitem value="Listagem Estudantes" icon="pi pi-fw pi-list"/>
                             </p:submenu>
 
                             <p:menuitem value="Quit" icon="pi pi-fw pi-power-off"/>
                         </ui:remove>
                     </p:tieredMenu>
-                    
+
                     <p:sticky target="menu"/>
                 </h:form>
             </ui:insert>
