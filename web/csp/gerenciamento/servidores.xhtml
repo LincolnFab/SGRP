@@ -31,6 +31,11 @@
                                                          style="margin-right: .5rem">
                                             <p:resetInput target=":dialogs:create-servidor-content"/>
                                         </p:commandButton>
+
+                                        <p:commandButton id="toggler" type="button" value="Campos" icon="pi pi-align-justify"/>
+                                        <p:columnToggler datasource="dt-servidores" trigger="toggler">
+                                            <p:ajax />
+                                        </p:columnToggler>
                                     </div>
                                 </div>
                             </f:facet>
@@ -55,7 +60,7 @@
                                 <h:outputText value="#{servidor.tipo}"  />
                             </p:column>
 
-                            <p:column exportable="false">
+                            <p:column headerText="Ações" exportable="false">
                                 <p:commandButton icon="pi pi-pencil" update=":dialogs:edit-servidor-content"
                                                  oncomplete="PF('editServidorDialog').show()"
                                                  styleClass="edit-button rounded-button" process="@this">

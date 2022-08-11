@@ -31,6 +31,11 @@
                                                          style="margin-right: .5rem">
                                             <p:resetInput target=":dialogs:create-turma-content"/>
                                         </p:commandButton>
+                                        
+                                        <p:commandButton id="toggler" type="button" value="Campos" icon="pi pi-align-justify"/>
+                                        <p:columnToggler datasource="dt-turmas" trigger="toggler">
+                                            <p:ajax />
+                                        </p:columnToggler>
                                     </div>
                                 </div>
                             </f:facet>
@@ -47,7 +52,7 @@
                                 <h:outputText value="#{turma.cursoId.descricao}"  />
                             </p:column>
 
-                            <p:column exportable="false">
+                            <p:column headerText="Ações" exportable="false">
                                 <p:commandButton icon="pi pi-pencil" update=":dialogs:edit-turma-content"
                                                  oncomplete="PF('editTurmaDialog').show()"
                                                  styleClass="edit-button rounded-button" process="@this">
