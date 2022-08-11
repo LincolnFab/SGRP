@@ -41,7 +41,7 @@ public class Servidor implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 10)
+    @Size(min = 1, max = 9)
     @Column(name = "prontuario")
     private String prontuario;
     @Basic(optional = false)
@@ -67,7 +67,7 @@ public class Servidor implements Serializable {
     private String senha;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 15)
+    @Size(min = 1, max = 14)
     @Column(name = "cpf")
     private String cpf;
     @ManyToMany(mappedBy = "servidorCollection")
