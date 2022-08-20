@@ -33,8 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Servidor.findByNome", query = "SELECT s FROM Servidor s WHERE s.nome = :nome"),
     @NamedQuery(name = "Servidor.findByEmail", query = "SELECT s FROM Servidor s WHERE s.email = :email"),
     @NamedQuery(name = "Servidor.findByTipo", query = "SELECT s FROM Servidor s WHERE s.tipo = :tipo"),
-    @NamedQuery(name = "Servidor.findBySenha", query = "SELECT s FROM Servidor s WHERE s.senha = :senha"),
-    @NamedQuery(name = "Servidor.findByCpf", query = "SELECT s FROM Servidor s WHERE s.cpf = :cpf")})
+    @NamedQuery(name = "Servidor.findBySenha", query = "SELECT s FROM Servidor s WHERE s.senha = :senha")})
 public class Servidor implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -65,11 +64,6 @@ public class Servidor implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "senha")
     private String senha;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 14)
-    @Column(name = "cpf")
-    private String cpf;
     @ManyToMany(mappedBy = "servidorCollection")
     private Collection<RecuperacaoParalela> recuperacaoParalelaCollection;
 
@@ -80,13 +74,12 @@ public class Servidor implements Serializable {
         this.prontuario = prontuario;
     }
 
-    public Servidor(String prontuario, String nome, String email, String tipo, String senha, String cpf) {
+    public Servidor(String prontuario, String nome, String email, String tipo, String senha) {
         this.prontuario = prontuario;
         this.nome = nome;
         this.email = email;
         this.tipo = tipo;
         this.senha = senha;
-        this.cpf = cpf;
     }
 
     public String getProntuario() {
@@ -127,14 +120,6 @@ public class Servidor implements Serializable {
 
     public void setSenha(String senha) {
         this.senha = senha;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
     }
 
     @XmlTransient

@@ -11,8 +11,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -40,13 +38,14 @@ public class Turma implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "idturma")
-    private Integer idturma;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 55)
+    @Column(name = "idturma")
+    private String idturma;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 140)
     @Column(name = "descricao")
     private String descricao;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "turmaIdturma")
@@ -58,20 +57,20 @@ public class Turma implements Serializable {
     public Turma() {
     }
 
-    public Turma(Integer idturma) {
+    public Turma(String idturma) {
         this.idturma = idturma;
     }
 
-    public Turma(Integer idturma, String descricao) {
+    public Turma(String idturma, String descricao) {
         this.idturma = idturma;
         this.descricao = descricao;
     }
 
-    public Integer getIdturma() {
+    public String getIdturma() {
         return idturma;
     }
 
-    public void setIdturma(Integer idturma) {
+    public void setIdturma(String idturma) {
         this.idturma = idturma;
     }
 

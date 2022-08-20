@@ -35,7 +35,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Estudante.findByProntuario", query = "SELECT e FROM Estudante e WHERE e.prontuario = :prontuario"),
     @NamedQuery(name = "Estudante.findByNome", query = "SELECT e FROM Estudante e WHERE e.nome = :nome"),
     @NamedQuery(name = "Estudante.findBySenha", query = "SELECT e FROM Estudante e WHERE e.senha = :senha"),
-    @NamedQuery(name = "Estudante.findByCpf", query = "SELECT e FROM Estudante e WHERE e.cpf = :cpf"),
     @NamedQuery(name = "Estudante.findByEmailPessoal", query = "SELECT e FROM Estudante e WHERE e.emailPessoal = :emailPessoal"),
     @NamedQuery(name = "Estudante.findByEmailAluno", query = "SELECT e FROM Estudante e WHERE e.emailAluno = :emailAluno"),
     @NamedQuery(name = "Estudante.findByEmailResponsavel", query = "SELECT e FROM Estudante e WHERE e.emailResponsavel = :emailResponsavel")})
@@ -50,7 +49,7 @@ public class Estudante implements Serializable {
     private String prontuario;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 100)
+    @Size(min = 1, max = 240)
     @Column(name = "nome")
     private String nome;
     @Basic(optional = false)
@@ -58,11 +57,6 @@ public class Estudante implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "senha")
     private String senha;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 14)
-    @Column(name = "cpf")
-    private String cpf;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -87,11 +81,10 @@ public class Estudante implements Serializable {
         this.prontuario = prontuario;
     }
 
-    public Estudante(String prontuario, String nome, String senha, String cpf, String emailPessoal) {
+    public Estudante(String prontuario, String nome, String senha, String emailPessoal) {
         this.prontuario = prontuario;
         this.nome = nome;
         this.senha = senha;
-        this.cpf = cpf;
         this.emailPessoal = emailPessoal;
     }
 
@@ -117,14 +110,6 @@ public class Estudante implements Serializable {
 
     public void setSenha(String senha) {
         this.senha = senha;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
     }
 
     public String getEmailPessoal() {

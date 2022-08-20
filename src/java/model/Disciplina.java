@@ -40,12 +40,12 @@ public class Disciplina implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 5)
+    @Size(min = 1, max = 25)
     @Column(name = "sigla")
     private String sigla;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 80)
     @Column(name = "nome")
     private String nome;
     @JoinColumn(name = "curso_id", referencedColumnName = "id")

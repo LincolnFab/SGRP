@@ -48,10 +48,6 @@
                                 <h:outputText value="#{estudante.nome}" />
                             </p:column>
 
-                            <p:column headerText="CPF" sortBy="#{estudante.cpf}">
-                                <h:outputText value="#{estudante.cpf}" />
-                            </p:column>
-
                             <p:column headerText="Email Pessoal" sortBy="#{estudante.emailPessoal}">
                                 <h:outputText value="#{estudante.emailPessoal}" />
                             </p:column>
@@ -103,11 +99,6 @@
                                     <div class="p-field">
                                         <p:outputLabel for="nome_create">Nome</p:outputLabel>
                                         <p:inputText id="nome_create" value="#{estudanteController.estudante.nome}" required="true"/>
-                                    </div>
-
-                                    <div class="p-field">
-                                        <p:outputLabel for="cpf_create">CPF</p:outputLabel>
-                                        <p:inputMask id="cpf_create" value="#{estudanteController.estudante.cpf}" mask="999.999.999-99" validateMask="true" required="true"/>
                                     </div>
 
                                     <div class="p-field">
@@ -164,11 +155,6 @@
                                     <div class="p-field">
                                         <p:outputLabel for="nome_edit">Nome</p:outputLabel>
                                         <p:inputText id="nome_edit" value="#{estudanteController.estudante.nome}" required="true"/>
-                                    </div>
-
-                                    <div class="p-field">
-                                        <p:outputLabel for="cpf_edit">CPF</p:outputLabel>
-                                        <p:inputMask id="cpf_edit" value="#{estudanteController.estudante.cpf}" mask="999.999.999-99" disabled="true"/>
                                     </div>
 
                                     <div class="p-field">

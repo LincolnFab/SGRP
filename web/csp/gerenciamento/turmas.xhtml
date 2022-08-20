@@ -74,6 +74,11 @@
                                   widgetVar="createTurmaDialog" responsive="true">
                             <p:outputPanel id="create-turma-content" class="ui-fluid">
                                 <p:outputPanel rendered="#{not empty turmaController.turma}">
+                                    
+                                    <div class="p-field">
+                                        <p:outputLabel for="id_create">ID da Turma</p:outputLabel>
+                                        <p:inputText id="id_create" value="#{turmaController.turma.idturma}" required="true" onblur="value = value.toUpperCase()"/>
+                                    </div>
 
                                     <div class="p-field">
                                         <p:outputLabel for="descricao_create">Descrição</p:outputLabel>
@@ -105,7 +110,7 @@
                                   widgetVar="editTurmaDialog" responsive="true">
                             <p:outputPanel id="edit-turma-content" class="ui-fluid">
                                 <p:outputPanel rendered="#{not empty turmaController.turma}">
-
+                                    
                                     <div class="p-field">
                                         <p:outputLabel for="id_edit">ID</p:outputLabel>
                                         <p:inputText id="id_edit" value="#{turmaController.turma.idturma}" disabled="true"/>
