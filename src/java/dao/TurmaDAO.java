@@ -22,7 +22,7 @@ public class TurmaDAO extends AbstractDAO<Turma> {
                 .getResultList();
     }
 
-    public Turma buscarPorId(int id) {
+    public Turma buscarPorId(String id) {
         return getEntityManager()
                 .createNamedQuery("Turma.findByIdturma", Turma.class)
                 .setParameter("idturma", id)

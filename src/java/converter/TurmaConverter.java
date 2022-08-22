@@ -5,14 +5,12 @@
  */
 package converter;
 
-import dao.CursoDAO;
 import dao.TurmaDAO;
 import javax.enterprise.inject.spi.CDI;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import model.Curso;
 import model.Turma;
 
 /**
@@ -24,11 +22,10 @@ public class TurmaConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext fc, UIComponent uic, String string) {
-
         //Obtém uma instância do DAO
         TurmaDAO dao = CDI.current().select(TurmaDAO.class).get();
         //Busca o objeto (pessoa) no banco de dados pela chave primária
-        Turma turma = dao.buscarPorId(Integer.valueOf(string));
+        Turma turma = dao.buscarPorId(string);
         return turma;
     }
 
