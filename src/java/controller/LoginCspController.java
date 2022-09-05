@@ -6,6 +6,7 @@
 package controller;
 
 import java.io.Serializable;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -16,17 +17,18 @@ import javax.inject.Named;
  * @author linkf
  */
 @Named
-@SessionScoped
+@RequestScoped
 public class LoginCspController implements Serializable {
 
     private String login;
     private String senha;
     
     public LoginCspController (){
-        
+        this.login = "aluno123";
     }
 
     public String autenticador() {
+        System.out.println(".........");
         if (this.login.equals(this.senha)) {
             return "csp/home?faces-redirect=true";
         } else {
