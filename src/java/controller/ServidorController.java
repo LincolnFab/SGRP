@@ -6,7 +6,9 @@
 package controller;
 
 import dao.ServidorDAO;
+import java.io.File;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJBException;
@@ -15,6 +17,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import model.Servidor;
 import org.primefaces.PrimeFaces;
+import org.primefaces.model.file.UploadedFile;
+import util.ReadExcel;
+import util.UploadFileToFile;
 import util.Util;
 
 /**
@@ -30,6 +35,9 @@ public class ServidorController implements Serializable {
 
     private Servidor servidor;
     private List<Servidor> servidores;
+    private UploadedFile file;
+    
+    private boolean loading = false;
 
     @PostConstruct
     public void fillServidorList() {
@@ -75,6 +83,36 @@ public class ServidorController implements Serializable {
         PrimeFaces.current().executeScript("PF('editServidorDialog').hide()");
         PrimeFaces.current().ajax().update("form:messages", "form:dt-servidores");
     }
+    
+        public void importarServidores() {
+        loading = true;
+        if (file != null) {
+            List<Servidor> planilha = new ArrayList<Servidor>();
+            List<Servidor> servidoresBanco = new ArrayList<Servidor>();
+
+            servidoresBanco = servidorDAO.buscarTodos();
+
+            File newFile = UploadFileToFile.uploadedFileToFileConverter(file);
+            planilha = util.ReadExcel.servidorReadExcel(newFile);
+            
+            for (Servidor s : planilha) {
+                if (servidoresBanco.contains(s)) {
+                    s.setSenha(servidoresBanco.get(servidoresBanco.indexOf(s)).getSenha());
+                    servidorDAO.update(s);
+                } else {
+                    servidorDAO.create(s);
+                }
+            }
+
+            PrimeFaces.current().executeScript("PF('importarServidor').hide()");
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-servidores");
+            fillServidorList();
+            loading = false;;
+            util.Util.addMessageInformation("Servidor(es) Cadastrado(s)");
+        } else {
+            System.out.println("FILE NULL");
+        }
+    }
 
     public Servidor getServidor() {
         return servidor;
@@ -91,5 +129,25 @@ public class ServidorController implements Serializable {
     public void setServidores(List<Servidor> servidores) {
         this.servidores = servidores;
     }
+
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
+    }
+
+    public boolean isLoading() {
+        return loading;
+    }
+
+    public void setLoading(boolean loading) {
+        this.loading = loading;
+    }
+    
+    
+    
+    
 
 }

@@ -26,6 +26,9 @@
                                 <div class="p-d-flex p-ai-center p-jc-between">
                                     <span>Servidores</span>
                                     <div>
+                                        <p:commandButton value="Importar" type="button" icon="pi pi-external-link" 
+                                                         onclick="PF('importarServidor').show()"
+                                                         style="margin-right: .5rem"/>
                                         <p:commandButton value="Cadastrar" icon="pi pi-plus" actionListener="#{servidorController.openNew()}"
                                                          update=":dialogs:create-servidor-content" oncomplete="PF('createServidorDialog').show()"
                                                          style="margin-right: .5rem">
@@ -71,6 +74,17 @@
                                 </p:commandButton>
                             </p:column>
                         </p:dataTable>
+                    </h:form>
+
+                    <h:form enctype="multipart/form-data">
+                        <p:dialog header="Importar curso" widgetVar="importarServidor" showEffect="fade" modal="true" responsive="true">
+                            <p:fileUpload value="#{servidorController.file}" mode="simple" skinSimple="true" label="Planilha"/>
+                            <i class="pi pi-spin pi-spinner" rendered="#{servidorController.loading}" ></i>
+                            <f:facet name="footer">
+                                <p:commandButton value="Enviar" action="#{servidorController.importarServidores()}"/>
+                                <p:commandButton value="Cancelar" onclick="PF('importarServidor').hide()" class="ui-button-secondary"/>
+                            </f:facet>
+                        </p:dialog>
                     </h:form>
 
                     <h:form id="dialogs">
