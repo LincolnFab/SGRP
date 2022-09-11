@@ -48,10 +48,6 @@
                                 <h:outputText value="#{servidor.nome}"  />
                             </p:column>
 
-                            <p:column headerText="CPF" sortBy="#{servidor.cpf}">
-                                <h:outputText value="#{servidor.cpf}"  />
-                            </p:column>
-
                             <p:column headerText="Email" sortBy="#{servidor.email}">
                                 <h:outputText value="#{servidor.email}"  />
                             </p:column>
@@ -91,11 +87,6 @@
                                     <div class="p-field">
                                         <p:outputLabel for="nome_create">Nome</p:outputLabel>
                                         <p:inputText id="nome_create" value="#{servidorController.servidor.nome}" required="true"/>
-                                    </div>
-
-                                    <div class="p-field">
-                                        <p:outputLabel for="cpf_create">CPF</p:outputLabel>
-                                        <p:inputMask id="cpf_create" value="#{servidorController.servidor.cpf}" mask="999.999.999-99" validateMask="true" required="true"/>
                                     </div>
 
                                     <div class="p-field">
@@ -140,11 +131,6 @@
                                     <div class="p-field">
                                         <p:outputLabel for="nome_edit">Nome</p:outputLabel>
                                         <p:inputText id="nome_edit" value="#{servidorController.servidor.nome}" required="true"/>
-                                    </div>
-
-                                    <div class="p-field">
-                                        <p:outputLabel for="cpf_edit">CPF</p:outputLabel>
-                                        <p:inputMask id="cpf_edit" value="#{servidorController.servidor.cpf}" mask="999.999.999-99" disabled="true"/>
                                     </div>
 
                                     <div class="p-field">
