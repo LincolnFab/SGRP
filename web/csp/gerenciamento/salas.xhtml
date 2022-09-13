@@ -19,7 +19,7 @@
                         </p:breadCrumb>
 
                         <p:dataTable id="dt-salas" widgetVar="dtSalas" var="sala" value="#{salaController.salasDeAula}"
-                                     emptyMessage="Nenhuma sala encontrada" rowKey="#{sala.id}" styleClass="sala-table"
+                                     emptyMessage="Nenhuma sala encontrada" rowKey="#{sala.idSala}" styleClass="sala-table"
                                      style="margin-top: 10px" paginator="true" rows="10" paginatorPosition="bottom">
 
                             <f:facet name="header">

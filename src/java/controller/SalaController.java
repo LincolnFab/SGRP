@@ -30,7 +30,6 @@ public class SalaController implements Serializable {
 
     private SalaDeAula salaDeAula;
     private List<SalaDeAula> salasDeAula;
-    
 
     @PostConstruct
     public void fillSalaList() {
@@ -100,7 +99,4 @@ public class SalaController implements Serializable {
         this.salasDeAula = salasDeAula;
     }
 
-    
-
 }
-
