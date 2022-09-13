@@ -19,7 +19,7 @@
                         </p:breadCrumb>
 
                         <p:dataTable id="dt-disciplinas" widgetVar="dtDisciplinas" var="disciplina" value="#{disciplinaController.disciplinas}"
-                                     emptyMessage="Nenhum disciplina encontrada" rowKey="#{disciplina.sigla}" styleClass="disciplina-table"
+                                     emptyMessage="Nenhum disciplina encontrada" rowKey="#{disciplina.disciplinaPK.sigla}" styleClass="disciplina-table"
                                      style="margin-top: 10px" paginator="true" rows="10" paginatorPosition="bottom">
 
                             <f:facet name="header">
@@ -40,16 +40,16 @@
                                 </div>
                             </f:facet>
 
-                            <p:column headerText="Sigla" sortBy="#{disciplina.sigla}">
-                                <h:outputText value="#{disciplina.sigla}" />
+                            <p:column headerText="Sigla" sortBy="#{disciplina.disciplinaPK.sigla}">
+                                <h:outputText value="#{disciplina.disciplinaPK.sigla}" />
                             </p:column>
 
                             <p:column headerText="Nome" sortBy="#{disciplina.nome}">
                                 <h:outputText value="#{disciplina.nome}"  />
                             </p:column>
                             
-                            <p:column headerText="Curso" sortBy="#{disciplina.cursoId.descricao}">
-                                <h:outputText value="#{disciplina.cursoId.descricao}"  />
+                            <p:column headerText="Curso" sortBy="#{disciplina.curso.descricao}">
+                                <h:outputText value="#{disciplina.curso.descricao}"  />
                             </p:column>
 
                             <p:column headerText="Ações" exportable="false">
@@ -77,7 +77,7 @@
 
                                     <div class="p-field">
                                         <p:outputLabel for="sigla_create">Sigla</p:outputLabel>
-                                        <p:inputText id="sigla_create" value="#{disciplinaController.disciplina.sigla}" required="true" onblur="value = value.toUpperCase()"/>
+                                        <p:inputText id="sigla_create" value="#{disciplinaController.disciplina.disciplinaPK.sigla}" required="true" onblur="value = value.toUpperCase()"/>
                                     </div>
 
                                     <div class="p-field">
@@ -87,7 +87,7 @@
 
                                     <div class="p-field">
                                         <p:outputLabel for="curso_create">Curso</p:outputLabel>
-                                        <p:selectOneMenu id="curso_create" value="#{disciplinaController.disciplina.cursoId}"
+                                        <p:selectOneMenu id="curso_create" value="#{disciplinaController.disciplina.curso}"
                                                          required="true" requiredMessage="Selecione um Curso" converter="#{cursoId}">
                                             <f:selectItem itemLabel="Selecione o Curso" itemValue=""/>
                                             <f:selectItems value="#{cursoController.cursos}" var="cursoId"
@@ -112,7 +112,7 @@
 
                                     <div class="p-field">
                                         <p:outputLabel for="sigla_edit">Sigla</p:outputLabel>
-                                        <p:inputText id="sigla_edit" value="#{disciplinaController.disciplina.sigla}" disabled="true"/>
+                                        <p:inputText id="sigla_edit" value="#{disciplinaController.disciplina.disciplinaPK.sigla}" disabled="true"/>
                                     </div>
 
                                     <div class="p-field">
@@ -122,7 +122,7 @@
 
                                     <div class="p-field">
                                         <p:outputLabel for="curso_edit">Curso</p:outputLabel>
-                                        <p:selectOneMenu id="curso_edit" value="#{disciplinaController.disciplina.cursoId}"
+                                        <p:selectOneMenu id="curso_edit" value="#{disciplinaController.disciplina.curso}"
                                                          required="true" requiredMessage="Selecione um Curso" converter="#{cursoId}">
                                             <f:selectItem itemLabel="Selecione o Curso" itemValue=""/>
                                             <f:selectItems value="#{cursoController.cursos}" var="cursoId"

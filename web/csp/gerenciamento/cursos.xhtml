@@ -70,6 +70,11 @@
                                   widgetVar="createCursoDialog" responsive="true">
                             <p:outputPanel id="create-curso-content" class="ui-fluid">
                                 <p:outputPanel rendered="#{not empty cursoController.curso}">
+                                    
+                                    <div class="p-field">
+                                        <p:outputLabel for="id_create">ID do Curso</p:outputLabel>
+                                        <p:inputText id="id_create" value="#{cursoController.curso.id}" required="true"/>
+                                    </div>
 
                                     <div class="p-field">
                                         <p:outputLabel for="descricao_create">Descrição</p:outputLabel>

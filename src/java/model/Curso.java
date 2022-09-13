@@ -11,8 +11,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -38,16 +36,17 @@ public class Curso implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
     @Column(name = "id")
-    private Integer id;
+    private String id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "descricao")
     private String descricao;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cursoId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "curso")
     private Collection<Disciplina> disciplinaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cursoId")
     private Collection<Turma> turmaCollection;
@@ -55,20 +54,20 @@ public class Curso implements Serializable {
     public Curso() {
     }
 
-    public Curso(Integer id) {
+    public Curso(String id) {
         this.id = id;
     }
 
-    public Curso(Integer id, String descricao) {
+    public Curso(String id, String descricao) {
         this.id = id;
         this.descricao = descricao;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

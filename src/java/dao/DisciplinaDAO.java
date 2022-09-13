@@ -21,4 +21,11 @@ public class DisciplinaDAO extends AbstractDAO<Disciplina> {
                 .createNamedQuery("Disciplina.findAll", Disciplina.class)
                 .getResultList();
     }
+    
+    public Disciplina buscarPorSigla(String sigla) {
+        return getEntityManager()
+                .createNamedQuery("Disciplina.findBySigla", Disciplina.class)
+                .setParameter("sigla", sigla)
+                .getSingleResult();
+    }
 }

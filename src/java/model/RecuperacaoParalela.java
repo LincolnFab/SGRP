@@ -14,6 +14,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -108,9 +109,11 @@ public class RecuperacaoParalela implements Serializable {
     private Collection<Aula> aulaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recuperacaoParalela")
     private Collection<RecuperacaoParalelaHasEstudante> recuperacaoParalelaHasEstudanteCollection;
-    @JoinColumn(name = "disciplina_sigla", referencedColumnName = "sigla")
+    @JoinColumns({
+        @JoinColumn(name = "disciplina_sigla", referencedColumnName = "sigla"),
+        @JoinColumn(name = "disciplina_curso_id", referencedColumnName = "curso_id")})
     @ManyToOne(optional = false)
-    private Disciplina disciplinaSigla;
+    private Disciplina disciplina;
 
     public RecuperacaoParalela() {
     }
@@ -246,12 +249,12 @@ public class RecuperacaoParalela implements Serializable {
         this.recuperacaoParalelaHasEstudanteCollection = recuperacaoParalelaHasEstudanteCollection;
     }
 
-    public Disciplina getDisciplinaSigla() {
-        return disciplinaSigla;
+    public Disciplina getDisciplina() {
+        return disciplina;
     }
 
-    public void setDisciplinaSigla(Disciplina disciplinaSigla) {
-        this.disciplinaSigla = disciplinaSigla;
+    public void setDisciplina(Disciplina disciplina) {
+        this.disciplina = disciplina;
     }
 
     @Override

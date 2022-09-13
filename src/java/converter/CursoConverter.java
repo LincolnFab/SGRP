@@ -22,12 +22,8 @@ public class CursoConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext fc, UIComponent uic, String string) {
-//        System.out.println("getAsObject: " + string);
-
-        //Obtém uma instância do DAO
         CursoDAO dao = CDI.current().select(CursoDAO.class).get();
-        //Busca o objeto (pessoa) no banco de dados pela chave primária
-        Curso curso = dao.buscarPorId(Integer.valueOf(string));
+        Curso curso = dao.buscarPorId(string);
         return curso;
     }
 

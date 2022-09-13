@@ -22,7 +22,7 @@ public class CursoDAO extends AbstractDAO<Curso> {
                 .getResultList();
     }
 
-    public Curso buscarPorId(int id) {
+    public Curso buscarPorId(String id) {
         return getEntityManager()
                 .createNamedQuery("Curso.findById", Curso.class)
                 .setParameter("id", id)

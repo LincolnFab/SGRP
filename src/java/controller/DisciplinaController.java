@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import model.Curso;
 import model.Disciplina;
+import model.DisciplinaPK;
 import org.primefaces.PrimeFaces;
 import util.Util;
 
@@ -46,11 +47,13 @@ public class DisciplinaController implements Serializable {
 
     public void openNew() {
         disciplina = new Disciplina();
-        disciplina.setCursoId(new Curso());
+        disciplina.setCurso(new Curso());
+        disciplina.setDisciplinaPK(new DisciplinaPK());
     }
 
     public void cadastrarDisciplina() {
         try {
+            disciplina.getDisciplinaPK().setCursoId(disciplina.getCurso().getId());
             disciplinaDAO.create(disciplina);
             fillCursoList();
             Util.addMessageInformation("Disciplina Cadastrada");

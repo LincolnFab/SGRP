@@ -10,8 +10,8 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -32,46 +32,47 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Disciplina.findAll", query = "SELECT d FROM Disciplina d"),
-    @NamedQuery(name = "Disciplina.findBySigla", query = "SELECT d FROM Disciplina d WHERE d.sigla = :sigla"),
-    @NamedQuery(name = "Disciplina.findByNome", query = "SELECT d FROM Disciplina d WHERE d.nome = :nome")})
+    @NamedQuery(name = "Disciplina.findBySigla", query = "SELECT d FROM Disciplina d WHERE d.disciplinaPK.sigla = :sigla"),
+    @NamedQuery(name = "Disciplina.findByNome", query = "SELECT d FROM Disciplina d WHERE d.nome = :nome"),
+    @NamedQuery(name = "Disciplina.findByCursoId", query = "SELECT d FROM Disciplina d WHERE d.disciplinaPK.cursoId = :cursoId")})
 public class Disciplina implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 25)
-    @Column(name = "sigla")
-    private String sigla;
+    @EmbeddedId
+    protected DisciplinaPK disciplinaPK;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 80)
     @Column(name = "nome")
     private String nome;
-    @JoinColumn(name = "curso_id", referencedColumnName = "id")
+    @JoinColumn(name = "curso_id", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Curso cursoId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "disciplinaSigla")
+    private Curso curso;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "disciplina")
     private Collection<RecuperacaoParalela> recuperacaoParalelaCollection;
 
     public Disciplina() {
     }
 
-    public Disciplina(String sigla) {
-        this.sigla = sigla;
+    public Disciplina(DisciplinaPK disciplinaPK) {
+        this.disciplinaPK = disciplinaPK;
     }
 
-    public Disciplina(String sigla, String nome) {
-        this.sigla = sigla;
+    public Disciplina(DisciplinaPK disciplinaPK, String nome) {
+        this.disciplinaPK = disciplinaPK;
         this.nome = nome;
     }
 
-    public String getSigla() {
-        return sigla;
+    public Disciplina(String sigla, String cursoId) {
+        this.disciplinaPK = new DisciplinaPK(sigla, cursoId);
     }
 
-    public void setSigla(String sigla) {
-        this.sigla = sigla;
+    public DisciplinaPK getDisciplinaPK() {
+        return disciplinaPK;
+    }
+
+    public void setDisciplinaPK(DisciplinaPK disciplinaPK) {
+        this.disciplinaPK = disciplinaPK;
     }
 
     public String getNome() {
@@ -82,12 +83,12 @@ public class Disciplina implements Serializable {
         this.nome = nome;
     }
 
-    public Curso getCursoId() {
-        return cursoId;
+    public Curso getCurso() {
+        return curso;
     }
 
-    public void setCursoId(Curso cursoId) {
-        this.cursoId = cursoId;
+    public void setCurso(Curso curso) {
+        this.curso = curso;
     }
 
     @XmlTransient
@@ -102,7 +103,7 @@ public class Disciplina implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (sigla != null ? sigla.hashCode() : 0);
+        hash += (disciplinaPK != null ? disciplinaPK.hashCode() : 0);
         return hash;
     }
 
@@ -113,7 +114,7 @@ public class Disciplina implements Serializable {
             return false;
         }
         Disciplina other = (Disciplina) object;
-        if ((this.sigla == null && other.sigla != null) || (this.sigla != null && !this.sigla.equals(other.sigla))) {
+        if ((this.disciplinaPK == null && other.disciplinaPK != null) || (this.disciplinaPK != null && !this.disciplinaPK.equals(other.disciplinaPK))) {
             return false;
         }
         return true;
@@ -121,7 +122,7 @@ public class Disciplina implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Disciplina[ sigla=" + sigla + " ]";
+        return "model.Disciplina[ disciplinaPK=" + disciplinaPK + " ]";
     }
     
 }
