@@ -6,7 +6,9 @@
 package controller;
 
 import dao.SalaDAO;
+import java.io.File;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJBException;
@@ -14,7 +16,10 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import model.SalaDeAula;
+import model.Servidor;
 import org.primefaces.PrimeFaces;
+import org.primefaces.model.file.UploadedFile;
+import util.UploadFileToFile;
 import util.Util;
 
 /**
@@ -30,6 +35,7 @@ public class SalaController implements Serializable {
 
     private SalaDeAula salaDeAula;
     private List<SalaDeAula> salasDeAula;
+     private UploadedFile file;
 
     @PostConstruct
     public void fillSalaList() {
@@ -74,6 +80,36 @@ public class SalaController implements Serializable {
         PrimeFaces.current().executeScript("PF('editSalaDialog').hide()");
         PrimeFaces.current().ajax().update("form:messages", "form:dt-salas");
     }
+    
+    public void importarServidores() {
+        
+        if (file != null) {
+            List<SalaDeAula> planilha = new ArrayList<SalaDeAula>();
+            List<SalaDeAula> salasBanco = new ArrayList<SalaDeAula>();
+
+            salasBanco = salaDAO.buscarTodos();
+
+            File newFile = UploadFileToFile.uploadedFileToFileConverter(file);
+            planilha = util.ReadExcel.salaDeAulaReadExcel(newFile);
+            
+            for (SalaDeAula s : planilha) {
+                if (salasBanco.contains(s)) {
+                 
+                    salaDAO.update(s);
+                } else {
+                    salaDAO.create(s);
+                }
+            }
+
+            PrimeFaces.current().executeScript("PF('importarSala').hide()");
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-salas");
+            fillSalaList();
+            
+            util.Util.addMessageInformation("Salas de Aula Cadastrada(s)");
+        } else {
+            System.out.println("FILE NULL");
+        }
+    }
 
     public SalaDAO getSalaDAO() {
         return salaDAO;
@@ -98,5 +134,15 @@ public class SalaController implements Serializable {
     public void setSalasDeAula(List<SalaDeAula> salasDeAula) {
         this.salasDeAula = salasDeAula;
     }
+
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
+    }
+    
+    
 
 }

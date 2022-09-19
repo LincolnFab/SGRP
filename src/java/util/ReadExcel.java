@@ -14,6 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.SalaDeAula;
 import model.Servidor;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -83,6 +84,62 @@ public class ReadExcel {
             }
             file.close();
             return servidores;
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(util.ReadExcel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        } catch (IOException ex) {
+            Logger.getLogger(util.ReadExcel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
+    public static List<SalaDeAula> salaDeAulaReadExcel(File fileImport) {
+ 
+        List<SalaDeAula> salas = new ArrayList<SalaDeAula>();
+        
+        FileInputStream file = null;
+        
+        try {
+           
+            file = new FileInputStream(fileImport);
+            Workbook workbook = null;
+
+            if (fileImport.getName().toLowerCase().endsWith("xlsx")) {
+                workbook = new XSSFWorkbook(file);
+            } else if (fileImport.getName().toLowerCase().endsWith("xls")) {
+                workbook = new HSSFWorkbook(file);
+            }
+           
+            Sheet sheet = workbook.getSheetAt(0);
+    
+            Iterator<Row> rowIterator = sheet.iterator();
+            rowIterator.hasNext();
+
+            while (rowIterator.hasNext()) {
+                Row row = rowIterator.next();
+                Iterator<Cell> cellIterator = row.cellIterator();
+
+                // instancia um servidor
+                SalaDeAula s = new SalaDeAula();
+
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
+                    switch (cell.getColumnIndex()) {
+                        case 1:
+                            s.setDescricao(cell.getStringCellValue());
+                            break;
+                        
+                        default:
+                            break;
+                    }
+
+                }
+                
+                salas.add(s);
+
+            }
+            file.close();
+            return salas;
         } catch (FileNotFoundException ex) {
             Logger.getLogger(util.ReadExcel.class.getName()).log(Level.SEVERE, null, ex);
             return null;
