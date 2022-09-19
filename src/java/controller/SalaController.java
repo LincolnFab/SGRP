@@ -81,7 +81,7 @@ public class SalaController implements Serializable {
         PrimeFaces.current().ajax().update("form:messages", "form:dt-salas");
     }
     
-    public void importarServidores() {
+    public void importarSala() {
         
         if (file != null) {
             List<SalaDeAula> planilha = new ArrayList<SalaDeAula>();
@@ -94,9 +94,10 @@ public class SalaController implements Serializable {
             
             for (SalaDeAula s : planilha) {
                 if (salasBanco.contains(s)) {
-                 
+                    
                     salaDAO.update(s);
                 } else {
+                    System.out.println("AQUIIIIIIIIIIIIIIIIIIIIIIIII");
                     salaDAO.create(s);
                 }
             }

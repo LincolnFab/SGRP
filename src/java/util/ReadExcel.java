@@ -125,20 +125,17 @@ public class ReadExcel {
                 while (cellIterator.hasNext()) {
                     Cell cell = cellIterator.next();
                     switch (cell.getColumnIndex()) {
-                        case 1:
+                        case 0:
                             s.setDescricao(cell.getStringCellValue());
                             break;
-                        
                         default:
                             break;
                     }
-
                 }
-                
                 salas.add(s);
-
             }
             file.close();
+            System.out.println("salas" + salas);
             return salas;
         } catch (FileNotFoundException ex) {
             Logger.getLogger(util.ReadExcel.class.getName()).log(Level.SEVERE, null, ex);
