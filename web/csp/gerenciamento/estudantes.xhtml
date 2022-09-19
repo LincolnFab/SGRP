@@ -26,6 +26,9 @@
                                 <div class="p-d-flex p-ai-center p-jc-between">
                                     <span>Estudantes</span>
                                     <div>
+                                        <p:commandButton value="Importar" type="button" icon="pi pi-external-link" 
+                                                         onclick="PF('importarEstudante').show()"
+                                                         style="margin-right: .5rem"/>
                                         <p:commandButton value="Cadastrar" icon="pi pi-plus" actionListener="#{estudanteController.openNew()}"
                                                          update=":dialogs:create-estudante-content" oncomplete="PF('createEstudanteDialog').show()"
                                                          style="margin-right: .5rem">
@@ -83,6 +86,16 @@
                                 </p:commandButton>
                             </p:column>
                         </p:dataTable>
+                    </h:form>
+                    
+                    <h:form enctype="multipart/form-data">
+                        <p:dialog header="Importar estudante(s)" widgetVar="importarEstudante" minHeight="40" width="350" showEffect="fade">
+                            <p:fileUpload value="#{estudanteController.file}" mode="simple" skinSimple="true" label="Planilha"/>
+                            <f:facet name="footer">
+                                <p:commandButton value="Enviar" action="#{estudanteController.importarEstudantes()}"/>
+                                <p:commandButton value="Cancelar" onclick="PF('importarEstudante').hide()" class="ui-button-secondary"/>
+                            </f:facet>
+                        </p:dialog>
                     </h:form>
 
                     <h:form id="dialogs">
