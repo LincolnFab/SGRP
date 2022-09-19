@@ -52,9 +52,9 @@ public class ReadExcel {
             // iterar sobre as linhas da planilha
             Iterator<Row> rowIterator = sheet.iterator();
             rowIterator.hasNext();
-
+            Row row = rowIterator.next();
             while (rowIterator.hasNext()) {
-                Row row = rowIterator.next();
+                row = rowIterator.next();
                 Iterator<Cell> cellIterator = row.cellIterator();
 
                 // instancia um servidor
@@ -117,9 +117,9 @@ public class ReadExcel {
     
             Iterator<Row> rowIterator = sheet.iterator();
             rowIterator.hasNext();
-
+            Row row = rowIterator.next();
             while (rowIterator.hasNext()) {
-                Row row = rowIterator.next();
+                row = rowIterator.next();
                 Iterator<Cell> cellIterator = row.cellIterator();
 
                 // instancia um servidor
