@@ -14,6 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Curso;
 import model.Estudante;
 import model.SalaDeAula;
 import model.Servidor;
@@ -53,6 +54,7 @@ public class ReadExcel {
             Iterator<Row> rowIterator = sheet.iterator();
             rowIterator.hasNext();
             Row row = rowIterator.next();
+            row = rowIterator.next();
             while (rowIterator.hasNext()) {
                 row = rowIterator.next();
                 Iterator<Cell> cellIterator = row.cellIterator();
@@ -167,7 +169,7 @@ public class ReadExcel {
             Iterator<Row> rowIterator = sheet.iterator();
             rowIterator.hasNext();
             Row row = rowIterator.next();
-            
+            row = rowIterator.next();
             while (rowIterator.hasNext()) {
                 row = rowIterator.next();
                 Iterator<Cell> cellIterator = row.cellIterator();
@@ -212,6 +214,68 @@ public class ReadExcel {
             }
             file.close();
             return estudantes;
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(util.ReadExcel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        } catch (IOException ex) {
+            Logger.getLogger(util.ReadExcel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
+    public static List<Turma> turmaExcelData(File fileImport, List<Curso> cursos) {
+        List<Turma> turmas = new ArrayList<Turma>();
+        FileInputStream file = null;
+        
+        try {
+            file = new FileInputStream(fileImport);
+            Workbook workbook = null;
+
+            if (fileImport.getName().toLowerCase().endsWith("xlsx")) {
+                workbook = new XSSFWorkbook(file);
+            } else if (fileImport.getName().toLowerCase().endsWith("xls")) {
+                workbook = new HSSFWorkbook(file);
+            }
+            
+            Sheet sheet = workbook.getSheetAt(0);
+            Iterator<Row> rowIterator = sheet.iterator();
+            rowIterator.hasNext();
+            Row row = rowIterator.next();
+            row = rowIterator.next();
+            while (rowIterator.hasNext()) {
+                row = rowIterator.next();
+                Iterator<Cell> cellIterator = row.cellIterator();
+
+                Turma t = new Turma();
+
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
+                    switch (cell.getColumnIndex()) {
+                        case 0:
+                            t.setIdturma(cell.getStringCellValue());
+                            break;
+                        case 1:
+                            t.setDescricao(cell.getStringCellValue());
+                            break;
+                        case 10:
+                            Curso curso = new Curso();
+                            String codigoCurso = cell.getStringCellValue();
+                            System.out.println("codigo do curso...." + codigoCurso);
+                            for (Curso c : cursos) {
+                                if(c.getId().equalsIgnoreCase(codigoCurso)) {
+                                    t.setCursoId(c);
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                System.out.println("turma" + t.getIdturma() + t.getDescricao() + t.getCursoId());
+                turmas.add(t);
+            }
+            file.close();
+            return turmas;
         } catch (FileNotFoundException ex) {
             Logger.getLogger(util.ReadExcel.class.getName()).log(Level.SEVERE, null, ex);
             return null;
