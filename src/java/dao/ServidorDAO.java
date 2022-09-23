@@ -21,4 +21,14 @@ public class ServidorDAO extends AbstractDAO<Servidor> {
                 .createNamedQuery("Servidor.findAll", Servidor.class)
                 .getResultList();
     }
+    
+    public Servidor buscarPorTipo(String tipo) {
+        return getEntityManager().createNamedQuery("Servidor.findByTipo", Servidor.class)
+                .setParameter("tipo", tipo)
+                .getSingleResult();
+    }
+
+
+
+    
 }

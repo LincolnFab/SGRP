@@ -84,7 +84,7 @@ public class ServidorController implements Serializable {
         PrimeFaces.current().ajax().update("form:messages", "form:dt-servidores");
     }
     
-        public void importarServidores() {
+    public void importarServidores() {
         loading = true;
         if (file != null) {
             List<Servidor> planilha = new ArrayList<Servidor>();
@@ -94,7 +94,7 @@ public class ServidorController implements Serializable {
 
             File newFile = UploadFileToFile.uploadedFileToFileConverter(file);
             planilha = util.ReadExcel.servidorReadExcel(newFile);
-            
+
             for (Servidor s : planilha) {
                 if (servidoresBanco.contains(s)) {
                     s.setSenha(servidoresBanco.get(servidoresBanco.indexOf(s)).getSenha());

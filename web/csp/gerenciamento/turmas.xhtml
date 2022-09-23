@@ -26,6 +26,9 @@
                                 <div class="p-d-flex p-ai-center p-jc-between">
                                     <span>Turmas</span>
                                     <div>
+                                        <p:commandButton value="Importar" type="button" icon="pi pi-external-link" 
+                                                         onclick="PF('importarTurma').show()"
+                                                         style="margin-right: .5rem"/>
                                         <p:commandButton value="Cadastrar" icon="pi pi-plus" actionListener="#{turmaController.openNew()}"
                                                          update=":dialogs:create-turma-content" oncomplete="PF('createTurmaDialog').show()"
                                                          style="margin-right: .5rem">
@@ -67,6 +70,16 @@
                                 </p:commandButton>
                             </p:column>
                         </p:dataTable>
+                    </h:form>
+                    
+                    <h:form enctype="multipart/form-data">
+                        <p:dialog header="Importar turma" widgetVar="importarTurma" showEffect="fade" modal="true" responsive="true">
+                            <p:fileUpload value="#{turmaController.file}" mode="simple" skinSimple="true" label="Planilha"/>
+                            <f:facet name="footer">
+                                <p:commandButton value="Enviar" action="#{turmaController.importarTurma()}"/>
+                                <p:commandButton value="Cancelar" onclick="PF('importarTurma').hide()" class="ui-button-secondary"/>
+                            </f:facet>
+                        </p:dialog>
                     </h:form>
 
                     <h:form id="dialogs">
