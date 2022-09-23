@@ -18,7 +18,6 @@ import javax.inject.Named;
 import model.Servidor;
 import org.primefaces.PrimeFaces;
 import org.primefaces.model.file.UploadedFile;
-import util.ReadExcel;
 import util.UploadFileToFile;
 import util.Util;
 
@@ -36,7 +35,7 @@ public class ServidorController implements Serializable {
     private Servidor servidor;
     private List<Servidor> servidores;
     private UploadedFile file;
-    
+
     private boolean loading = false;
 
     @PostConstruct
@@ -54,7 +53,7 @@ public class ServidorController implements Serializable {
 
     public void cadastrarServidor() {
         servidorDAO.create(servidor);
-        fillServidorList(); 
+        fillServidorList();
         Util.addMessageInformation("Servidor Cadastrado");
 
         PrimeFaces.current().executeScript("PF('createServidorDialog').hide()");
@@ -83,33 +82,45 @@ public class ServidorController implements Serializable {
         PrimeFaces.current().executeScript("PF('editServidorDialog').hide()");
         PrimeFaces.current().ajax().update("form:messages", "form:dt-servidores");
     }
-    
+
     public void importarServidores() {
         loading = true;
+        List<Servidor> planilha = new ArrayList<Servidor>();
+        List<Servidor> servidoresBanco = new ArrayList<Servidor>();
         if (file != null) {
-            List<Servidor> planilha = new ArrayList<Servidor>();
-            List<Servidor> servidoresBanco = new ArrayList<Servidor>();
+            try {
+                servidoresBanco = servidorDAO.buscarTodos();
 
-            servidoresBanco = servidorDAO.buscarTodos();
+                File newFile = UploadFileToFile.uploadedFileToFileConverter(file);
+                planilha = util.ReadExcel.servidorReadExcel(newFile);
 
-            File newFile = UploadFileToFile.uploadedFileToFileConverter(file);
-            planilha = util.ReadExcel.servidorReadExcel(newFile);
-
-            for (Servidor s : planilha) {
-                if (servidoresBanco.contains(s)) {
-                    s.setSenha(servidoresBanco.get(servidoresBanco.indexOf(s)).getSenha());
-                    servidorDAO.update(s);
-                } else {
-                    servidorDAO.create(s);
+                for (Servidor s : planilha) {
+                    if (servidoresBanco.contains(s)) {
+                        s.setSenha(servidoresBanco.get(servidoresBanco.indexOf(s)).getSenha());
+                        servidorDAO.update(s);
+                    } else {
+                        servidorDAO.create(s);
+                    }
                 }
+
+                loading = false;
+                util.Util.addMessageInformation("Servidor(es) Importado(s)");
+
+                PrimeFaces.current().executeScript("PF('importarServidor').hide()");
+                PrimeFaces.current().ajax().update("form:messages", "form:dt-servidores");
+                fillServidorList();
+            } catch (Exception e) {
+                loading = false;
+                util.Util.addMessageError("Erro ao Importar");
+
+                PrimeFaces.current().ajax().update("form:messages");
             }
 
-            PrimeFaces.current().executeScript("PF('importarServidor').hide()");
-            PrimeFaces.current().ajax().update("form:messages", "form:dt-servidores");
-            fillServidorList();
-            loading = false;;
-            util.Util.addMessageInformation("Servidor(es) Cadastrado(s)");
         } else {
+            loading = false;
+            util.Util.addMessageWarning("Selecione um arquivo .xls ou .xlsx");
+
+            PrimeFaces.current().ajax().update("form:messages");
             System.out.println("FILE NULL");
         }
     }
@@ -145,9 +156,5 @@ public class ServidorController implements Serializable {
     public void setLoading(boolean loading) {
         this.loading = loading;
     }
-    
-    
-    
-    
 
 }
