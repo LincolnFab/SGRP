@@ -146,7 +146,7 @@ public class Aula implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Aula[ idaula=" + idaula + " ]";
+        return "Aula{" + "idaula=" + idaula + ", dia=" + dia + ", horario=" + horario + ", frequencia=" + frequencia + ", saladeaulaidSala=" + saladeaulaidSala + '}';
     }
-    
+
 }

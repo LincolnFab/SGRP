@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="css/cssLayout.css"/>
+        <h:outputStylesheet name="css/primeflex.min.css"/>
+        <title>IFSP - SGRP</title>
+    </h:head>
+
+    <h:body>
+        <ui:composition template="/docente/home.xhtml">
+            <ui:define name="content">
+                <div class="card">
+                    <h:form id="form">
+                        <p:growl id="messages" showDetail="true"/>
+
+                        <p:breadCrumb>
+                            <p:menuitem outcome="/docente/home" value="Home"/>
+                            <p:menuitem outcome="/docente/rp/cadastrar/dados" value="Cadastrar Recuperação Paralela"/>
+                        </p:breadCrumb>
+
+                        <p:tabMenu activeIndex="#{param.i}">
+                            <p:menuitem value="Dados da RP" outcome="/docente/rp/cadastrar/dados" icon="pi pi-fw pi-database">
+                                <f:param name="i" value="0"/>
+                            </p:menuitem>
+                            <p:menuitem value="Alunos" disabled="#{recuperacaoController.turma == null}" outcome="/docente/rp/cadastrar/alunos" icon="pi pi-fw pi-users">
+                                <f:param name="i" value="1"/>
+                            </p:menuitem>
+                            <p:menuitem value="Aulas" outcome="/docente/rp/cadastrar/aulas" icon="pi pi-fw pi-copy">
+                                <f:param name="i" value="2"/>
+                            </p:menuitem>
+                        </p:tabMenu>
+
+                        <style>
+                            /* reset on the showcase style*/
+                            body .ui-panelgrid .ui-panelgrid-cell {
+                                background-color: transparent;
+                            }
+
+                            /* example use of styles for your form */
+                            .my-heading-row {
+                                background-color: var(--surface-c);
+                                font-weight: bold;
+                                margin-top: 0.5em;
+                            }
+                        </style>
+                        <p:panelGrid columns="4"
+                                     columnClasses="ui-grid-col-3,ui-grid-col-4,ui-grid-col-2,ui-grid-col-3"
+                                     layout="grid"
+                                     styleClass="ui-panelgrid-blank ui-fluid"
+                                     style="border:0px none; background-color:transparent;">
+
+                            <p:row styleClass="my-heading-row">
+                                Adicionar Aulas
+                            </p:row>
+
+                            <p:outputLabel for="create_rp_sala">Sala</p:outputLabel>
+                            <p:selectOneMenu id="create_rp_sala" converter="#{salaConverter}"
+                                             value="#{recuperacaoController.aula.saladeaulaidSala}" requiredMessage="Selecione uma sala"
+                                             required="true" filter="true" filterMatchMode="startsWith">
+                                <f:selectItem itemLabel="Selecione a Sala" itemValue=""/>
+                                <f:selectItems value="#{salaController.salasDeAula}" var="sala"
+                                               itemLabel="#{sala.descricao}" itemValue="#{sala}"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel for="create_rp_data" value="Data"/>
+                            <p:datePicker id="create_rp_data" value="#{recuperacaoController.aula.dia}" requiredMessage="Informe uma Data"
+                                          mindate="#{recuperacaoController.minDate}" maxdate="#{recuperacaoController.maxDate}"
+                                          required="true" readonlyInput="true"/>
+
+                            <p:outputLabel for="create_rp_horario_ini">Horário de Início</p:outputLabel>
+                            <p:datePicker id="create_rp_horario_ini" value="#{recuperacaoController.aula.horario}" requiredMessage="Informe um horário"
+                                          mindate="#{recuperacaoController.minTime}" maxdate="#{recuperacaoController.maxTime}"
+                                          required="true" timeOnly="true" pattern="HH:mm"/>
+
+                        </p:panelGrid>
+                        <div align="right">
+                            <p:commandButton value="Adicionar aula" action="#{recuperacaoController.adicionarAula()}" update="messages" style="margin-right: 30px"/>
+                        </div>
+
+                        <p:separator style="margin-bottom: 2em; margin-top: 2em"/>
+
+                        <p:dataTable id="dt-aulas" widgetVar="dtAulas" var="aula" value="#{recuperacaoController.aulas}"
+                                     emptyMessage="Nenhum aula encontrado" rowKey="#{aula.idaula}" styleClass="aulas-table"
+                                     style="margin-top: 10px" paginator="true" rows="10" paginatorPosition="bottom" reflow="true">
+
+                            <f:facet name="header">
+                                <div class="p-d-flex p-ai-center p-jc-between">
+                                    <span>Aulas da RP</span>
+                                </div>
+                            </f:facet>
+
+                            <p:column headerText="Data" sortBy="#{aula.dia}">
+                                <h:outputText value="#{aula.dia}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column headerText="Hora" sortBy="#{aula.horario}">
+                                <h:outputText value="#{aula.horario}" >
+                                    <f:convertDateTime pattern="HH:mm" />
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column headerText="Sala" sortBy="#{aula.saladeaulaidSala.descricao}">
+                                <h:outputText value="#{aula.saladeaulaidSala.descricao}" />
+                            </p:column>
+
+                            <p:column headerText="Ações" exportable="false">
+                                <p:commandButton icon="pi pi-times" style="margin-left: 7px;"
+                                                 oncomplete="PF('deleteAulaDialog').show()" 
+                                                 styleClass="ui-button-danger rounded-button" process="@this">
+                                    <f:setPropertyActionListener value="#{aula}" target="#{recuperacaoController.aula}"/>
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+
+                        <div align="right">
+                            <p:commandButton value="Finalizar" actionListener="#{recuperacaoController.cadastrarRecuperacao()}" style="margin-right: 30px; margin-top: 10px"/>
+                        </div>
+                    </h:form>
+
+                    <h:form id="dialogs">
+                        <p:confirmDialog widgetVar="deleteAulaDialog" showEffect="fade" width="300"
+                                         message="Deseja remover esta aula?" header="Confirmação" severity="warn">
+                            <p:commandButton value="Sim" icon="pi pi-check" actionListener="#{recuperacaoController.removerAula()}"
+                                             process="@this" oncomplete="PF('deleteAulaDialog').hide()"/>
+                            <p:commandButton value="Não" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                             onclick="PF('deleteAulaDialog').hide()"/>
+                        </p:confirmDialog>
+                    </h:form>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

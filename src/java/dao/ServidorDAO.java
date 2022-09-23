@@ -29,6 +29,10 @@ public class ServidorDAO extends AbstractDAO<Servidor> {
     }
 
 
-
-    
+    public Servidor buscarPorProntuario(String prontuario) {
+        return getEntityManager()
+                .createNamedQuery("Servidor.findByProntuario", Servidor.class)
+                .setParameter("prontuario", prontuario)
+                .getSingleResult();
+    }
 }

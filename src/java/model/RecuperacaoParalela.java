@@ -279,7 +279,22 @@ public class RecuperacaoParalela implements Serializable {
 
     @Override
     public String toString() {
-        return "model.RecuperacaoParalela[ id=" + id + " ]";
+        return "\n\nRecuperacaoParalela: " + 
+                "\nid.......................................: " + id + 
+                "\ndataProposta.............................: " + dataProposta + 
+                "\njustificativa............................: " + justificativa + 
+                "\nobjetivoGeral............................: " + objetivoGeral + 
+                "\nprocedimentosAvaliativos.................: " + procedimentosAvaliativos + 
+                "\nquantidadeAlunos.........................: " + quantidadeAlunos + 
+                "\nquantidadeAulas..........................: " + quantidadeAulas + 
+                "\nanoLetivo................................: " + anoLetivo + 
+                "\nbimestre.................................: " + bimestre + 
+                "\natividadesPropostas......................: " + atividadesPropostas + 
+                "\nstatus...................................: " + status + 
+                "\nservidorCollection.......................: " + servidorCollection + 
+                "\naulaCollection...........................: " + aulaCollection + 
+                "\nrecuperacaoParalelaHasEstudanteCollection: " + recuperacaoParalelaHasEstudanteCollection +
+                "\ndisciplina...............................: " + disciplina + "\n\n";
     }
-    
+
 }

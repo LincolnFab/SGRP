@@ -19,6 +19,6 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>login_csp.xhtml</welcome-file>
+        <welcome-file>login_docente.xhtml</welcome-file>
     </welcome-file-list>
 </web-app>

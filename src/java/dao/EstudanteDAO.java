@@ -8,6 +8,7 @@ package dao;
 import java.util.List;
 import javax.ejb.Stateless;
 import model.Estudante;
+import model.Turma;
 
 /**
  *
@@ -19,6 +20,13 @@ public class EstudanteDAO extends AbstractDAO<Estudante> {
     public List<Estudante> buscarTodos() {
         return getEntityManager()
                 .createNamedQuery("Estudante.findAll", Estudante.class)
+                .getResultList();
+    }
+
+    public List<Estudante> buscarPorTurma(Turma t) {
+        return getEntityManager()
+                .createNamedQuery("Estudante.findByTurma", Estudante.class)
+                .setParameter("turma", t)
                 .getResultList();
     }
 }

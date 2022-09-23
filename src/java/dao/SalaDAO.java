@@ -22,4 +22,17 @@ public class SalaDAO extends AbstractDAO<SalaDeAula> {
                 .getResultList();
     }
 
+    public SalaDeAula buscarPorDescricao(String descricao) {
+        return getEntityManager()
+                .createNamedQuery("SalaDeAula.findByDescricao", SalaDeAula.class)
+                .setParameter("descricao", descricao)
+                .getSingleResult();
+    }
+
+    public SalaDeAula buscarPorId(int idSala) {
+        return getEntityManager()
+                .createNamedQuery("SalaDeAula.findByIdSala", SalaDeAula.class)
+                .setParameter("idSala", idSala)
+                .getSingleResult();
+    }
 }

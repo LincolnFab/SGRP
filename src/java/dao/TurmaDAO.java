@@ -28,4 +28,11 @@ public class TurmaDAO extends AbstractDAO<Turma> {
                 .setParameter("idturma", id)
                 .getSingleResult();
     }
+    
+    public List<Turma> buscarPorCurso(String cursoId) {
+        return getEntityManager()
+                .createNamedQuery("Turma.findByCurso", Turma.class)
+                .setParameter("idcurso", cursoId)
+                .getResultList();
+    }
 }
