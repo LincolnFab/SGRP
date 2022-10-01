@@ -129,7 +129,7 @@
                                                      required="true" requiredMessage="Informe uma Justificativa"
                                                      counterTemplate="{0} caracteres restantes."
                                                      counter="display_justificativa" 
-                                                     maxlength="250" autoResize="true"
+                                                     maxlength="1500" autoResize="true"
                                                      value="#{recuperacaoController.recuperacaoParalela.justificativa}" />
                                     <h:outputText id="display_justificativa" class="block" style="float: right" />
                                 </p:column>
@@ -142,7 +142,7 @@
                                                      required="true" requiredMessage="Defina um Objetivo"
                                                      counterTemplate="{0} caracteres restantes."
                                                      counter="display_objetivo"
-                                                     maxlength="250" autoResize="true"
+                                                     maxlength="1500" autoResize="true"
                                                      value="#{recuperacaoController.recuperacaoParalela.objetivoGeral}" />
                                     <h:outputText id="display_objetivo" class="block" style="float: right" />
                                 </p:column>
@@ -155,12 +155,12 @@
                                                      counterTemplate="{0} caracteres restantes."
                                                      required="true" requiredMessage="Informe as Atividades Propostas"
                                                      counter="display_atividade" 
-                                                     maxlength="250" autoResize="true"
+                                                     maxlength="1500" autoResize="true"
                                                      value="#{recuperacaoController.recuperacaoParalela.atividadesPropostas}"/>
                                     <h:outputText id="display_atividade" class="block" style="float: right" />
                                 </p:column>
                             </p:row>
-                            
+
                             <p:row>
                                 <p:outputLabel for="create_rp_procedimentos_avaliativos">Procedimentos Avaliativos</p:outputLabel>
                                 <p:column>
@@ -168,9 +168,21 @@
                                                      required="true" requiredMessage="Defina o Procedimento Avaliativo"
                                                      counterTemplate="{0} caracteres restantes."
                                                      counter="display_procedimentos"
-                                                     maxlength="250" autoResize="true"
+                                                     maxlength="1500" autoResize="true"
                                                      value="#{recuperacaoController.recuperacaoParalela.procedimentosAvaliativos}" />
                                     <h:outputText id="display_procedimentos" class="block" style="float: right" />
+                                </p:column>
+                            </p:row>
+
+                            <p:row>
+                                <p:outputLabel for="create_rp_obsercacoes">Observações Adicionais</p:outputLabel>
+                                <p:column>
+                                    <p:inputTextarea id="create_rp_obsercacoes" rows="7" cols="40" required="false"
+                                                     counterTemplate="{0} caracteres restantes."
+                                                     counter="display_observacoes"
+                                                     maxlength="1500" autoResize="true"
+                                                     value="#{recuperacaoController.recuperacaoParalela.observacoes}" />
+                                    <h:outputText id="display_observacoes" class="block" style="float: right" />
                                 </p:column>
                             </p:row>
                         </p:panelGrid>
