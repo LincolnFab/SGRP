@@ -51,7 +51,7 @@
                             }
                         </style>
                         <p:panelGrid columns="4"
-                                     columnClasses="ui-grid-col-3,ui-grid-col-4,ui-grid-col-2,ui-grid-col-3"
+                                     columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
                                      layout="grid"
                                      styleClass="ui-panelgrid-blank ui-fluid"
                                      style="border:0px none; background-color:transparent;">
@@ -59,15 +59,6 @@
                             <p:row styleClass="my-heading-row">
                                 Adicionar Aulas
                             </p:row>
-
-                            <p:outputLabel for="create_rp_sala">Sala</p:outputLabel>
-                            <p:selectOneMenu id="create_rp_sala" converter="#{salaConverter}"
-                                             value="#{recuperacaoController.aula.saladeaulaidSala}" requiredMessage="Selecione uma sala"
-                                             required="true" filter="true" filterMatchMode="startsWith">
-                                <f:selectItem itemLabel="Selecione a Sala" itemValue=""/>
-                                <f:selectItems value="#{salaController.salasDeAula}" var="sala"
-                                               itemLabel="#{sala.descricao}" itemValue="#{sala}"/>
-                            </p:selectOneMenu>
 
                             <p:outputLabel for="create_rp_data" value="Data"/>
                             <p:datePicker id="create_rp_data" value="#{recuperacaoController.aula.dia}" requiredMessage="Informe uma Data"
@@ -79,6 +70,14 @@
                                           mindate="#{recuperacaoController.minTime}" maxdate="#{recuperacaoController.maxTime}"
                                           required="true" timeOnly="true" pattern="HH:mm"/>
 
+                            <p:outputLabel for="create_rp_sala">Sala</p:outputLabel>
+                            <p:selectOneMenu id="create_rp_sala" converter="#{salaConverter}"
+                                             value="#{recuperacaoController.aula.saladeaulaidSala}" requiredMessage="Selecione uma sala"
+                                             required="true" filter="true" filterMatchMode="startsWith">
+                                <f:selectItem itemLabel="Selecione a Sala" itemValue=""/>
+                                <f:selectItems value="#{salaController.salasDeAula}" var="sala"
+                                               itemLabel="#{sala.descricao}" itemValue="#{sala}"/>
+                            </p:selectOneMenu>
                         </p:panelGrid>
                         <div align="right">
                             <p:commandButton value="Adicionar aula" action="#{recuperacaoController.adicionarAula()}" update="messages" style="margin-right: 30px"/>

@@ -41,11 +41,11 @@ body .ui-card {
 }
 
 .left_content {
+    min-height: 50vh;
     /*background-color: #dddddd;*/
     /*padding: 5px;*/
     margin-top: 10px;
     margin-left: 260px;
-    min-height: 180px;
 }
 
 .right_content {
