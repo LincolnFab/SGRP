@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Curso;
+import model.Disciplina;
+import model.DisciplinaPK;
 import model.Estudante;
 import model.SalaDeAula;
 import model.Servidor;
@@ -276,6 +278,68 @@ public class ReadExcel {
             }
             file.close();
             return turmas;
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(util.ReadExcel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        } catch (IOException ex) {
+            Logger.getLogger(util.ReadExcel.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
+    public static List<Disciplina> disciplinaExcelData(File fileImport, List<Curso> cursos) {
+        List<Disciplina> disciplinas = new ArrayList<Disciplina>();
+        FileInputStream file = null;
+        
+        try {
+            file = new FileInputStream(fileImport);
+            Workbook workbook = null;
+
+            if (fileImport.getName().toLowerCase().endsWith("xlsx")) {
+                workbook = new XSSFWorkbook(file);
+            } else if (fileImport.getName().toLowerCase().endsWith("xls")) {
+                workbook = new HSSFWorkbook(file);
+            }
+            
+            Sheet sheet = workbook.getSheetAt(0);
+            Iterator<Row> rowIterator = sheet.iterator();
+            rowIterator.hasNext();
+            Row row = rowIterator.next();
+            //row = rowIterator.next();
+            while (rowIterator.hasNext()) {
+                row = rowIterator.next();
+                Iterator<Cell> cellIterator = row.cellIterator();
+
+                Disciplina d = new Disciplina();
+                String siglaId = null;
+                String cursoId = null;
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
+                    switch (cell.getColumnIndex()) {
+                        case 2:
+                            siglaId = (cell.getStringCellValue());
+                            break;
+                        case 3:
+                            d.setNome(cell.getStringCellValue());
+                            break;
+                        case 13:
+                            Curso curso = new Curso();
+                            cursoId = cell.getStringCellValue();
+                            for (Curso c : cursos) {
+                                if(c.getId().equalsIgnoreCase(cursoId)) {
+                                    d.setCurso(c);
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                d.setDisciplinaPK(new DisciplinaPK(siglaId, cursoId));
+                disciplinas.add(d);
+            }
+            file.close();
+            return disciplinas;
         } catch (FileNotFoundException ex) {
             Logger.getLogger(util.ReadExcel.class.getName()).log(Level.SEVERE, null, ex);
             return null;
