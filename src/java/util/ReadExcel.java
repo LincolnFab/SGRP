@@ -133,7 +133,10 @@ public class ReadExcel {
                     Cell cell = cellIterator.next();
                     switch (cell.getColumnIndex()) {
                         case 0:
-                            s.setDescricao(cell.getStringCellValue());
+                            s.setIdSala(cell.getStringCellValue());
+                            break;
+                        case 1:
+                            s.setTipo(cell.getStringCellValue());
                             break;
                         default:
                             break;
