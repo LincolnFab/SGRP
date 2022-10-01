@@ -171,7 +171,7 @@ public class ReadExcel {
             Iterator<Row> rowIterator = sheet.iterator();
             rowIterator.hasNext();
             Row row = rowIterator.next();
-            row = rowIterator.next();
+            //row = rowIterator.next();
             while (rowIterator.hasNext()) {
                 row = rowIterator.next();
                 Iterator<Cell> cellIterator = row.cellIterator();
@@ -212,6 +212,7 @@ public class ReadExcel {
                             break;
                     }
                 }
+                System.out.println("ESTUDANTE....." + e);
                 estudantes.add(e);
             }
             file.close();

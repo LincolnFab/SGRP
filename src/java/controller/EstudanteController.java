@@ -95,7 +95,7 @@ public class EstudanteController implements Serializable {
         
             File newFile = UploadFileToFile.uploadedFileToFileConverter(file);
             planilha = util.ReadExcel.estudanteExcelData(newFile, turmas);
-        
+            
             for (Estudante e : planilha) {
                 if (estudantesBanco.contains(e)) {
                     e.setSenha(estudantesBanco.get(estudantesBanco.indexOf(e)).getSenha());
@@ -104,9 +104,9 @@ public class EstudanteController implements Serializable {
                     estudanteDAO.create(e);
                 }
             }
-
+            file  = null;
             PrimeFaces.current().executeScript("PF('importarEstudante').hide()");
-            PrimeFaces.current().ajax().update("form:messages", "form:dt-estudantes");
+            PrimeFaces.current().ajax().update("form:fileupload", "form:messages", "form:dt-estudantes");
             fillEstudanteList();
             util.Util.addMessageInformation("Estudante(s) Cadastrado(s)");
         } else {

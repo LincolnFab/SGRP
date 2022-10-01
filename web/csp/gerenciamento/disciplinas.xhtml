@@ -74,7 +74,10 @@
                     
                     <h:form enctype="multipart/form-data">
                         <p:dialog header="Importar disciplina(s)" widgetVar="importarDisciplina" minHeight="40" width="350" showEffect="fade">
-                            <p:fileUpload value="#{disciplinaController.file}" mode="simple" skinSimple="true" label="Planilha"/>
+                            <p:fileUpload value="#{disciplinaController.file}" 
+                                          allowTypes="/(\.|\/)(xls|xlsx)$/"
+                                          validateContentType="true" accept=".xls,.xlsx"
+                                          mode="simple" skinSimple="true" label="Planilha"/>
                             <f:facet name="footer">
                                 <p:commandButton value="Enviar" action="#{disciplinaController.importarDisciplina()}"/>
                                 <p:commandButton value="Cancelar" onclick="PF('importarDisciplina').hide()" class="ui-button-secondary"/>
