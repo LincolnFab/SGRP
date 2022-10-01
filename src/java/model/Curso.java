@@ -39,12 +39,12 @@ public class Curso implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false, length = 20)
     private String id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "descricao")
+    @Size(min = 1, max = 55)
+    @Column(name = "descricao", nullable = false, length = 55)
     private String descricao;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "curso")
     private Collection<Disciplina> disciplinaCollection;

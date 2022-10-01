@@ -43,12 +43,13 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "RecuperacaoParalela.findByJustificativa", query = "SELECT r FROM RecuperacaoParalela r WHERE r.justificativa = :justificativa"),
     @NamedQuery(name = "RecuperacaoParalela.findByObjetivoGeral", query = "SELECT r FROM RecuperacaoParalela r WHERE r.objetivoGeral = :objetivoGeral"),
     @NamedQuery(name = "RecuperacaoParalela.findByProcedimentosAvaliativos", query = "SELECT r FROM RecuperacaoParalela r WHERE r.procedimentosAvaliativos = :procedimentosAvaliativos"),
-    @NamedQuery(name = "RecuperacaoParalela.findByQuantidadeAlunos", query = "SELECT r FROM RecuperacaoParalela r WHERE r.quantidadeAlunos = :quantidadeAlunos"),
-    @NamedQuery(name = "RecuperacaoParalela.findByQuantidadeAulas", query = "SELECT r FROM RecuperacaoParalela r WHERE r.quantidadeAulas = :quantidadeAulas"),
+    @NamedQuery(name = "RecuperacaoParalela.findByAtividadesPropostas", query = "SELECT r FROM RecuperacaoParalela r WHERE r.atividadesPropostas = :atividadesPropostas"),
     @NamedQuery(name = "RecuperacaoParalela.findByAnoLetivo", query = "SELECT r FROM RecuperacaoParalela r WHERE r.anoLetivo = :anoLetivo"),
     @NamedQuery(name = "RecuperacaoParalela.findByBimestre", query = "SELECT r FROM RecuperacaoParalela r WHERE r.bimestre = :bimestre"),
-    @NamedQuery(name = "RecuperacaoParalela.findByAtividadesPropostas", query = "SELECT r FROM RecuperacaoParalela r WHERE r.atividadesPropostas = :atividadesPropostas"),
-    @NamedQuery(name = "RecuperacaoParalela.findByStatus", query = "SELECT r FROM RecuperacaoParalela r WHERE r.status = :status")})
+    @NamedQuery(name = "RecuperacaoParalela.findByStatus", query = "SELECT r FROM RecuperacaoParalela r WHERE r.status = :status"),
+    @NamedQuery(name = "RecuperacaoParalela.findByQuantidadeAlunos", query = "SELECT r FROM RecuperacaoParalela r WHERE r.quantidadeAlunos = :quantidadeAlunos"),
+    @NamedQuery(name = "RecuperacaoParalela.findByQuantidadeAulas", query = "SELECT r FROM RecuperacaoParalela r WHERE r.quantidadeAulas = :quantidadeAulas"),
+    @NamedQuery(name = "RecuperacaoParalela.findByObservacoes", query = "SELECT r FROM RecuperacaoParalela r WHERE r.observacoes = :observacoes")})
 public class RecuperacaoParalela implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -56,53 +57,56 @@ public class RecuperacaoParalela implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 11)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false, length = 11)
     private String id;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "data_proposta")
+    @Column(name = "data_proposta", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date dataProposta;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "justificativa")
+    @Size(min = 1, max = 1500)
+    @Column(name = "justificativa", nullable = false, length = 1500)
     private String justificativa;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "objetivo_geral")
+    @Size(min = 1, max = 1500)
+    @Column(name = "objetivo_geral", nullable = false, length = 1500)
     private String objetivoGeral;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "procedimentos_avaliativos")
+    @Size(min = 1, max = 1500)
+    @Column(name = "procedimentos_avaliativos", nullable = false, length = 1500)
     private String procedimentosAvaliativos;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 1500)
+    @Column(name = "atividades_propostas", nullable = false, length = 1500)
+    private String atividadesPropostas;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "ano_letivo", nullable = false)
+    private int anoLetivo;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "bimestre", nullable = false)
+    private int bimestre;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 14)
+    @Column(name = "status", nullable = false, length = 14)
+    private String status;
     @Column(name = "quantidade_alunos")
     private Integer quantidadeAlunos;
     @Column(name = "quantidade_aulas")
     private Integer quantidadeAulas;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ano_letivo")
-    private int anoLetivo;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "bimestre")
-    private int bimestre;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "atividades_propostas")
-    private String atividadesPropostas;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 30)
-    @Column(name = "status")
-    private String status;
+    @Size(max = 1500)
+    @Column(name = "observacoes", length = 1500)
+    private String observacoes;
     @JoinTable(name = "recuperacao_paralela_has_servidor", joinColumns = {
-        @JoinColumn(name = "recuperacao_paralela_idrecuperacao_paralela", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "servidor_prontuario", referencedColumnName = "prontuario")})
+        @JoinColumn(name = "recuperacao_paralela_idrecuperacao_paralela", referencedColumnName = "id", nullable = false)}, inverseJoinColumns = {
+        @JoinColumn(name = "servidor_prontuario", referencedColumnName = "prontuario", nullable = false)})
     @ManyToMany
     private Collection<Servidor> servidorCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recuperacaoParalelaId")
@@ -110,8 +114,8 @@ public class RecuperacaoParalela implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recuperacaoParalela")
     private Collection<RecuperacaoParalelaHasEstudante> recuperacaoParalelaHasEstudanteCollection;
     @JoinColumns({
-        @JoinColumn(name = "disciplina_sigla", referencedColumnName = "sigla"),
-        @JoinColumn(name = "disciplina_curso_id", referencedColumnName = "curso_id")})
+        @JoinColumn(name = "disciplina_sigla", referencedColumnName = "sigla", nullable = false),
+        @JoinColumn(name = "disciplina_curso_id", referencedColumnName = "curso_id", nullable = false)})
     @ManyToOne(optional = false)
     private Disciplina disciplina;
 
@@ -122,15 +126,15 @@ public class RecuperacaoParalela implements Serializable {
         this.id = id;
     }
 
-    public RecuperacaoParalela(String id, Date dataProposta, String justificativa, String objetivoGeral, String procedimentosAvaliativos, int anoLetivo, int bimestre, String atividadesPropostas, String status) {
+    public RecuperacaoParalela(String id, Date dataProposta, String justificativa, String objetivoGeral, String procedimentosAvaliativos, String atividadesPropostas, int anoLetivo, int bimestre, String status) {
         this.id = id;
         this.dataProposta = dataProposta;
         this.justificativa = justificativa;
         this.objetivoGeral = objetivoGeral;
         this.procedimentosAvaliativos = procedimentosAvaliativos;
+        this.atividadesPropostas = atividadesPropostas;
         this.anoLetivo = anoLetivo;
         this.bimestre = bimestre;
-        this.atividadesPropostas = atividadesPropostas;
         this.status = status;
     }
 
@@ -174,20 +178,12 @@ public class RecuperacaoParalela implements Serializable {
         this.procedimentosAvaliativos = procedimentosAvaliativos;
     }
 
-    public Integer getQuantidadeAlunos() {
-        return quantidadeAlunos;
+    public String getAtividadesPropostas() {
+        return atividadesPropostas;
     }
 
-    public void setQuantidadeAlunos(Integer quantidadeAlunos) {
-        this.quantidadeAlunos = quantidadeAlunos;
-    }
-
-    public Integer getQuantidadeAulas() {
-        return quantidadeAulas;
-    }
-
-    public void setQuantidadeAulas(Integer quantidadeAulas) {
-        this.quantidadeAulas = quantidadeAulas;
+    public void setAtividadesPropostas(String atividadesPropostas) {
+        this.atividadesPropostas = atividadesPropostas;
     }
 
     public int getAnoLetivo() {
@@ -206,20 +202,36 @@ public class RecuperacaoParalela implements Serializable {
         this.bimestre = bimestre;
     }
 
-    public String getAtividadesPropostas() {
-        return atividadesPropostas;
-    }
-
-    public void setAtividadesPropostas(String atividadesPropostas) {
-        this.atividadesPropostas = atividadesPropostas;
-    }
-
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Integer getQuantidadeAlunos() {
+        return quantidadeAlunos;
+    }
+
+    public void setQuantidadeAlunos(Integer quantidadeAlunos) {
+        this.quantidadeAlunos = quantidadeAlunos;
+    }
+
+    public Integer getQuantidadeAulas() {
+        return quantidadeAulas;
+    }
+
+    public void setQuantidadeAulas(Integer quantidadeAulas) {
+        this.quantidadeAulas = quantidadeAulas;
+    }
+
+    public String getObservacoes() {
+        return observacoes;
+    }
+
+    public void setObservacoes(String observacoes) {
+        this.observacoes = observacoes;
     }
 
     @XmlTransient
@@ -279,22 +291,7 @@ public class RecuperacaoParalela implements Serializable {
 
     @Override
     public String toString() {
-        return "\n\nRecuperacaoParalela: " + 
-                "\nid.......................................: " + id + 
-                "\ndataProposta.............................: " + dataProposta + 
-                "\njustificativa............................: " + justificativa + 
-                "\nobjetivoGeral............................: " + objetivoGeral + 
-                "\nprocedimentosAvaliativos.................: " + procedimentosAvaliativos + 
-                "\nquantidadeAlunos.........................: " + quantidadeAlunos + 
-                "\nquantidadeAulas..........................: " + quantidadeAulas + 
-                "\nanoLetivo................................: " + anoLetivo + 
-                "\nbimestre.................................: " + bimestre + 
-                "\natividadesPropostas......................: " + atividadesPropostas + 
-                "\nstatus...................................: " + status + 
-                "\nservidorCollection.......................: " + servidorCollection + 
-                "\naulaCollection...........................: " + aulaCollection + 
-                "\nrecuperacaoParalelaHasEstudanteCollection: " + recuperacaoParalelaHasEstudanteCollection +
-                "\ndisciplina...............................: " + disciplina + "\n\n";
+        return "model.RecuperacaoParalela[ id=" + id + " ]";
     }
-
+    
 }

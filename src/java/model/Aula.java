@@ -42,24 +42,24 @@ public class Aula implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idaula")
+    @Column(name = "idaula", nullable = false)
     private Integer idaula;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "dia")
+    @Column(name = "dia", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date dia;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "horario")
+    @Column(name = "horario", nullable = false)
     @Temporal(TemporalType.TIME)
     private Date horario;
     @Column(name = "frequencia")
     private Short frequencia;
-    @JoinColumn(name = "recuperacao_paralela_id", referencedColumnName = "id")
+    @JoinColumn(name = "recuperacao_paralela_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
     private RecuperacaoParalela recuperacaoParalelaId;
-    @JoinColumn(name = "sala_de_aula_idSala", referencedColumnName = "idSala")
+    @JoinColumn(name = "sala_de_aula_idSala", referencedColumnName = "idSala", nullable = false)
     @ManyToOne(optional = false)
     private SalaDeAula saladeaulaidSala;
 
@@ -146,7 +146,7 @@ public class Aula implements Serializable {
 
     @Override
     public String toString() {
-        return "Aula{" + "idaula=" + idaula + ", dia=" + dia + ", horario=" + horario + ", frequencia=" + frequencia + ", saladeaulaidSala=" + saladeaulaidSala + '}';
+        return "model.Aula[ idaula=" + idaula + " ]";
     }
-
+    
 }

@@ -41,28 +41,28 @@ public class Servidor implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 9)
-    @Column(name = "prontuario")
+    @Column(name = "prontuario", nullable = false, length = 9)
     private String prontuario;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "nome")
+    @Column(name = "nome", nullable = false, length = 45)
     private String nome;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "email")
+    @Column(name = "email", nullable = false, length = 45)
     private String email;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "tipo")
+    @Column(name = "tipo", nullable = false, length = 30)
     private String tipo;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "senha")
+    @Column(name = "senha", nullable = false, length = 45)
     private String senha;
     @ManyToMany(mappedBy = "servidorCollection")
     private Collection<RecuperacaoParalela> recuperacaoParalelaCollection;

@@ -46,32 +46,32 @@ public class Estudante implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 9)
-    @Column(name = "prontuario")
+    @Column(name = "prontuario", nullable = false, length = 9)
     private String prontuario;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 240)
-    @Column(name = "nome")
+    @Column(name = "nome", nullable = false, length = 240)
     private String nome;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "senha")
+    @Column(name = "senha", nullable = false, length = 45)
     private String senha;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "email_pessoal")
+    @Column(name = "email_pessoal", nullable = false, length = 45)
     private String emailPessoal;
     @Size(max = 45)
-    @Column(name = "email_aluno")
+    @Column(name = "email_aluno", length = 45)
     private String emailAluno;
     @Size(max = 45)
-    @Column(name = "email_responsavel")
+    @Column(name = "email_responsavel", length = 45)
     private String emailResponsavel;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "estudante")
     private Collection<RecuperacaoParalelaHasEstudante> recuperacaoParalelaHasEstudanteCollection;
-    @JoinColumn(name = "turma_idturma", referencedColumnName = "idturma")
+    @JoinColumn(name = "turma_idturma", referencedColumnName = "idturma", nullable = false)
     @ManyToOne(optional = false)
     private Turma turmaIdturma;
 

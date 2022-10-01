@@ -22,12 +22,12 @@ public class RecuperacaoParalelaHasEstudantePK implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 11)
-    @Column(name = "recuperacao_paralela_id")
+    @Column(name = "recuperacao_paralela_id", nullable = false, length = 11)
     private String recuperacaoParalelaId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 9)
-    @Column(name = "estudante_prontuario")
+    @Column(name = "estudante_prontuario", nullable = false, length = 9)
     private String estudanteProntuario;
 
     public RecuperacaoParalelaHasEstudantePK() {

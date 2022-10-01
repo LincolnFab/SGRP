@@ -7,7 +7,6 @@ package model;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -45,9 +44,9 @@ public class Disciplina implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 80)
-    @Column(name = "nome")
+    @Column(name = "nome", nullable = false, length = 80)
     private String nome;
-    @JoinColumn(name = "curso_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "curso_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Curso curso;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "disciplina")
@@ -104,46 +103,27 @@ public class Disciplina implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 17 * hash + Objects.hashCode(this.disciplinaPK);
-        hash = 17 * hash + Objects.hashCode(this.nome);
-        hash = 17 * hash + Objects.hashCode(this.curso);
-        hash = 17 * hash + Objects.hashCode(this.recuperacaoParalelaCollection);
+        int hash = 0;
+        hash += (disciplinaPK != null ? disciplinaPK.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Disciplina)) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Disciplina other = (Disciplina) obj;
-        if (!Objects.equals(this.nome, other.nome)) {
-            return false;
-        }
-        if (!Objects.equals(this.disciplinaPK, other.disciplinaPK)) {
-            return false;
-        }
-        if (!Objects.equals(this.curso, other.curso)) {
-            return false;
-        }
-        if (!Objects.equals(this.recuperacaoParalelaCollection, other.recuperacaoParalelaCollection)) {
+        Disciplina other = (Disciplina) object;
+        if ((this.disciplinaPK == null && other.disciplinaPK != null) || (this.disciplinaPK != null && !this.disciplinaPK.equals(other.disciplinaPK))) {
             return false;
         }
         return true;
     }
-    
-    
 
     @Override
     public String toString() {
-        return "Disciplina{" + "disciplinaPK=" + disciplinaPK + ", nome=" + nome + ", curso=" + curso + '}';
+        return "model.Disciplina[ disciplinaPK=" + disciplinaPK + " ]";
     }
-
+    
 }

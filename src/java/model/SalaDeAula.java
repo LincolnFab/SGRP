@@ -11,8 +11,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -33,49 +31,50 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "SalaDeAula.findAll", query = "SELECT s FROM SalaDeAula s"),
     @NamedQuery(name = "SalaDeAula.findByIdSala", query = "SELECT s FROM SalaDeAula s WHERE s.idSala = :idSala"),
-    @NamedQuery(name = "SalaDeAula.findByDescricao", query = "SELECT s FROM SalaDeAula s WHERE s.descricao = :descricao")})
+    @NamedQuery(name = "SalaDeAula.findByTipo", query = "SELECT s FROM SalaDeAula s WHERE s.tipo = :tipo")})
 public class SalaDeAula implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "idSala")
-    private Integer idSala;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 5)
-    @Column(name = "descricao")
-    private String descricao;
+    @Column(name = "idSala", nullable = false, length = 5)
+    private String idSala;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "tipo", nullable = false, length = 50)
+    private String tipo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "saladeaulaidSala")
     private Collection<Aula> aulaCollection;
 
     public SalaDeAula() {
     }
 
-    public SalaDeAula(Integer idSala) {
+    public SalaDeAula(String idSala) {
         this.idSala = idSala;
     }
 
-    public SalaDeAula(Integer idSala, String descricao) {
+    public SalaDeAula(String idSala, String tipo) {
         this.idSala = idSala;
-        this.descricao = descricao;
+        this.tipo = tipo;
     }
 
-    public Integer getIdSala() {
+    public String getIdSala() {
         return idSala;
     }
 
-    public void setIdSala(Integer idSala) {
+    public void setIdSala(String idSala) {
         this.idSala = idSala;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     @XmlTransient

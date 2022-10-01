@@ -42,16 +42,16 @@ public class Turma implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 55)
-    @Column(name = "idturma")
+    @Column(name = "idturma", nullable = false, length = 55)
     private String idturma;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 140)
-    @Column(name = "descricao")
+    @Column(name = "descricao", nullable = false, length = 140)
     private String descricao;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "turmaIdturma")
     private Collection<Estudante> estudanteCollection;
-    @JoinColumn(name = "curso_id", referencedColumnName = "id")
+    @JoinColumn(name = "curso_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
     private Curso cursoId;
 

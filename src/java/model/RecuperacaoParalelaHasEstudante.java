@@ -37,16 +37,16 @@ public class RecuperacaoParalelaHasEstudante implements Serializable {
     @EmbeddedId
     protected RecuperacaoParalelaHasEstudantePK recuperacaoParalelaHasEstudantePK;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "nota_pos")
+    @Column(name = "nota_pos", precision = 12, scale = 0)
     private Float notaPos;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "nota_pre")
+    @Column(name = "nota_pre", nullable = false)
     private float notaPre;
-    @JoinColumn(name = "estudante_prontuario", referencedColumnName = "prontuario", insertable = false, updatable = false)
+    @JoinColumn(name = "estudante_prontuario", referencedColumnName = "prontuario", nullable = false, insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Estudante estudante;
-    @JoinColumn(name = "recuperacao_paralela_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "recuperacao_paralela_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private RecuperacaoParalela recuperacaoParalela;
 

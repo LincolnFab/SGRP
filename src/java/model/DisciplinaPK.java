@@ -22,12 +22,12 @@ public class DisciplinaPK implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 25)
-    @Column(name = "sigla")
+    @Column(name = "sigla", nullable = false, length = 25)
     private String sigla;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
-    @Column(name = "curso_id")
+    @Column(name = "curso_id", nullable = false, length = 20)
     private String cursoId;
 
     public DisciplinaPK() {
