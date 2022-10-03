@@ -35,7 +35,7 @@ public class SalaController implements Serializable {
 
     private SalaDeAula salaDeAula;
     private List<SalaDeAula> salasDeAula;
-     private UploadedFile file;
+    private UploadedFile file;
 
     @PostConstruct
     public void fillSalaList() {
@@ -51,17 +51,25 @@ public class SalaController implements Serializable {
     }
 
     public void cadastrarSala() {
-        salaDAO.create(salaDeAula);
-        fillSalaList();
-        Util.addMessageInformation("Sala Cadastrada");
+        try {
+            salaDAO.create(salaDeAula);
+            fillSalaList();
+            Util.addMessageInformation("Sala Cadastrada");
+        } catch (EJBException e) {
+            Util.addMessageError("Erro ao cadastrar sala (verifique se a sala já existe)");
+        }
 
         PrimeFaces.current().executeScript("PF('createSalaDialog').hide()");
         PrimeFaces.current().ajax().update("form:messages", "form:dt-salas");
     }
 
     public void editarSala() {
-        salaDAO.update(salaDeAula);
-        Util.addMessageInformation("Sala Editada");
+        try {
+            salaDAO.update(salaDeAula);
+            Util.addMessageInformation("Sala Editada");
+        } catch (EJBException e) {
+            Util.addMessageError("Erro ao editar sala");
+        }
 
         PrimeFaces.current().executeScript("PF('editSalaDialog').hide()");
         PrimeFaces.current().ajax().update("form:messages", "form:dt-salas");
@@ -80,9 +88,9 @@ public class SalaController implements Serializable {
         PrimeFaces.current().executeScript("PF('editSalaDialog').hide()");
         PrimeFaces.current().ajax().update("form:messages", "form:dt-salas");
     }
-    
+
     public void importarSala() {
-        
+
         if (file != null) {
             List<SalaDeAula> planilha = new ArrayList<SalaDeAula>();
             List<SalaDeAula> salasBanco = new ArrayList<SalaDeAula>();
@@ -91,10 +99,10 @@ public class SalaController implements Serializable {
 
             File newFile = UploadFileToFile.uploadedFileToFileConverter(file);
             planilha = util.ReadExcel.salaDeAulaReadExcel(newFile);
-            
+
             for (SalaDeAula s : planilha) {
                 if (salasBanco.contains(s)) {
-                    
+
                     salaDAO.update(s);
                 } else {
                     System.out.println("AQUIIIIIIIIIIIIIIIIIIIIIIIII");
@@ -105,7 +113,7 @@ public class SalaController implements Serializable {
             PrimeFaces.current().executeScript("PF('importarSala').hide()");
             PrimeFaces.current().ajax().update("form:messages", "form:dt-salas");
             fillSalaList();
-            
+
             util.Util.addMessageInformation("Salas de Aula Cadastrada(s)");
         } else {
             System.out.println("FILE NULL");
@@ -143,7 +151,5 @@ public class SalaController implements Serializable {
     public void setFile(UploadedFile file) {
         this.file = file;
     }
-    
-    
 
 }

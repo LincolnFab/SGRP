@@ -76,7 +76,7 @@
                                              required="true" filter="true" filterMatchMode="startsWith">
                                 <f:selectItem itemLabel="Selecione a Sala" itemValue=""/>
                                 <f:selectItems value="#{salaController.salasDeAula}" var="sala"
-                                               itemLabel="#{sala.descricao}" itemValue="#{sala}"/>
+                                               itemLabel="#{sala.idSala}" itemValue="#{sala}"/>
                             </p:selectOneMenu>
                         </p:panelGrid>
                         <div align="right">
@@ -107,8 +107,8 @@
                                 </h:outputText>
                             </p:column>
 
-                            <p:column headerText="Sala" sortBy="#{aula.saladeaulaidSala.descricao}">
-                                <h:outputText value="#{aula.saladeaulaidSala.descricao}" />
+                            <p:column headerText="Sala" sortBy="#{aula.saladeaulaidSala.idSala}">
+                                <h:outputText value="#{aula.saladeaulaidSala.idSala}" />
                             </p:column>
 
                             <p:column headerText="Ações" exportable="false">

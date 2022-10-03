@@ -108,7 +108,6 @@ public class SalaDeAula implements Serializable {
 
     @Override
     public String toString() {
-        return "model.SalaDeAula[ idSala=" + idSala + " ]";
+        return "SalaDeAula{" + "idSala=" + idSala + ", tipo=" + tipo;
     }
-    
 }

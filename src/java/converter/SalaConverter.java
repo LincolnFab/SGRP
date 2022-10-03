@@ -23,7 +23,7 @@ public class SalaConverter implements Converter {
     @Override
     public Object getAsObject(FacesContext fc, UIComponent uic, String string) {
         SalaDAO dao = CDI.current().select(SalaDAO.class).get();
-        SalaDeAula sala = dao.buscarPorId(Integer.parseInt(string));
+        SalaDeAula sala = dao.buscarPorId(string);
         return sala;
     }
 
