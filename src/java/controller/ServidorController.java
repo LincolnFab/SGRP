@@ -88,40 +88,48 @@ public class ServidorController implements Serializable {
         List<Servidor> planilha = new ArrayList<Servidor>();
         List<Servidor> servidoresBanco = new ArrayList<Servidor>();
         if (file != null) {
-            try {
-                servidoresBanco = servidorDAO.buscarTodos();
 
-                File newFile = UploadFileToFile.uploadedFileToFileConverter(file);
-                planilha = util.ReadExcel.servidorReadExcel(newFile);
+            servidoresBanco = servidorDAO.buscarTodos();
+            int error = 0;
+            int update = 0;
+            int create = 0;
 
-                for (Servidor s : planilha) {
-                    if (servidoresBanco.contains(s)) {
+            File newFile = UploadFileToFile.uploadedFileToFileConverter(file);
+            planilha = util.ReadExcel.servidorReadExcel(newFile);
+
+            for (Servidor s : planilha) {
+                if (servidoresBanco.contains(s)) {
+                    try {
                         s.setSenha(servidoresBanco.get(servidoresBanco.indexOf(s)).getSenha());
                         servidorDAO.update(s);
-                    } else {
+                        update += 1;
+                    } catch (Exception e) {
+                        error += 1;
+                    }
+                } else {
+                    try {
                         servidorDAO.create(s);
+                        create += 1;
+                    } catch (Exception e) {
+                        error += 1;
                     }
                 }
-
-                loading = false;
-                util.Util.addMessageInformation("Servidor(es) Importado(s)");
-
-                PrimeFaces.current().executeScript("PF('importarServidor').hide()");
-                PrimeFaces.current().ajax().update("form:messages", "form:dt-servidores");
-                fillServidorList();
-            } catch (Exception e) {
-                loading = false;
-                util.Util.addMessageError("Erro ao Importar");
-
-                PrimeFaces.current().ajax().update("form:messages");
             }
 
-        } else {
-            loading = false;
-            util.Util.addMessageWarning("Selecione um arquivo .xls ou .xlsx");
+            PrimeFaces.current().executeScript("PF('importarServidor').hide()");
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-servidores");
+            fillServidorList();
+            
+            util.Util.addMessageWarning(update + " registro(s) atualizado(s)");
+            util.Util.addMessageWarning(create + " registro(s) inserido(s)");
+            util.Util.addMessageWarning(error + " registro(s) não foram importado(s)");
+            
 
-            PrimeFaces.current().ajax().update("form:messages");
-            System.out.println("FILE NULL");
+        } else {
+            PrimeFaces.current().executeScript("PF('importarTurma').hide()");
+            fillServidorList();
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-turmas");
+            util.Util.addMessageError("Arquivo inválido");
         }
     }
 
