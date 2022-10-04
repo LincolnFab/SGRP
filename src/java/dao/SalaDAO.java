@@ -29,7 +29,7 @@ public class SalaDAO extends AbstractDAO<SalaDeAula> {
                 .getSingleResult();
     }
 
-    public SalaDeAula buscarPorId(int idSala) {
+    public SalaDeAula buscarPorId(String idSala) {
         return getEntityManager()
                 .createNamedQuery("SalaDeAula.findByIdSala", SalaDeAula.class)
                 .setParameter("idSala", idSala)
