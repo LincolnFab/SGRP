@@ -94,24 +94,46 @@ public class TurmaController implements Serializable {
             
             turmaBanco = turmaDAO.buscarTodos();
             cursos = cursoDAO.buscarTodos();
+            int error = 0;
+            int update = 0;
+            int create = 0;
             
             File newFile = UploadFileToFile.uploadedFileToFileConverter(file);
             planilha = util.ReadExcel.turmaExcelData(newFile, cursos);
-
+            //System.out.println("planilha....." + planilha);
             for (Turma t : planilha) {
                 if (turmaBanco.contains(t)) {
-                    turmaDAO.update(t);
+                    try {    
+                        turmaDAO.update(t);
+                        update +=1;
+                    } catch (Exception e) {
+                        error += 1;
+                    }
                 } else {
-                    turmaDAO.create(t);
+                    try{
+                        turmaDAO.create(t);
+                        create += 1;
+                    }catch (Exception e) {
+                        //System.out.println("exception......" + e);
+                        error += 1;
+                    }
                 }
             }
 
             PrimeFaces.current().executeScript("PF('importarTurma').hide()");
-            PrimeFaces.current().ajax().update("form:messages", "form:dt-turmas");
             fillTurmaList();
-            util.Util.addMessageInformation("Turma(s) Cadastrada(s)");
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-turmas");
+            
+            util.Util.addMessageWarning(update + " registro(s) atualizado(s)");
+            util.Util.addMessageWarning(create + " registro(s) inserido(s)");
+            util.Util.addMessageWarning(error + " registro(s) não foram importado(s)");
+            
+                
         } else {
-            System.out.println("FILE NULL");
+            PrimeFaces.current().executeScript("PF('importarTurma').hide()");
+            fillTurmaList();
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-turmas");
+            util.Util.addMessageError("Arquivo inválido");
         }
     }
 

@@ -56,7 +56,7 @@ public class ReadExcel {
             Iterator<Row> rowIterator = sheet.iterator();
             rowIterator.hasNext();
             Row row = rowIterator.next();
-            row = rowIterator.next();
+            //row = rowIterator.next();
             while (rowIterator.hasNext()) {
                 row = rowIterator.next();
                 Iterator<Cell> cellIterator = row.cellIterator();
