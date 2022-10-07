@@ -6,6 +6,7 @@
 package util;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -20,6 +21,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import model.Servidor;
 
 /**
  *
@@ -45,7 +47,8 @@ public class JavaMail {
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("recuperacaoparalela.sgrp@gmail.com", "nftakceaabwxmnnk");
+                return new PasswordAuthentication("recuperacaoparalela.sgrp@gmail.com", "rutlxbvefdlpresh");
+                //return new PasswordAuthentication("recuperacaoparalela.sgrp@gmail.com", "JoseRamosJunior275032819599");
             }
         });
 
@@ -81,5 +84,32 @@ public class JavaMail {
         } catch (MessagingException e) {
             e.printStackTrace();
         };
+    }
+    
+    public static void emailFccDae(String email) {
+        //System.out.println("tipo......." + tipo);
+        ArrayList<String> to = new ArrayList<>();
+        //Servidor s;
+        
+        String subject = "SGRP - Recuperação paralela";
+        
+        String htmlBody = 
+                "<html>"
+                + "<h2>Sistema de Gerenciamento de Recuperação Paralela</h2>"
+                + "<p>Uma recuperação paralela foi cadastrada e aguarda sua avaliação.</p>"
+                + "<p> Entre no sistema para avaliar. "
+                + "<a href=\"https://www.w3schools.com\">Acesse: pep2.ifsp.edu.br/rp</a>"
+                + "<h5>Mensagem automática. Não responda.</h5>"
+                + "</html>";
+        
+        try {
+            //s = dao.servidorDAO.buscarPorTipo(tipo);
+            //System.out.println("s........." + s );
+            to.add(email);
+            util.JavaMail.sendEmail(to, subject, htmlBody);
+        } catch(Exception e) {
+            System.out.println("Não foi possível enviar o e-mail.");
+        }
+        
     }
 }
