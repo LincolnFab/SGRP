@@ -8,6 +8,7 @@ package controller;
 import dao.DisciplinaDAO;
 import dao.EstudanteDAO;
 import dao.RecuperacaoDAO;
+import dao.ServidorDAO;
 import dao.TurmaDAO;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ import model.Estudante;
 import model.RecuperacaoParalela;
 import model.RecuperacaoParalelaHasEstudante;
 import model.RecuperacaoParalelaHasEstudantePK;
+import model.Servidor;
 import model.Turma;
 import org.primefaces.PrimeFaces;
 import util.Util;
@@ -50,6 +52,9 @@ public class RecuperacaoController implements Serializable {
 
     @Inject
     private TurmaDAO turmaDAO;
+    
+    @Inject
+    private ServidorDAO servidorDAO;
 
     private Date minTime;
     private Date maxTime;
@@ -69,6 +74,8 @@ public class RecuperacaoController implements Serializable {
 
     private RecuperacaoParalela recuperacaoParalela;
     private List<RecuperacaoParalela> recuperacoesParalelas;
+    
+    private EmailController emailController;
 
     @PostConstruct
     public void fillRecuperacaoParalelaList() {
@@ -155,7 +162,7 @@ public class RecuperacaoController implements Serializable {
 
     public void cadastrarRecuperacao() {
         Date date = new Date();
-        recuperacaoParalela.setId("wer");
+        recuperacaoParalela.setId("trhtr");
         recuperacaoParalela.setAulaCollection(new ArrayList<Aula>());
         recuperacaoParalela.setRecuperacaoParalelaHasEstudanteCollection(new ArrayList<RecuperacaoParalelaHasEstudante>());
 
@@ -180,10 +187,22 @@ public class RecuperacaoController implements Serializable {
 
         try {
             System.out.println(recuperacaoParalela.toString());
-
             recuperacaoDAO.create(recuperacaoParalela);
+            
+            // enviar e-mail
+            String curso = recuperacaoParalela.getDisciplina().getCurso().getDescricao();
+            System.out.println("CURSO...." + curso);
+            if (curso.toLowerCase().contains("inf")) {
+                Servidor s = servidorDAO.buscarPorTipo("FCC INF");
+                util.JavaMail.emailFccDae(s.getEmail());
+            } else if (curso.toLowerCase().contains("mec")) {
+                Servidor s = servidorDAO.buscarPorTipo("FCC MEC");
+                util.JavaMail.emailFccDae(s.getEmail());
+            }
+            
             fillRecuperacaoParalelaList();
             Util.addMessageInformation("A recuperação paralela foi enviada para análise");
+            Util.addMessageInformation("Um email foi enviado ao Coordenador");
 
             PrimeFaces.current().ajax().update("form:messages");
 
