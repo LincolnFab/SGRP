@@ -17,12 +17,12 @@ import javax.inject.Named;
  */
 @Named
 @SessionScoped
-public class LoginDocenteController implements Serializable {
+public class LoginFccController implements Serializable {
 
     private String login;
     private String senha;
 
-    public LoginDocenteController() {
+    public LoginFccController() {
         login = "";
         senha = "";
     }
@@ -30,7 +30,7 @@ public class LoginDocenteController implements Serializable {
     public String autenticador() {
         System.out.println(login + senha);
         if (this.login.equals(this.senha)) {
-            return "docente/home?faces-redirect=true";
+            return "fcc/home?faces-redirect=true";
         } else {
             FacesContext.getCurrentInstance().
                     addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login Inválido", "Usuário e senha incorretos"));
@@ -39,7 +39,7 @@ public class LoginDocenteController implements Serializable {
     }
 
     public String logout() {
-        return "/login_csp?faces-redirect=true";
+        return "/login_fcc?faces-redirect=true";
     }
 
     public String getLogin() {

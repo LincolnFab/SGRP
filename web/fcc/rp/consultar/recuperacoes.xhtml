@@ -15,7 +15,7 @@
     </h:head>
 
     <h:body>
-        <ui:composition template="/docente/home.xhtml">
+        <ui:composition template="/fcc/home.xhtml">
             <ui:define name="content">
                 <style>
                     /* reset on the showcase style*/
@@ -29,14 +29,21 @@
                         font-weight: bold;
                         margin-top: 0.5em;
                     }
+                    .ui-panelgrid.showcase-text-align-center .ui-grid-responsive .ui-panelgrid-cell {
+                        text-align: center;
+                    }
+
+                    .customPanelGrid .ui-panelgrid-content {
+                        align-items: center;
+                    }
                 </style>
                 <div class="card">
                     <h:form id="form">
                         <p:growl id="messages" showDetail="true"/>
 
                         <p:breadCrumb>
-                            <p:menuitem outcome="/docente/home" value="Home"/>
-                            <p:menuitem outcome="/docente/rp/consultar/recuperacoes" value="Consultar Recuperação Paralela"/>
+                            <p:menuitem outcome="/fcc/home" value="Home"/>
+                            <p:menuitem outcome="/fcc/rp/consultar/recuperacoes" value="Consultar Recuperação Paralela"/>
                         </p:breadCrumb>
 
                         <p:dataTable id="dt-rp" widgetVar="dtRPs" var="recuperacao" value="#{recuperacaoController.recuperacoesParalelas}"
@@ -71,13 +78,103 @@
                                 <h:outputText value="#{recuperacao.quantidadeAlunos}" />
                             </p:column>
 
-                            <p:column headerText="Status" sortBy="#{recuperacao.status}">
+                            <p:column headerText="Status" filterBy="#{recuperacao.status}" sortBy="#{recuperacao.status}">
                                 <h:outputText value="#{recuperacao.status}" />
                             </p:column>
 
-                            <p:column headerText="Ações" exportable="false">
+                            <p:column style="width:2rem">
+                                <p:rowToggler/>
                             </p:column>
+
+                            <p:column headerText="Ações" exportable="false">
+                                <p:commandButton icon="pi pi-check" update=":dialogs:aut-rp-content"
+                                                 oncomplete="PF('autRP').show()"
+                                                 styleClass="rounded-button" process="@this">
+                                    <f:setPropertyActionListener value="#{recuperacao}" target="#{recuperacaoController.recuperacaoParalela}"/>
+                                    <p:resetInput target=":dialogs:aut-rp-content"/>
+                                </p:commandButton>
+
+                            </p:column>
+
+                            <p:rowExpansion>
+                                <p:tabView>
+                                    <p:tab title="Dados">
+                                        <p:panelGrid columns="4" layout="grid" styleClass="showcase-text-align-center">
+                                            <p:outputLabel>Curso:</p:outputLabel>
+                                            <p:inputText disabled="true" value="#{recuperacao.disciplina.curso.descricao}"/>
+                                            <p:outputLabel>Turma:</p:outputLabel>
+                                            <p:inputText disabled="true" value="#{recuperacao.disciplina.curso.turmaCollection}"/>
+                                        </p:panelGrid>
+                                        <p:panelGrid columns="4" layout="grid" styleClass="showcase-text-align-center"> 
+                                            <p:outputLabel>Sigla:</p:outputLabel>
+                                            <p:inputText disabled="true" value="#{recuperacao.disciplina.disciplinaPK.sigla}"/>
+                                            <p:outputLabel>Disciplina</p:outputLabel>
+                                            <p:inputText disabled="true" value="#{recuperacao.disciplina.nome}"/>
+                                        </p:panelGrid>
+                                        <p:panelGrid columns="6" layout="grid" styleClass="showcase-text-align-center">
+                                            <p:outputLabel>Bimestre</p:outputLabel>
+                                            <p:inputText disabled="true" value="#{recuperacao.bimestre}"/>
+                                            <p:outputLabel>Ano Letivo</p:outputLabel>
+                                            <p:inputText disabled="true" value="#{recuperacao.anoLetivo}"/>
+                                            <p:outputLabel>Docente(s):</p:outputLabel>
+                                            <p:inputText disabled="true" value="#{recuperacao.servidorCollection}"/>
+                                        </p:panelGrid>
+                                        <p:panelGrid columns="2" layout="grid" styleClass="showcase-text-align-center">
+                                            <p:outputLabel>Justificativa:</p:outputLabel>
+                                            <p:inputText disabled="true" value="#{recuperacao.justificativa}"/>
+                                        </p:panelGrid>
+                                        <p:panelGrid columns="2" layout="grid" styleClass="showcase-text-align-center">
+                                            <p:outputLabel>Objetivo Geral:</p:outputLabel>
+                                            <p:inputText disabled="true" value="#{recuperacao.objetivoGeral}"/>
+                                        </p:panelGrid>
+                                        <p:panelGrid columns="2" layout="grid" styleClass="showcase-text-align-center">
+                                            <p:outputLabel>Atividades propostas:</p:outputLabel>
+                                            <p:inputText disabled="true" value="#{recuperacao.atividadesPropostas}"/>
+                                        </p:panelGrid>
+                                        <p:panelGrid columns="2" layout="grid" styleClass="showcase-text-align-center">
+                                            <p:outputLabel>Procedimentos avaliativos:</p:outputLabel>
+                                            <p:inputText disabled="true" value="#{recuperacao.procedimentosAvaliativos}"/>
+                                        </p:panelGrid>
+                                        <p:panelGrid columns="2" layout="grid" styleClass="showcase-text-align-center">
+                                            <p:outputLabel>Observações:</p:outputLabel>
+                                            <p:inputText value="#{recuperacao.procedimentosAvaliativos}"/>
+                                        </p:panelGrid>
+                                    </p:tab>
+                                    <p:tab title="Alunos">
+                                        <p:dataTable id="dt-alunos-rp" widgetVar="dtAlunosRp" var="alunos" 
+                                                     value="#{recuperacaoController.recuperacoesParalelas}"
+                                                     emptyMessage="Nenhum estudante encontrado" rowKey="#{recuperacao.id}" styleClass="recuperacao-table"
+                                                     style="margin-top: 10px" paginator="true" rows="10" paginatorPosition="bottom">
+                                            <p:column headerText="Prontuário">
+                                                <h:outputText value="#{recuperacao.recuperacaoParalelaHasEstudanteCollection}" />
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:tab>
+                                    <p:tab title="Aulas">
+                                        <p class="m-0">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores
+                                            et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.
+                                            Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.
+                                        </p>
+                                    </p:tab>
+                                </p:tabView>
+                            </p:rowExpansion>
                         </p:dataTable>
+                    </h:form>
+
+                    <h:form id="dialogs">
+                        <p:dialog header="Autorizar RP" showEffect="fade" modal="true"
+                                  widgetVar="autRP" responsive="true">
+                            <p:outputPanel id="aut-rp-content" class="ui-fluid">
+                                <p:outputPanel rendered="#{not empty recuperacaoController.recuperacaoParalela}">
+
+                                    <div class="p-field">
+                                        <p:outputLabel >Disciplina</p:outputLabel>
+                                        <p:outputLabel></p:outputLabel>
+                                    </div>
+                                </p:outputPanel>
+                            </p:outputPanel>
+                        </p:dialog>
+
                     </h:form>
                 </div>
             </ui:define>
