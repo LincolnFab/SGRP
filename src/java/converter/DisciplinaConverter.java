@@ -24,7 +24,7 @@ public class DisciplinaConverter implements Converter {
     @Override
     public Object getAsObject(FacesContext fc, UIComponent uic, String string) {
         //Obtém uma instância do DAO
-        String[] split = string.split("-");
+        String[] split = string.split("#");
         DisciplinaDAO dao = CDI.current().select(DisciplinaDAO.class).get();
         //Busca o objeto (pessoa) no banco de dados pela chave primária
         System.out.println(string);
@@ -39,7 +39,7 @@ public class DisciplinaConverter implements Converter {
         System.out.println(o instanceof Disciplina);
         System.out.println(o instanceof DisciplinaPK);
         Disciplina d = (Disciplina) o;
-        return String.valueOf(d.getDisciplinaPK().getSigla() + "-" + d.getDisciplinaPK().getCursoId());
+        return String.valueOf(d.getDisciplinaPK().getSigla() + "#" + d.getDisciplinaPK().getCursoId());
     }
 
 }
