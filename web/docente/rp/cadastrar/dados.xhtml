@@ -63,7 +63,7 @@
 
                             <p:outputLabel for="create_rp_curso">Curso</p:outputLabel>
                             <p:selectOneMenu id="create_rp_curso" converter="#{cursoConverter}"
-                                             value="#{recuperacaoController.curso}"
+                                             value="#{recuperacaoController.curso}" style="max-width: 22rem"
                                              required="true" requiredMessage="Selecione um Curso"
                                              filter="true" filterMatchMode="startsWith">
                                 <p:ajax listener="#{recuperacaoController.onCursoChange()}" update="create_rp_disciplina, create_rp_turma"/>
@@ -73,7 +73,7 @@
                             </p:selectOneMenu>
 
                             <p:outputLabel for="create_rp_disciplina ">Disciplina</p:outputLabel>
-                            <p:selectOneMenu id="create_rp_disciplina"
+                            <p:selectOneMenu id="create_rp_disciplina" style="max-width: 22rem"
                                              value="#{recuperacaoController.recuperacaoParalela.disciplina}"
                                              required="true" requiredMessage="Selecione uma Disciplina"
                                              filter="true" filterMatchMode="startsWith">
@@ -83,7 +83,7 @@
                             </p:selectOneMenu>
 
                             <p:outputLabel for="create_rp_turma">Turma</p:outputLabel>
-                            <p:selectOneMenu id="create_rp_turma" 
+                            <p:selectOneMenu id="create_rp_turma" style="max-width: 22rem"
                                              value="#{recuperacaoController.turma}"
                                              required="true" requiredMessage="Selecione uma Turma"
                                              filter="true" filterMatchMode="startsWith">
@@ -94,7 +94,7 @@
 
                             <p:outputLabel for="create_rp_bimestre">Bimestre</p:outputLabel>
                             <p:selectOneButton id="create_rp_bimestre" value="#{recuperacaoController.recuperacaoParalela.bimestre}"
-                                               required="true" requiredMessage="Selecione o bimestre" >
+                                               required="true" requiredMessage="Selecione o bimestre" style="max-width: 22rem">
                                 <f:selectItem itemLabel="1" itemValue="1"/>
                                 <f:selectItem itemLabel="2" itemValue="2"/>
                                 <f:selectItem itemLabel="3" itemValue="3"/>
@@ -103,13 +103,12 @@
 
                             <p:outputLabel for="create_rp_docente">Servidores</p:outputLabel>
                             <p:selectManyMenu id="create_rp_docente" value="#{recuperacaoController.recuperacaoParalela.servidorCollection}"
-                                              converter="servidorConverter"
+                                              converter="servidorConverter" style="max-width: 22rem"
                                               required="true" requiredMessage="Selecione ao menos um professor" 
                                               filter="true" filterMatchMode="contains" showCheckbox="true" styleClass="manymenu-advanced">
                                 <f:selectItems value="#{servidorController.servidores}" var="servidor" itemLabel="#{servidor.nome}"
                                                itemValue="#{servidor}"/>
                             </p:selectManyMenu>
-
                         </p:panelGrid>
 
                         <p:panelGrid columns="2"
