@@ -52,7 +52,7 @@ public class RecuperacaoController implements Serializable {
 
     @Inject
     private TurmaDAO turmaDAO;
-    
+
     @Inject
     private ServidorDAO servidorDAO;
 
@@ -74,7 +74,7 @@ public class RecuperacaoController implements Serializable {
 
     private RecuperacaoParalela recuperacaoParalela;
     private List<RecuperacaoParalela> recuperacoesParalelas;
-    
+
     private EmailController emailController;
 
     @PostConstruct
@@ -153,6 +153,7 @@ public class RecuperacaoController implements Serializable {
     }
 
     public void openNew() {
+        curso = null;
         turma = null;
         aula = new Aula();
         aulas = new ArrayList<>();
@@ -160,35 +161,36 @@ public class RecuperacaoController implements Serializable {
         recuperacaoParalela.setDisciplina(new Disciplina());
     }
 
-    public void cadastrarRecuperacao() {
+    public String cadastrarRecuperacao() {
         Date date = new Date();
-        recuperacaoParalela.setId("trhtr");
-        recuperacaoParalela.setAulaCollection(new ArrayList<Aula>());
-        recuperacaoParalela.setRecuperacaoParalelaHasEstudanteCollection(new ArrayList<RecuperacaoParalelaHasEstudante>());
-
-        recuperacaoParalela.setDataProposta(date);
-        recuperacaoParalela.setAnoLetivo(new GregorianCalendar().get(Calendar.YEAR));
-        recuperacaoParalela.setQuantidadeAlunos(estudantesRP.size());
-        recuperacaoParalela.setQuantidadeAulas(aulas.size());
-        recuperacaoParalela.setStatus("pendente");
-
-        for (Estudante e : estudantesRP) {
-            RecuperacaoParalelaHasEstudante rphe = new RecuperacaoParalelaHasEstudante();
-            rphe.setEstudante(e);
-            rphe.setRecuperacaoParalela(recuperacaoParalela);
-            rphe.setRecuperacaoParalelaHasEstudantePK(new RecuperacaoParalelaHasEstudantePK(recuperacaoParalela.getId(), e.getProntuario()));
-            recuperacaoParalela.getRecuperacaoParalelaHasEstudanteCollection().add(rphe);
-        }
-
-        for (Aula a : aulas) {
-            a.setRecuperacaoParalelaId(recuperacaoParalela);
-            recuperacaoParalela.getAulaCollection().add(a);
-        }
 
         try {
+            recuperacaoParalela.setId("trhtr");
+            recuperacaoParalela.setAulaCollection(new ArrayList<Aula>());
+            recuperacaoParalela.setRecuperacaoParalelaHasEstudanteCollection(new ArrayList<RecuperacaoParalelaHasEstudante>());
+
+            recuperacaoParalela.setDataProposta(date);
+            recuperacaoParalela.setAnoLetivo(new GregorianCalendar().get(Calendar.YEAR));
+            recuperacaoParalela.setQuantidadeAlunos(estudantesRP.size());
+            recuperacaoParalela.setQuantidadeAulas(aulas.size());
+            recuperacaoParalela.setStatus("pendente");
+
+            for (Estudante e : estudantesRP) {
+                RecuperacaoParalelaHasEstudante rphe = new RecuperacaoParalelaHasEstudante();
+                rphe.setEstudante(e);
+                rphe.setRecuperacaoParalela(recuperacaoParalela);
+                rphe.setRecuperacaoParalelaHasEstudantePK(new RecuperacaoParalelaHasEstudantePK(recuperacaoParalela.getId(), e.getProntuario()));
+                recuperacaoParalela.getRecuperacaoParalelaHasEstudanteCollection().add(rphe);
+            }
+
+            for (Aula a : aulas) {
+                a.setRecuperacaoParalelaId(recuperacaoParalela);
+                recuperacaoParalela.getAulaCollection().add(a);
+            }
+
             System.out.println(recuperacaoParalela.toString());
             recuperacaoDAO.create(recuperacaoParalela);
-            
+
             // enviar e-mail
             String curso = recuperacaoParalela.getDisciplina().getCurso().getDescricao();
             System.out.println("CURSO...." + curso);
@@ -199,18 +201,21 @@ public class RecuperacaoController implements Serializable {
                 Servidor s = servidorDAO.buscarPorTipo("FCC MEC");
                 util.JavaMail.emailFccDae(s.getEmail());
             }
-            
+
             fillRecuperacaoParalelaList();
             Util.addMessageInformation("A recuperação paralela foi enviada para análise");
             Util.addMessageInformation("Um email foi enviado ao Coordenador");
 
             PrimeFaces.current().ajax().update("form:messages");
-
+            openNew();
+            return "../home.xhtml?faces-redirect=true";
         } catch (Exception e) {
+            System.out.println(e);
             Util.addMessageError("Erro ao cadastrar a recuperação paralela");
 
             PrimeFaces.current().ajax().update("form:messages");
         }
+        return "";
     }
 
     public void editarRecuperacao() {
@@ -230,6 +235,14 @@ public class RecuperacaoController implements Serializable {
     }
 
     public void adicionarAula() {
+//        Estudante e = estudantesRP.get(estudantesRP.size());
+//        for (RecuperacaoParalela rp : recuperacoesParalelas) {
+//            for (Aula a: rp.getAulaCollection())
+//            if (e.) {
+//                Util.addMessageInformation("O aluno " + e.getNome() + " já está cadastrado em uma RP no mesmo horário");
+//                PrimeFaces.current().ajax().update("form:messages");
+//            }
+//        }
         aula.setRecuperacaoParalelaId(recuperacaoParalela);
         aulas.add(aula);
 
@@ -262,12 +275,12 @@ public class RecuperacaoController implements Serializable {
         tmp.set(Calendar.MILLISECOND, 0);
         minTime = tmp.getTime();
 
-        tmp = Calendar.getInstance().getInstance();
-        tmp.set(Calendar.HOUR_OF_DAY, 16);
-        tmp.set(Calendar.MINUTE, 0);
-        tmp.set(Calendar.SECOND, 0);
-        tmp.set(Calendar.MILLISECOND, 0);
-        maxTime = tmp.getTime();
+//        tmp = Calendar.getInstance().getInstance();
+//        tmp.set(Calendar.HOUR_OF_DAY, 16);
+//        tmp.set(Calendar.MINUTE, 0);
+//        tmp.set(Calendar.SECOND, 0);
+//        tmp.set(Calendar.MILLISECOND, 0);
+//        maxTime = tmp.getTime();
     }
 
     public void setMinMaxDate() {
