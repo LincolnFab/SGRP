@@ -20,7 +20,7 @@
 
                         <p:dataTable id="dt-estudantes" widgetVar="dtEstudantes" var="estudante" value="#{estudanteController.estudantes}"
                                      emptyMessage="Nenhum estudante encontrado" rowKey="#{estudante.prontuario}" styleClass="estudante-table"
-                                     style="margin-top: 10px" paginator="true" rows="10" paginatorPosition="bottom">
+                                     style="margin-top: 10px" paginator="true" rows="10" paginatorPosition="bottom" reflow="true">
 
                             <f:facet name="header">
                                 <div class="p-d-flex p-ai-center p-jc-between">
@@ -43,23 +43,25 @@
                                 </div>
                             </f:facet>
 
-                            <p:column headerText="Prontuário" sortBy="#{estudante.prontuario}">
+                            <p:column headerText="Prontuário" sortBy="#{estudante.prontuario}" responsivePriority="1"
+                                      filterBy="#{estudante.prontuario}" filterMatchMode="contains">
                                 <h:outputText value="#{estudante.prontuario}" />
                             </p:column>
 
-                            <p:column headerText="Nome" sortBy="#{estudante.nome}">
+                            <p:column headerText="Nome" sortBy="#{estudante.nome}"
+                                      filterBy="#{estudante.nome}" filterMatchMode="contains">
                                 <h:outputText value="#{estudante.nome}" />
                             </p:column>
 
-                            <p:column headerText="Email Pessoal" sortBy="#{estudante.emailPessoal}">
+                            <p:column headerText="Email Pessoal" sortBy="#{estudante.emailPessoal}" visible="false">
                                 <h:outputText value="#{estudante.emailPessoal}" />
                             </p:column>
 
-                            <p:column headerText="Email Institucional" sortBy="#{estudante.emailAluno}">
+                            <p:column headerText="Email Institucional" sortBy="#{estudante.emailAluno}" visible="false">
                                 <h:outputText value="#{estudante.emailAluno}" />
                             </p:column>
 
-                            <p:column headerText="Email Responsável" sortBy="#{estudante.emailResponsavel}">
+                            <p:column headerText="Email Responsável" sortBy="#{estudante.emailResponsavel}" visible="false">
                                 <h:outputText value="#{estudante.emailResponsavel}" />
                             </p:column>
 

@@ -43,11 +43,11 @@
                                 </div>
                             </f:facet>
 
-                            <p:column headerText="Prontuário" sortBy="#{servidor.prontuario}">
+                            <p:column headerText="Prontuário" sortBy="#{servidor.prontuario}" filterBy="#{servidorController.servidor.prontuario}" filterMatchMode="contains">
                                 <h:outputText value="#{servidor.prontuario}" />
                             </p:column>
 
-                            <p:column headerText="Nome" sortBy="#{servidor.nome}">
+                            <p:column headerText="Nome" sortBy="#{servidor.nome}" filterBy="#{servidorController.servidor.nome}" filterMatchMode="contains">
                                 <h:outputText value="#{servidor.nome}"  />
                             </p:column>
 
@@ -55,7 +55,7 @@
                                 <h:outputText value="#{servidor.email}"  />
                             </p:column>
 
-                            <p:column headerText="Tipo" sortBy="#{servidor.tipo}">
+                            <p:column headerText="Tipo" sortBy="#{servidor.tipo}" filterBy="#{servidorController.servidor.tipo}" filterMatchMode="contains">
                                 <h:outputText value="#{servidor.tipo}"  />
                             </p:column>
 
@@ -82,7 +82,8 @@
                                           allowTypes="/(\.|\/)(xls|xlsx)$/"
                                           validateContentType="true" accept=".xls,.xlsx"
                                           mode="simple" skinSimple="true" label="Planilha"/>
-                            <i class="pi pi-spin pi-spinner" rendered="#{servidorController.loading}" ></i>
+                            <p:commandButton id="loading" disabled="true" styleClass="ui-button-flat"
+                                             icon="pi pi-spin pi-spinner" rendered="#{servidorController.loading}" />
                             <f:facet name="footer">
                                 <p:commandButton value="Enviar" action="#{servidorController.importarServidores()}"/>
                                 <p:commandButton value="Cancelar" onclick="PF('importarServidor').hide()" class="ui-button-secondary"/>
