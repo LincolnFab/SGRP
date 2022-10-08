@@ -21,4 +21,13 @@ public class RecuperacaoDAO extends AbstractDAO<RecuperacaoParalela> {
                 .createNamedQuery("RecuperacaoParalela.findAll", RecuperacaoParalela.class)
                 .getResultList();
     }
+
+//    public List<Estudante> verificarAlunoJaCadastradoEmUmaRp(String dia, String horario, String prontuario) {
+//        return getEntityManager()
+//                .createQuery("SELECT rp FROM Estudante e JOIN e.recuperacaoParalelaHasEstudanteCollection rphe ON e = rphe.estudante JOIN rphe.recuperacaoParalela rp ON rphe.recuperacaoParalela = rp JOIN rp.aulaCollection a ON rp = a.recuperacaoParalelaId WHERE a.dia = :dia AND a.horario = :horario AND e.prontuario = :prontuario", Estudante.class)
+//                .setParameter("dia", dia)
+//                .setParameter("horario", horario)
+//                .setParameter("prontuario", prontuario)
+//                .getResultList();
+//    }
 }
