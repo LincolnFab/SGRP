@@ -103,7 +103,7 @@
 
                             <p:column headerText="Hora" sortBy="#{aula.horario}">
                                 <h:outputText value="#{aula.horario}" >
-                                    <f:convertDateTime pattern="HH:mm" />
+                                    <f:convertDateTime pattern="HH:mm" timeZone="GMT-3"/>
                                 </h:outputText>
                             </p:column>
 
