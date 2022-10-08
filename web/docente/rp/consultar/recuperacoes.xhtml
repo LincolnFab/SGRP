@@ -17,7 +17,6 @@
     <h:body>
         <ui:composition template="/docente/home.xhtml">
             <ui:define name="content">
-                </style>
                 <div class="card">
                     <h:form id="form">
                         <p:growl id="messages" showDetail="true"/>
@@ -134,7 +133,7 @@
                                             <p:inputTextarea disabled="true" rows="7" cols="40" value="#{recuperacao.procedimentosAvaliativos}"/>
 
                                             <p:outputLabel>Observações:</p:outputLabel>
-                                            <p:inputTextarea rows="7" cols="40" value="#{recuperacao.procedimentosAvaliativos}"/>
+                                            <p:inputTextarea rows="7" cols="40" value="#{recuperacao.observacoes}"/>
                                         </p:panelGrid>
                                     </p:tab>
                                     <p:tab title="Alunos">
@@ -178,6 +177,10 @@
                                         </p:dataTable>
                                     </p:tab>
                                 </p:tabView>
+                                <div align="right">
+                                    <p:commandButton value="Editar RP" icon="pi pi-check" actionListener="#{recuperacaoController.editarRecuperacao(recuperacao)}"
+                                                     update="messages"/>
+                                </div>
                             </p:rowExpansion>
                         </p:dataTable>
                     </h:form>
