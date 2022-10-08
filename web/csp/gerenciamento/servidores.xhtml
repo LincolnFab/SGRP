@@ -82,10 +82,10 @@
                                           allowTypes="/(\.|\/)(xls|xlsx)$/"
                                           validateContentType="true" accept=".xls,.xlsx"
                                           mode="simple" skinSimple="true" label="Planilha"/>
-                            <p:commandButton id="loading" disabled="true" styleClass="ui-button-flat"
-                                             icon="pi pi-spin pi-spinner" rendered="#{servidorController.loading}" />
+                           
                             <f:facet name="footer">
-                                <p:commandButton value="Enviar" action="#{servidorController.importarServidores()}"/>
+                                <p:commandButton id="submitBtn" value="Enviar" action="#{servidorController.importarServidores()}"/>
+                                <p:blockUI block="submitBtn" trigger="submitBtn"/>
                                 <p:commandButton value="Cancelar" onclick="PF('importarServidor').hide()" class="ui-button-secondary"/>
                             </f:facet>
                         </p:dialog>

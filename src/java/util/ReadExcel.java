@@ -126,7 +126,6 @@ public class ReadExcel {
                 row = rowIterator.next();
                 Iterator<Cell> cellIterator = row.cellIterator();
 
-                // instancia um servidor
                 SalaDeAula s = new SalaDeAula();
 
                 while (cellIterator.hasNext()) {
@@ -145,7 +144,7 @@ public class ReadExcel {
                 salas.add(s);
             }
             file.close();
-            System.out.println("salas" + salas);
+            //System.out.println("salas" + salas);
             return salas;
         } catch (FileNotFoundException ex) {
             Logger.getLogger(util.ReadExcel.class.getName()).log(Level.SEVERE, null, ex);
@@ -247,7 +246,7 @@ public class ReadExcel {
             Iterator<Row> rowIterator = sheet.iterator();
             rowIterator.hasNext();
             Row row = rowIterator.next();
-            row = rowIterator.next();
+            //row = rowIterator.next();
             while (rowIterator.hasNext()) {
                 row = rowIterator.next();
                 Iterator<Cell> cellIterator = row.cellIterator();

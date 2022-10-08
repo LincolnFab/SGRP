@@ -296,6 +296,95 @@ public class RecuperacaoController implements Serializable {
         maxDate = new Date(minDate.getTime() + (365 * 24 * 60 * 60 * 1000));
     }
 
+    public void deferirRpFcc() {
+        try {
+            recuperacaoParalela.setStatus("Deferida - FCC");
+            recuperacaoParalela.setObservacoes(recuperacaoParalela.getObservacoes());
+
+            recuperacaoDAO.update(recuperacaoParalela);
+        } catch (EJBException e) {
+            Util.addMessageError("Não foi possível deferir a recuperação paralela");
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-rp");
+        }
+
+        // enviar email dae
+        try {
+
+            Servidor s = servidorDAO.buscarPorTipo("DAE");
+            util.JavaMail.emailFccDae(s.getEmail());
+
+            fillRecuperacaoParalelaList();
+            Util.addMessageInformation("Um email foi enviado para o DAE");
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-rp");
+        } catch (EJBException e) {
+            Util.addMessageError("Não foi possível enviar email de notificação para o DAE");
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-rp");
+        }
+    }
+
+    public void deferirRpDae() {
+        try {
+            recuperacaoParalela.setStatus("Aprovada");
+            recuperacaoParalela.setObservacoes(recuperacaoParalela.getObservacoes());
+
+            recuperacaoDAO.update(recuperacaoParalela);
+
+            // enviar email docente
+            List<String> emailDocentes = new ArrayList<>();
+            recuperacaoParalela.getServidorCollection().forEach(((servidor) -> {
+                emailDocentes.add(servidor.getEmail());
+            }));
+            util.JavaMail.emailDocenteAprovacao(emailDocentes);
+
+            // enviar email csp
+            util.JavaMail.emailCspCadastroRp();
+
+            // enviar email pra lista de alunos cadastrados na RP
+            List<String> emailEstudantes = new ArrayList<>();
+            recuperacaoParalela.getRecuperacaoParalelaHasEstudanteCollection().forEach((estudante) -> {
+                if (estudante.getEstudante().getEmailAluno() != null) {
+                    emailEstudantes.add(estudante.getEstudante().getEmailAluno());
+                }
+                if (estudante.getEstudante().getEmailPessoal() != null) {
+                    emailEstudantes.add(estudante.getEstudante().getEmailPessoal());
+                }
+                if (estudante.getEstudante().getEmailResponsavel() != null) {
+                    emailEstudantes.add(estudante.getEstudante().getEmailResponsavel());
+                }
+            });
+
+            util.JavaMail.emailEstudanteCadastro(emailEstudantes);
+
+            fillRecuperacaoParalelaList();
+            Util.addMessageInformation("Recuperação paralela deferida");
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-rp");
+        } catch (EJBException e) {
+            Util.addMessageError("Não foi possível deferir a recuperação paralela");
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-rp");
+        }
+    }
+
+    public void indeferirRp() {
+        try {
+            recuperacaoParalela.setStatus("Correção");
+            recuperacaoDAO.update(recuperacaoParalela);
+
+            // enviar email docente
+            List<String> emailDocentes = new ArrayList<>();
+            recuperacaoParalela.getServidorCollection().forEach(((servidor) -> {
+                emailDocentes.add(servidor.getEmail());
+            }));
+            util.JavaMail.emailDocenteCorrecao(emailDocentes);
+
+            fillRecuperacaoParalelaList();
+            Util.addMessageWarning("Recuperação paralela indeferida");
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-rp");
+        } catch (EJBException e) {
+            Util.addMessageError("Não foi possível indeferir a recuperação paralela");
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-rp");
+        }
+    }
+
     public Turma getTurma() {
         return turma;
     }

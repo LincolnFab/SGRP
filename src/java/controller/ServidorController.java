@@ -120,16 +120,15 @@ public class ServidorController implements Serializable {
             PrimeFaces.current().executeScript("PF('importarServidor').hide()");
             PrimeFaces.current().ajax().update("form:messages", "form:dt-servidores");
             fillServidorList();
-            
+
             util.Util.addMessageWarning(update + " registro(s) atualizado(s)");
             util.Util.addMessageWarning(create + " registro(s) inserido(s)");
             util.Util.addMessageWarning(error + " registro(s) não foram importado(s)");
-            
 
         } else {
-            PrimeFaces.current().executeScript("PF('importarTurma').hide()");
+            PrimeFaces.current().executeScript("PF('importarServidor').hide()");
             fillServidorList();
-            PrimeFaces.current().ajax().update("form:messages", "form:dt-turmas");
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-servidores");
             util.Util.addMessageError("Arquivo inválido");
         }
         PrimeFaces.current().ajax().update("loading");
@@ -161,7 +160,7 @@ public class ServidorController implements Serializable {
 
     public boolean isLoading() {
         return loading;
-    }
+}
 
     public void setLoading(boolean loading) {
         this.loading = loading;

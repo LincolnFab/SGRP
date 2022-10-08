@@ -96,17 +96,28 @@ public class SalaController implements Serializable {
             List<SalaDeAula> salasBanco = new ArrayList<SalaDeAula>();
 
             salasBanco = salaDAO.buscarTodos();
-
+            int error = 0;
+            int update = 0;
+            int create = 0;
+            
             File newFile = UploadFileToFile.uploadedFileToFileConverter(file);
             planilha = util.ReadExcel.salaDeAulaReadExcel(newFile);
 
             for (SalaDeAula s : planilha) {
                 if (salasBanco.contains(s)) {
-
-                    salaDAO.update(s);
+                    try{
+                        salaDAO.update(s);
+                        update += 1;
+                    } catch (Exception e) {
+                        error += 1;
+                    }
                 } else {
-                    System.out.println("AQUIIIIIIIIIIIIIIIIIIIIIIIII");
-                    salaDAO.create(s);
+                    try {
+                        salaDAO.create(s);
+                        create += 1;
+                    } catch(Exception e) {
+                        error += 1;
+                    }
                 }
             }
 
@@ -114,9 +125,15 @@ public class SalaController implements Serializable {
             PrimeFaces.current().ajax().update("form:messages", "form:dt-salas");
             fillSalaList();
 
-            util.Util.addMessageInformation("Salas de Aula Cadastrada(s)");
+            util.Util.addMessageWarning(update + " registro(s) atualizado(s)");
+            util.Util.addMessageWarning(create + " registro(s) inserido(s)");
+            util.Util.addMessageWarning(error + " registro(s) não foram importado(s)");
+            
         } else {
-            System.out.println("FILE NULL");
+            PrimeFaces.current().executeScript("PF('importarSala').hide()");
+            fillSalaList();
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-salas");
+            util.Util.addMessageError("Arquivo inválido");
         }
     }
 
