@@ -165,7 +165,7 @@ public class RecuperacaoController implements Serializable {
         Date date = new Date();
 
         try {
-            recuperacaoParalela.setId("trhtr");
+            recuperacaoParalela.setId("dfs");
             recuperacaoParalela.setAulaCollection(new ArrayList<Aula>());
             recuperacaoParalela.setRecuperacaoParalelaHasEstudanteCollection(new ArrayList<RecuperacaoParalelaHasEstudante>());
 
@@ -173,7 +173,7 @@ public class RecuperacaoController implements Serializable {
             recuperacaoParalela.setAnoLetivo(new GregorianCalendar().get(Calendar.YEAR));
             recuperacaoParalela.setQuantidadeAlunos(estudantesRP.size());
             recuperacaoParalela.setQuantidadeAulas(aulas.size());
-            recuperacaoParalela.setStatus("pendente");
+            recuperacaoParalela.setStatus("Pendente");
 
             for (Estudante e : estudantesRP) {
                 RecuperacaoParalelaHasEstudante rphe = new RecuperacaoParalelaHasEstudante();
@@ -294,16 +294,23 @@ public class RecuperacaoController implements Serializable {
             recuperacaoParalela.setObservacoes(recuperacaoParalela.getObservacoes());
             
             recuperacaoDAO.update(recuperacaoParalela);
+        }catch (EJBException e) {
+            Util.addMessageError("Não foi possível deferir a recuperação paralela");
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-rp");
+        }
+        
+        // enviar email dae
+        try{
             
-            // enviar email dae
             Servidor s = servidorDAO.buscarPorTipo("DAE");
             util.JavaMail.emailFccDae(s.getEmail());
             
             fillRecuperacaoParalelaList();
-            Util.addMessageInformation("Recuperação paralela deferida");
+            Util.addMessageInformation("Um email foi enviado para o DAE");
             PrimeFaces.current().ajax().update("form:messages", "form:dt-rp");
         } catch (EJBException e) {
-            Util.addMessageError("Não foi possível deferir a recuperação paralela");
+            Util.addMessageError("Não foi possível enviar email de notificação para o DAE");
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-rp");
         }
     }
     
@@ -345,6 +352,7 @@ public class RecuperacaoController implements Serializable {
             PrimeFaces.current().ajax().update("form:messages", "form:dt-rp");
         } catch (EJBException e) {
             Util.addMessageError("Não foi possível deferir a recuperação paralela");
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-rp");
         }
     }
     
@@ -365,6 +373,7 @@ public class RecuperacaoController implements Serializable {
             PrimeFaces.current().ajax().update("form:messages", "form:dt-rp");
         } catch(EJBException e) {
             Util.addMessageError("Não foi possível indeferir a recuperação paralela");
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-rp");
         }
     }
     
