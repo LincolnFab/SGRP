@@ -12,6 +12,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
@@ -109,9 +110,9 @@ public class RecuperacaoParalela implements Serializable {
         @JoinColumn(name = "servidor_prontuario", referencedColumnName = "prontuario", nullable = false)})
     @ManyToMany
     private Collection<Servidor> servidorCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recuperacaoParalelaId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recuperacaoParalelaId", fetch = FetchType.EAGER)
     private Collection<Aula> aulaCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recuperacaoParalela")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recuperacaoParalela", fetch = FetchType.EAGER)
     private Collection<RecuperacaoParalelaHasEstudante> recuperacaoParalelaHasEstudanteCollection;
     @JoinColumns({
         @JoinColumn(name = "disciplina_sigla", referencedColumnName = "sigla", nullable = false),
@@ -291,7 +292,7 @@ public class RecuperacaoParalela implements Serializable {
 
     @Override
     public String toString() {
-        return "model.RecuperacaoParalela[ id=" + id + " ]";
+        return "RecuperacaoParalela{" + "id=" + id + ", dataProposta=" + dataProposta + ", justificativa=" + justificativa + ", objetivoGeral=" + objetivoGeral + ", procedimentosAvaliativos=" + procedimentosAvaliativos + ", atividadesPropostas=" + atividadesPropostas + ", anoLetivo=" + anoLetivo + ", bimestre=" + bimestre + ", status=" + status + ", quantidadeAlunos=" + quantidadeAlunos + ", quantidadeAulas=" + quantidadeAulas + ", observacoes=" + observacoes + ", servidorCollection=" + servidorCollection + ", aulaCollection=" + aulaCollection + ", recuperacaoParalelaHasEstudanteCollection=" + recuperacaoParalelaHasEstudanteCollection + ", disciplina=" + disciplina + '}';
     }
-    
+
 }
