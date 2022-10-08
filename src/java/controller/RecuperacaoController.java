@@ -201,16 +201,15 @@ public class RecuperacaoController implements Serializable {
                     Servidor s = servidorDAO.buscarPorTipo("FCC MEC");
                     util.JavaMail.emailFccDae(s.getEmail());
                 }
+                Util.addMessageInformation("Um email foi enviado ao Coordenador");
             } catch (EJBException e) {
                 System.out.println(e);
-                Util.addMessageInformation("A recuperação paralela foi enviada para análise");
                 Util.addMessageError("Erro ao enviar o email para o FCC do Curso. Contate o administrador.");
                 PrimeFaces.current().ajax().update("form:messages");
             }
 
             fillRecuperacaoParalelaList();
             Util.addMessageInformation("A recuperação paralela foi enviada para análise");
-            Util.addMessageInformation("Um email foi enviado ao Coordenador");
 
             PrimeFaces.current().ajax().update("form:messages");
             openNew();
@@ -218,7 +217,7 @@ public class RecuperacaoController implements Serializable {
         } catch (Exception e) {
             System.out.println(e);
             Util.addMessageError("Erro ao cadastrar a recuperação paralela.");
-        
+
             PrimeFaces.current().ajax().update("form:messages");
         }
         return "";
