@@ -11,8 +11,6 @@ import dao.RecuperacaoDAO;
 import dao.ServidorDAO;
 import dao.TurmaDAO;
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -220,7 +218,7 @@ public class RecuperacaoController implements Serializable {
         } catch (Exception e) {
             System.out.println(e);
             Util.addMessageError("Erro ao cadastrar a recuperação paralela.");
-
+        
             PrimeFaces.current().ajax().update("form:messages");
         }
         return "";
