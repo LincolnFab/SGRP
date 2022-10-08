@@ -104,29 +104,43 @@ public class DisciplinaController implements Serializable {
             
             disciplinaBanco = disciplinaDAO.buscarTodos();
             cursos = cursoDAO.buscarTodos();
+            int error = 0;
+            int update = 0;
+            int create = 0;
             
             File newFile = UploadFileToFile.uploadedFileToFileConverter(file);
             planilha = util.ReadExcel.disciplinaExcelData(newFile, cursos);
         
-            System.out.println("planilha..." + planilha);
             for (Disciplina d : planilha) {
                 if (disciplinaBanco.contains(d)) {
-                    System.out.println("UPDATE");
-                    System.out.println("D..." + d);
-                    disciplinaDAO.update(d);
+                    try{
+                        disciplinaDAO.update(d);
+                        update += 1;
+                    }catch (Exception e) {
+                        error += 1;
+                    }
                 } else {
-                    System.out.println("CREATE");
-                    System.out.println("D..." + d);
-                    disciplinaDAO.create(d);
+                    try {
+                       disciplinaDAO.create(d);
+                        create += 1;
+                    } catch(Exception e) {
+                        error += 1;
+                    }
                 }
             }
-            this.file = null;
+            
             PrimeFaces.current().executeScript("PF('importarDisciplina').hide()");
             PrimeFaces.current().ajax().update("form:messages", "form:dt-disciplinas");
             fillCursoList();
-            util.Util.addMessageInformation("Disciplina(s) Cadastrado(s)");
+            
+            util.Util.addMessageWarning(update + " registro(s) atualizado(s)");
+            util.Util.addMessageWarning(create + " registro(s) inserido(s)");
+            util.Util.addMessageWarning(error + " registro(s) não foram importado(s)");
         } else {
-            System.out.println("FILE NULL");
+            PrimeFaces.current().executeScript("PF('importarDisciplina').hide()");
+            fillCursoList();
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-disciplinas");
+            util.Util.addMessageError("Arquivo inválido");
         }
     }
 

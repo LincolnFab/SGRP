@@ -92,25 +92,43 @@ public class EstudanteController implements Serializable {
             
             estudantesBanco = estudanteDAO.buscarTodos();
             turmas = turmaDAO.buscarTodos();
+            int error = 0;
+            int update = 0;
+            int create = 0;
         
             File newFile = UploadFileToFile.uploadedFileToFileConverter(file);
             planilha = util.ReadExcel.estudanteExcelData(newFile, turmas);
             
             for (Estudante e : planilha) {
                 if (estudantesBanco.contains(e)) {
-                    e.setSenha(estudantesBanco.get(estudantesBanco.indexOf(e)).getSenha());
-                    estudanteDAO.update(e);
+                    try{
+                        e.setSenha(estudantesBanco.get(estudantesBanco.indexOf(e)).getSenha());
+                        estudanteDAO.update(e);
+                        update += 1;
+                    } catch (Exception ex) {
+                        error += 1;
+                    }
                 } else {
-                    estudanteDAO.create(e);
+                    try {
+                        estudanteDAO.create(e);
+                        create += 1;
+                    } catch(Exception ex) {
+                        error += 1;
+                    }
                 }
             }
-            file  = null;
             PrimeFaces.current().executeScript("PF('importarEstudante').hide()");
             PrimeFaces.current().ajax().update("form:fileupload", "form:messages", "form:dt-estudantes");
             fillEstudanteList();
-            util.Util.addMessageInformation("Estudante(s) Cadastrado(s)");
+            util.Util.addMessageWarning(update + " registro(s) atualizado(s)");
+            util.Util.addMessageWarning(create + " registro(s) inserido(s)");
+            util.Util.addMessageWarning(error + " registro(s) não foram importado(s)");
+            
         } else {
-            System.out.println("FILE NULL");
+            PrimeFaces.current().executeScript("PF('importarEstudante').hide()");
+            PrimeFaces.current().ajax().update("form:fileupload", "form:messages", "form:dt-estudantes");
+            fillEstudanteList();
+            util.Util.addMessageError("Arquivo inválido");
         }
     }
 

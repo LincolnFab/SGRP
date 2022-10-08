@@ -130,9 +130,9 @@ public class SalaController implements Serializable {
             util.Util.addMessageWarning(error + " registro(s) não foram importado(s)");
             
         } else {
-            PrimeFaces.current().executeScript("PF('importarTurma').hide()");
+            PrimeFaces.current().executeScript("PF('importarSala').hide()");
             fillSalaList();
-            PrimeFaces.current().ajax().update("form:messages", "form:dt-turmas");
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-salas");
             util.Util.addMessageError("Arquivo inválido");
         }
     }
