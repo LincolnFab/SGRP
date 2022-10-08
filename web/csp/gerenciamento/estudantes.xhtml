@@ -89,7 +89,7 @@
                             </p:column>
                         </p:dataTable>
                     </h:form>
-                    
+
                     <h:form id="fileupload" enctype="multipart/form-data">
                         <p:dialog header="Importar estudante(s)" widgetVar="importarEstudante" showEffect="fade" modal="true" responsive="true">
                             <p:fileUpload value="#{estudanteController.file}"
@@ -106,51 +106,49 @@
 
                     <h:form id="dialogs">
                         <p:dialog header="Cadastrar Estudante" showEffect="fade" modal="true"
-                                  widgetVar="createEstudanteDialog" responsive="true">
-                            <p:outputPanel id="create-estudante-content" class="ui-fluid">
-                                <p:outputPanel rendered="#{not empty estudanteController.estudante}">
+                                  widgetVar="createEstudanteDialog" responsive="true" height="400">
+                            <p:outputPanel rendered="#{not empty estudanteController.estudante}"
+                                           id="create-estudante-content" class="ui-fluid">
+                                <div class="p-field">
+                                    <p:outputLabel for="prontuario_create">Prontuário</p:outputLabel>
+                                    <p:inputMask id="prontuario_create" value="#{estudanteController.estudante.prontuario}" mask="AA9999999" validateMask="true" required="true"/>
+                                </div>
 
-                                    <div class="p-field">
-                                        <p:outputLabel for="prontuario_create">Prontuário</p:outputLabel>
-                                        <p:inputMask id="prontuario_create" value="#{estudanteController.estudante.prontuario}" mask="AA9999999" validateMask="true" required="true"/>
-                                    </div>
+                                <div class="p-field">
+                                    <p:outputLabel for="nome_create">Nome</p:outputLabel>
+                                    <p:inputText id="nome_create" value="#{estudanteController.estudante.nome}" required="true"/>
+                                </div>
 
-                                    <div class="p-field">
-                                        <p:outputLabel for="nome_create">Nome</p:outputLabel>
-                                        <p:inputText id="nome_create" value="#{estudanteController.estudante.nome}" required="true"/>
-                                    </div>
+                                <div class="p-field">
+                                    <p:outputLabel for="email_pessoal_create">Email Pessoal</p:outputLabel>
+                                    <p:inputText id="email_pessoal_create" value="#{estudanteController.estudante.emailPessoal}" required="true"/>
+                                </div>
 
-                                    <div class="p-field">
-                                        <p:outputLabel for="email_pessoal_create">Email Pessoal</p:outputLabel>
-                                        <p:inputText id="email_pessoal_create" value="#{estudanteController.estudante.emailPessoal}" required="true"/>
-                                    </div>
+                                <div class="p-field">
+                                    <p:outputLabel for="email_institucional_create">Email Istitucional</p:outputLabel>
+                                    <p:inputText id="email_institucional_create" value="#{estudanteController.estudante.emailAluno}" required="false"/>
+                                </div>
 
-                                    <div class="p-field">
-                                        <p:outputLabel for="email_institucional_create">Email Istitucional</p:outputLabel>
-                                        <p:inputText id="email_institucional_create" value="#{estudanteController.estudante.emailAluno}" required="false"/>
-                                    </div>
+                                <div class="p-field">
+                                    <p:outputLabel for="email_responsavel_create">Email Responsável</p:outputLabel>
+                                    <p:inputText id="email_responsavel_create" value="#{estudanteController.estudante.emailResponsavel}" required="false"/>
+                                </div>
 
-                                    <div class="p-field">
-                                        <p:outputLabel for="email_responsavel_create">Email Responsável</p:outputLabel>
-                                        <p:inputText id="email_responsavel_create" value="#{estudanteController.estudante.emailResponsavel}" required="false"/>
-                                    </div>
+                                <div class="p-field">
+                                    <p:outputLabel for="turma_create">Turma</p:outputLabel>
+                                    <p:selectOneMenu id="turma_create" value="#{estudanteController.estudante.turmaIdturma}"
+                                                     required="true" requiredMessage="Selecione uma Turma" converter="#{turmaId}">
+                                        <f:selectItem itemLabel="Selecione a Turma" itemValue=""/>
+                                        <f:selectItems value="#{turmaController.turmas}" var="turmaId"
+                                                       itemLabel="#{turmaId.descricao}" itemValue="#{turmaId}"/>
+                                    </p:selectOneMenu>
+                                </div>
 
-                                    <div class="p-field">
-                                        <p:outputLabel for="turma_create">Turma</p:outputLabel>
-                                        <p:selectOneMenu id="turma_create" value="#{estudanteController.estudante.turmaIdturma}"
-                                                         required="true" requiredMessage="Selecione uma Turma" converter="#{turmaId}">
-                                            <f:selectItem itemLabel="Selecione a Turma" itemValue=""/>
-                                            <f:selectItems value="#{turmaController.turmas}" var="turmaId"
-                                                           itemLabel="#{turmaId.descricao}" itemValue="#{turmaId}"/>
-                                        </p:selectOneMenu>
-                                    </div>
+                                <div class="p-field">
+                                    <p:outputLabel for="senha_create">Senha</p:outputLabel>
+                                    <p:password id="senha_create" value="#{estudanteController.estudante.senha}"/>
+                                </div>
 
-                                    <div class="p-field">
-                                        <p:outputLabel for="senha_create">Senha</p:outputLabel>
-                                        <p:password id="senha_create" value="#{estudanteController.estudante.senha}"/>
-                                    </div>
-
-                                </p:outputPanel>
                             </p:outputPanel>
 
                             <f:facet name="footer">
@@ -163,44 +161,42 @@
 
                         <p:dialog header="Editar Estudante" showEffect="fade" modal="true"
                                   widgetVar="editEstudanteDialog" responsive="true">
-                            <p:outputPanel id="edit-estudante-content" class="ui-fluid">
-                                <p:outputPanel rendered="#{not empty estudanteController.estudante}">
+                            <p:outputPanel rendered="#{not empty estudanteController.estudante}"
+                                           id="edit-estudante-content" class="ui-fluid">
+                                <div class="p-field">
+                                    <p:outputLabel for="prontuario_edit">Prontuário</p:outputLabel>
+                                    <p:inputMask id="prontuario_edit" value="#{estudanteController.estudante.prontuario}" mask="AA-9999999" disabled="true"/>
+                                </div>
 
-                                    <div class="p-field">
-                                        <p:outputLabel for="prontuario_edit">Prontuário</p:outputLabel>
-                                        <p:inputMask id="prontuario_edit" value="#{estudanteController.estudante.prontuario}" mask="AA-9999999" disabled="true"/>
-                                    </div>
+                                <div class="p-field">
+                                    <p:outputLabel for="nome_edit">Nome</p:outputLabel>
+                                    <p:inputText id="nome_edit" value="#{estudanteController.estudante.nome}" required="true"/>
+                                </div>
 
-                                    <div class="p-field">
-                                        <p:outputLabel for="nome_edit">Nome</p:outputLabel>
-                                        <p:inputText id="nome_edit" value="#{estudanteController.estudante.nome}" required="true"/>
-                                    </div>
+                                <div class="p-field">
+                                    <p:outputLabel for="email_pessoal_edit">Email Pessoal</p:outputLabel>
+                                    <p:inputText id="email_pessoal_edit" value="#{estudanteController.estudante.emailPessoal}" required="true"/>
+                                </div>
 
-                                    <div class="p-field">
-                                        <p:outputLabel for="email_pessoal_edit">Email Pessoal</p:outputLabel>
-                                        <p:inputText id="email_pessoal_edit" value="#{estudanteController.estudante.emailPessoal}" required="true"/>
-                                    </div>
+                                <div class="p-field">
+                                    <p:outputLabel for="email_institucional_edit">Email Istitucional</p:outputLabel>
+                                    <p:inputText id="email_institucional_edit" value="#{estudanteController.estudante.emailAluno}" required="false"/>
+                                </div>
 
-                                    <div class="p-field">
-                                        <p:outputLabel for="email_institucional_edit">Email Istitucional</p:outputLabel>
-                                        <p:inputText id="email_institucional_edit" value="#{estudanteController.estudante.emailAluno}" required="false"/>
-                                    </div>
+                                <div class="p-field">
+                                    <p:outputLabel for="email_responsavel_edit">Email Responsável</p:outputLabel>
+                                    <p:inputText id="email_responsavel_edit" value="#{estudanteController.estudante.emailResponsavel}" required="false"/>
+                                </div>
 
-                                    <div class="p-field">
-                                        <p:outputLabel for="email_responsavel_edit">Email Responsável</p:outputLabel>
-                                        <p:inputText id="email_responsavel_edit" value="#{estudanteController.estudante.emailResponsavel}" required="false"/>
-                                    </div>
-
-                                    <div class="p-field">
-                                        <p:outputLabel for="turma_edit">Turma</p:outputLabel>
-                                        <p:selectOneMenu id="turma_edit" value="#{estudanteController.estudante.turmaIdturma}"
-                                                         required="true" requiredMessage="Selecione uma Turma" converter="#{turmaId}">
-                                            <f:selectItem itemLabel="Selecione a Turma" itemValue=""/>
-                                            <f:selectItems value="#{turmaController.turmas}" var="turmaId"
-                                                           itemLabel="#{turmaId.descricao}" itemValue="#{turmaId}"/>
-                                        </p:selectOneMenu>
-                                    </div>
-                                </p:outputPanel>
+                                <div class="p-field">
+                                    <p:outputLabel for="turma_edit">Turma</p:outputLabel>
+                                    <p:selectOneMenu id="turma_edit" value="#{estudanteController.estudante.turmaIdturma}"
+                                                     required="true" requiredMessage="Selecione uma Turma" converter="#{turmaId}">
+                                        <f:selectItem itemLabel="Selecione a Turma" itemValue=""/>
+                                        <f:selectItems value="#{turmaController.turmas}" var="turmaId"
+                                                       itemLabel="#{turmaId.descricao}" itemValue="#{turmaId}"/>
+                                    </p:selectOneMenu>
+                                </div>
                             </p:outputPanel>
 
                             <f:facet name="footer">
