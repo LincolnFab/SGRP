@@ -36,7 +36,7 @@ public class ServidorController implements Serializable {
     private List<Servidor> servidores;
     private UploadedFile file;
 
-    private boolean loading = false;
+    private boolean loading = true;
 
     @PostConstruct
     public void fillServidorList() {
@@ -85,6 +85,7 @@ public class ServidorController implements Serializable {
 
     public void importarServidores() {
         loading = true;
+        PrimeFaces.current().ajax().update("loading");
         List<Servidor> planilha = new ArrayList<Servidor>();
         List<Servidor> servidoresBanco = new ArrayList<Servidor>();
         if (file != null) {
@@ -131,6 +132,7 @@ public class ServidorController implements Serializable {
             PrimeFaces.current().ajax().update("form:messages", "form:dt-turmas");
             util.Util.addMessageError("Arquivo inválido");
         }
+        PrimeFaces.current().ajax().update("loading");
     }
 
     public Servidor getServidor() {
