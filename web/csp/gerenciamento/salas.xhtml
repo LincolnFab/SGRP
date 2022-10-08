@@ -76,7 +76,8 @@
                                           mode="simple" skinSimple="true" label="Planilha"/>
 
                             <f:facet name="footer">
-                                <p:commandButton value="Enviar" action="#{salaController.importarSala()}"/>
+                                <p:commandButton id="submitBtn" value="Enviar" action="#{salaController.importarSala()}"/>
+                                <p:blockUI block="submitBtn" trigger="submitBtn"/>
                                 <p:commandButton value="Cancelar" onclick="PF('importarSala').hide()" class="ui-button-secondary"/>
                             </f:facet>
                         </p:dialog>
