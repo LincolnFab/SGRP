@@ -112,4 +112,102 @@ public class JavaMail {
         }
         
     }
+    
+    public static void emailDocenteCorrecao(List<String> to) {
+        //System.out.println("tipo......." + tipo);
+        //ArrayList<String> to = new ArrayList<>();
+        //Servidor s;
+        
+        String subject = "SGRP - Recuperação paralela";
+        
+        String htmlBody = 
+                "<html>"
+                + "<h2>Sistema de Gerenciamento de Recuperação Paralela</h2>"
+                + "<p>A recuperação paralela foi devolvida para correção.</p>"
+                + "<p> Entre no sistema para verificar. "
+                + "<a href=\"https://www.w3schools.com\">Acesse: pep2.ifsp.edu.br/rp</a>"
+                + "<h5>Mensagem automática. Não responda.</h5>"
+                + "</html>";
+        
+        try {
+            //s = dao.servidorDAO.buscarPorTipo(tipo);
+            //System.out.println("s........." + s );
+            //to.add(email);
+            util.JavaMail.sendEmail(to, subject, htmlBody);
+        } catch(Exception e) {
+            System.out.println("Não foi possível enviar o e-mail.");
+        }
+        
+    }
+    
+    public static void emailDocenteAprovacao(List<String> to) {
+        //System.out.println("tipo......." + tipo);
+        //ArrayList<String> to = new ArrayList<>();
+        //Servidor s;
+        
+        String subject = "SGRP - Recuperação paralela - Aprovacao";
+        
+        String htmlBody = 
+                "<html>"
+                + "<h2>Sistema de Gerenciamento de Recuperação Paralela</h2>"
+                + "<p>Uma recuperação paralela cadastrada foi aprovada.</p>"
+                + "<p> Entre no sistema para verificar. "
+                + "<a href=\"https://www.w3schools.com\">Acesse: pep2.ifsp.edu.br/rp</a>"
+                + "<h5>Mensagem automática. Não responda.</h5>"
+                + "</html>";
+        
+        try {
+            //s = dao.servidorDAO.buscarPorTipo(tipo);
+            //System.out.println("s........." + s );
+            //to.add(email);
+            util.JavaMail.sendEmail(to, subject, htmlBody);
+        } catch(Exception e) {
+            System.out.println("Não foi possível enviar o e-mail.");
+        }
+    }
+    
+    public static void emailCspCadastroRp() {
+        ArrayList<String> to = new ArrayList<>();
+        
+        String subject = "SGRP - Recuperação paralela - CSP";
+        
+        String htmlBody = 
+                "<html>"
+                + "<h2>Sistema de Gerenciamento de Recuperação Paralela</h2>"
+                + "<p>Uma nova recuperação paralela foi cadastrada.</p>"
+                + "<p> Entre no sistema para verificar. "
+                + "<a href=\"https://www.w3schools.com\">Acesse: pep2.ifsp.edu.br/rp</a>"
+                + "<h5>Mensagem automática. Não responda.</h5>"
+                + "</html>";
+        
+        try {
+            //COLOCAR E-MAIL DA CSP
+            to.add("marilenaoshima@gmail.com");
+            util.JavaMail.sendEmail(to, subject, htmlBody);
+        } catch(Exception e) {
+            System.out.println("Não foi possível enviar o e-mail.");
+        }
+    }
+    
+    public static void emailEstudanteCadastro(List<String> to) {
+        String subject = "SGRP - Recuperação paralela - Cadastro Aluno";
+        
+        String htmlBody = 
+                "<html>"
+                + "<h2>Sistema de Gerenciamento de Recuperação Paralela</h2>"
+                + "<p>Você foi cadastrado em uma recuperação paralela.</p>"
+                + "<p> Entre no sistema para verificar. "
+                + "<a href=\"https://www.w3schools.com\">Acesse: pep2.ifsp.edu.br/rp</a>"
+                + "<h5>Mensagem automática. Não responda.</h5>"
+                + "</html>";
+        
+        try {
+            //s = dao.servidorDAO.buscarPorTipo(tipo);
+            //System.out.println("s........." + s );
+            //to.add(email);
+            util.JavaMail.sendEmail(to, subject, htmlBody);
+        } catch(Exception e) {
+            System.out.println("Não foi possível enviar o e-mail.");
+        }
+    }
 }
