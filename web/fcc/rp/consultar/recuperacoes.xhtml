@@ -134,7 +134,7 @@
                                             <p:inputText disabled="true" value="#{recuperacao.disciplina.curso.descricao}"/>
                                             
                                             <p:outputLabel>Turma:</p:outputLabel>
-                                            <p:inputText disabled="true" value="#{recuperacao.disciplina.curso.turmaCollection}"/>
+                                            <p:inputText disabled="true" value="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.turmaIdturma.descricao}"/>
                                         
                                             <p:outputLabel>Sigla:</p:outputLabel>
                                             <p:inputText disabled="true" value="#{recuperacao.disciplina.disciplinaPK.sigla}"/>
@@ -149,7 +149,13 @@
                                             <p:inputText disabled="true" value="#{recuperacao.anoLetivo}"/>
                                           
                                             <p:outputLabel>Docente(s):</p:outputLabel>
-                                            <p:inputText disabled="true" value="#{recuperacao.servidorCollection}"/>
+                                            <p:selectManyMenu id="create_rp_docente" value="#{recuperacao.servidorCollection}"
+                                                              converter="servidorConverter" disabled="true" 
+                                                              required="true" requiredMessage="Selecione ao menos um professor" 
+                                                              filter="true" filterMatchMode="contains" showCheckbox="true" styleClass="manymenu-advanced">
+                                                <f:selectItems value="#{servidorController.servidores}" var="servidor" itemLabel="#{servidor.nome}"
+                                                               itemValue="#{servidor}"/>
+                                            </p:selectManyMenu>
                                         </p:panelGrid>
                                         
                                         <p:panelGrid columns="2"
@@ -178,11 +184,45 @@
                                             <p:inputTextarea rows="7" cols="40" value="#{recuperacao.procedimentosAvaliativos}"/>
                                         </p:panelGrid>
                                     </p:tab>
+                                    <p:tab title="Alunos">
+                                        <p:dataTable id="dt-alunos-rp" widgetVar="dtAlunosRp" value="#{recuperacao.recuperacaoParalelaHasEstudanteCollection}"
+                                                     var="rphe" emptyMessage="Nenhum estudante encontrado"
+                                                     rowKey="#{rphe.estudante.prontuario}" styleClass="alunos-table"
+                                                     style="margin-top: 10px" paginator="false" >
+                                            <p:column headerText="Prontuário" sortBy="#{rphe.estudante.prontuario}">
+                                                <h:outputText value="#{rphe.estudante.prontuario}" />
+                                            </p:column>
+
+                                            <p:column headerText="Nome" sortBy="#{rphe.estudante.nome}">
+                                                <h:outputText value="#{rphe.estudante.nome}" />
+                                            </p:column>
+
+                                            <p:column headerText="Email" sortBy="#{rphe.estudante.emailPessoal}">
+                                                <h:outputText value="#{rphe.estudante.emailPessoal}" />
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:tab>
                                     <p:tab title="Aulas">
-                                        <p class="m-0">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores
-                                            et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.
-                                            Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.
-                                        </p>
+                                        <p:dataTable id="dt-aulas" widgetVar="dtAulas" var="aula" value="#{recuperacao.aulaCollection}"
+                                                     emptyMessage="Nenhum aula encontrado" rowKey="#{aula.idaula}" styleClass="aulas-table"
+                                                     style="margin-top: 10px" paginator="false">
+
+                                            <p:column headerText="Data" sortBy="#{aula.dia}">
+                                                <h:outputText value="#{aula.dia}" >
+                                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                                </h:outputText>
+                                            </p:column>
+
+                                            <p:column headerText="Hora" sortBy="#{aula.horario}">
+                                                <h:outputText value="#{aula.horario}" >
+                                                    <f:convertDateTime pattern="HH:mm" />
+                                                </h:outputText>
+                                            </p:column>
+
+                                            <p:column headerText="Sala" sortBy="#{aula.saladeaulaidSala.idSala}">
+                                                <h:outputText value="#{aula.saladeaulaidSala.idSala}" />
+                                            </p:column>
+                                        </p:dataTable>
                                     </p:tab>
                                 </p:tabView>
                             </p:rowExpansion>
