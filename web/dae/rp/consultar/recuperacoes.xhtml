@@ -87,67 +87,89 @@
                             </p:column>
 
                             <p:column headerText="Ações" exportable="false">
+                                <ui:remove>
+                                    <p:commandButton action="#{recuperacaoController.deferirRpDae()}"
+                                                     styleClass="rounded-button"  icon="pi pi-check"
+                                                     title="Deferir"
+                                                     disabled="#{recuperacao.status != 'Deferida - FCC'}"
+                                                     >
+                                        <f:setPropertyActionListener value="#{recuperacao}" target="#{recuperacaoController.recuperacaoParalela}"/>
+                                        <p:confirm header="Deferir Recuperação Paralela" message="Deseja deferir a recuperacao paralela?" icon="pi pi-exclamation-triangle"/>
+                                    </p:commandButton>
 
-                                <p:commandButton action="#{recuperacaoController.deferirRpDae()}"
-                                                 styleClass="rounded-button"  icon="pi pi-check"
+                                    <p:commandButton action="#{recuperacaoController.indeferirRp}"
+                                                     styleClass="ui-button-danger rounded-button" icon="pi pi-times"
+                                                     title="Indeferir"
+                                                     style="margin-left: 7px;"
+                                                     disabled="#{recuperacao.status != 'Deferida - FCC'}"
+                                                     >
+                                        <f:setPropertyActionListener value="#{recuperacao}" target="#{recuperacaoController.recuperacaoParalela}"/>
+                                        <p:confirm header="Indeferir Recuperação Paralela" message="Deseja indeferir a recuperacao paralela?" icon="pi pi-exclamation-triangle"/>
+                                    </p:commandButton>
+
+                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" >
+                                        <p:panelGrid columns="2" layout="flex" contentStyleClass="align-items-baseline ui-fluid">
+                                            <p:outputLabel for="rp_obsercacoes">Observações: </p:outputLabel>
+                                            <p:inputTextarea id="rp_obsercacoes" required="false"
+                                                             value="#{recuperacao.observacoes}" 
+                                                             autoResize="true"
+                                                             />
+                                        </p:panelGrid>
+                                        <p:commandButton id ="submitBtn" value="Sim" type="button" styleClass="ui-confirmdialog-yes "/>
+                                        <p:blockUI block="submitBtn" trigger="submitBtn"/>
+                                        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no ui-button-flat" />
+                                    </p:confirmDialog>
+                                </ui:remove>
+                                
+                                <p:commandButton icon="pi pi-check" update=":dialogs:aut-rp-content"
+                                                 oncomplete="PF('autRP').show()"
+                                                 styleClass="rounded-button" process="@this"
                                                  title="Deferir"
                                                  disabled="#{recuperacao.status != 'Deferida - FCC'}"
                                                  >
                                     <f:setPropertyActionListener value="#{recuperacao}" target="#{recuperacaoController.recuperacaoParalela}"/>
-                                    <p:confirm header="Deferir Recuperação Paralela" message="Deseja deferir a recuperacao paralela?" icon="pi pi-exclamation-triangle"/>
+                                    <p:resetInput target=":dialogs:aut-rp-content"/>
                                 </p:commandButton>
 
-                                <p:commandButton action="#{recuperacaoController.indeferirRp}"
-                                                 styleClass="ui-button-danger rounded-button" icon="pi pi-times"
-                                                 title="Indeferir"
+                                <p:commandButton icon="pi pi-times" update=":dialogs:aut-rp-content"
                                                  style="margin-left: 7px;"
+                                                 oncomplete="PF('indefRP').show()"
+                                                 styleClass="ui-button-danger rounded-button" process="@this"
+                                                 title="Indeferir"
                                                  disabled="#{recuperacao.status != 'Deferida - FCC'}"
                                                  >
                                     <f:setPropertyActionListener value="#{recuperacao}" target="#{recuperacaoController.recuperacaoParalela}"/>
-                                    <p:confirm header="Indeferir Recuperação Paralela" message="Deseja indeferir a recuperacao paralela?" icon="pi pi-exclamation-triangle"/>
+                                    <p:resetInput target=":dialogs:indef-rp-content"/>
                                 </p:commandButton>
-
-                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" >
-                                    <p:panelGrid columns="2" layout="flex" contentStyleClass="align-items-baseline ui-fluid">
-                                        <p:outputLabel for="rp_obsercacoes">Observações: </p:outputLabel>
-                                        <p:inputTextarea id="rp_obsercacoes" required="false"
-                                                         value="#{recuperacao.observacoes}" 
-                                                         autoResize="true"
-                                                         />
-                                    </p:panelGrid>
-                                    <p:commandButton id ="submitBtn" value="Sim" type="button" styleClass="ui-confirmdialog-yes "/>
-                                    <p:blockUI block="submitBtn" trigger="submitBtn"/>
-                                    <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no ui-button-flat" />
-                                </p:confirmDialog>
                             </p:column>
 
                             <p:rowExpansion>
                                 <p:tabView>
-                                <p:tab title="Dados">
+                                    <p:tab title="Dados">
                                         <p:panelGrid columns="4"
                                                      columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
                                                      layout="grid"
                                                      styleClass="ui-panelgrid-blank ui-fluid"
                                                      style="border:0px none; background-color:transparent;">
-                                            
+
                                             <p:outputLabel>Curso:</p:outputLabel>
                                             <p:inputText disabled="true" value="#{recuperacao.disciplina.curso.descricao}"/>
-                                            
+
                                             <p:outputLabel>Turma:</p:outputLabel>
                                             <p:inputText disabled="true" value="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.turmaIdturma.descricao}"/>
-                                        
+
                                             <p:outputLabel>Sigla:</p:outputLabel>
                                             <p:inputText disabled="true" value="#{recuperacao.disciplina.disciplinaPK.sigla}"/>
-                                            
+
                                             <p:outputLabel>Disciplina</p:outputLabel>
                                             <p:inputText disabled="true" value="#{recuperacao.disciplina.nome}"/>
-                                        
+
                                             <p:outputLabel>Bimestre</p:outputLabel>
                                             <p:inputText disabled="true" value="#{recuperacao.bimestre}"/>
-                                            
+
                                             <p:outputLabel>Ano Letivo</p:outputLabel>
                                             <p:inputText disabled="true" value="#{recuperacao.anoLetivo}"/>
-                                          
+
                                             <p:outputLabel>Docente(s):</p:outputLabel>
                                             <p:selectManyMenu id="create_rp_docente" value="#{recuperacao.servidorCollection}"
                                                               converter="servidorConverter" disabled="true" 
@@ -157,7 +179,7 @@
                                                                itemValue="#{servidor}"/>
                                             </p:selectManyMenu>
                                         </p:panelGrid>
-                                        
+
                                         <p:panelGrid columns="2"
                                                      columnClasses="ui-grid-col-3,ui-grid-col-9"
                                                      layout="grid"
@@ -227,6 +249,52 @@
                                 </p:tabView>
                             </p:rowExpansion>
                         </p:dataTable>
+                    </h:form>
+                    
+                    <h:form id="dialogs">
+                        
+                        <p:dialog id="dialogAut" header="Autorizar RP" showEffect="fade" modal="true"
+                                  widgetVar="autRP" responsive="true">
+                            <p:outputPanel id="aut-rp-content" class="ui-fluid">
+                                <p:panelGrid columns="2" layout="flex" contentStyleClass="align-items-baseline ui-fluid">
+                                    <p:outputLabel for="rp_obsercacoes">Observações: </p:outputLabel>
+                                    <p:inputTextarea id="rp_obsercacoes" required="false"
+                                                     value="#{recuperacaoController.obs}" 
+                                                     autoResize="true"/>
+                                </p:panelGrid>
+                            </p:outputPanel>
+                            <f:facet name="footer">
+                                <p:commandButton id="simBtn" value="Sim" icon="pi pi-check" actionListener="#{recuperacaoController.deferirRpDae()}"
+                                                 update="aut-rp-content" process="aut-rp-content @this"/>
+                                <p:commandButton value="Não" icon="pi pi-times" onclick="PF('autRP').hide()"
+                                                 class="ui-button-secondary"/>
+                            </f:facet>
+                            <p:blockUI block="dialogAut" trigger="simBtn">
+                                <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
+                            </p:blockUI>
+                        </p:dialog>
+
+                        <p:dialog id="dialogIndef" header="Indeferir recuperação paralela" showEffect="fade" modal="true"
+                                  widgetVar="indefRP" responsive="true">
+                            <p:outputPanel id="indef-rp-content" class="ui-fluid">
+                                <p:panelGrid columns="2" layout="flex" contentStyleClass="align-items-baseline ui-fluid">
+                                    <p:outputLabel for="rp_obsercacoes">Observações: </p:outputLabel>
+                                    <p:inputTextarea id="rp_obsercacoes_indef" required="false"
+                                                     value="#{recuperacaoController.obs}" 
+                                                     autoResize="true"/>
+                                </p:panelGrid>
+                            </p:outputPanel>
+                            <f:facet name="footer">
+                                <p:commandButton id="simBtnIndef" value="Sim" icon="pi pi-check" actionListener="#{recuperacaoController.indeferirRp()}"
+                                                 update="indef-rp-content" process="indef-rp-content @this"/>
+                                <p:commandButton value="Não" icon="pi pi-times" onclick="PF('indefRP').hide()"
+                                                 class="ui-button-secondary"/>
+                            </f:facet>
+                            <p:blockUI block="dialogIndef" trigger="simBtnIndef">
+                                <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
+                            </p:blockUI>
+                        </p:dialog>
+                    
                     </h:form>
                 </div>
             </ui:define>
