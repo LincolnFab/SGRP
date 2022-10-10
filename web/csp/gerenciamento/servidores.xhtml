@@ -85,7 +85,9 @@
                            
                             <f:facet name="footer">
                                 <p:commandButton id="submitBtn" value="Enviar" action="#{servidorController.importarServidores()}"/>
-                                <p:blockUI block="submitBtn" trigger="submitBtn"/>
+                                <p:blockUI block="submitBtn" trigger="submitBtn">
+                                    <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
+                                </p:blockUI>
                                 <p:commandButton value="Cancelar" onclick="PF('importarServidor').hide()" class="ui-button-secondary"/>
                             </f:facet>
                         </p:dialog>
