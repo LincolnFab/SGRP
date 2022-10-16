@@ -172,7 +172,7 @@ public class RecuperacaoController implements Serializable {
         recuperacaoParalela.setAnoLetivo(new GregorianCalendar().get(Calendar.YEAR));
         recuperacaoParalela.setQuantidadeAlunos(estudantesRP.size());
         recuperacaoParalela.setQuantidadeAulas(aulas.size());
-        recuperacaoParalela.setStatus("pendente");
+        recuperacaoParalela.setStatus("Pendente");
 
         for (Estudante e : estudantesRP) {
             RecuperacaoParalelaHasEstudante rphe = new RecuperacaoParalelaHasEstudante();
