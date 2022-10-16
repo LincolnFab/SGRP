@@ -29,4 +29,11 @@ public class EstudanteDAO extends AbstractDAO<Estudante> {
                 .setParameter("turma", t)
                 .getResultList();
     }
+    
+    public Estudante buscarPorProntuario(String prontuario) {
+        return getEntityManager()
+                .createNamedQuery("Estudante.findByProntuario", Estudante.class)
+                .setParameter("prontuario", prontuario)
+                .getSingleResult();
+    }
 }

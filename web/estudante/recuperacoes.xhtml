@@ -1,0 +1,194 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="css/cssLayout.css"/>
+        <h:outputStylesheet name="css/primeflex.min.css"/>
+
+        <title>IFSP - SGRP</title>
+    </h:head>
+
+    <h:body>
+        <ui:composition template="/estudante/home.xhtml">
+            <ui:define name="content">
+                <style>
+                    /* reset on the showcase style*/
+                    body .ui-panelgrid .ui-panelgrid-cell {
+                        background-color: transparent;
+                    }
+
+                    /* example use of styles for your form */
+                    .my-heading-row {
+                        background-color: var(--surface-c);
+                        font-weight: bold;
+                        margin-top: 0.5em;
+                    }
+                    .ui-panelgrid.showcase-text-align-center .ui-grid-responsive .ui-panelgrid-cell {
+                        text-align: center;
+                    }
+
+                    .customPanelGrid .ui-panelgrid-content {
+                        align-items: center;
+                    }
+                </style>
+                <div class="card">
+                    <h:form id="form">
+                        <p:growl id="messages" showDetail="true"/>
+
+                        <p:breadCrumb>
+                            <p:menuitem outcome="/estudante/home" value="Home"/>
+                            <p:menuitem outcome="/estudante/recuperacoes" value="Consultar Recuperação Paralela"/>
+                        </p:breadCrumb>
+
+                        <p:dataTable id="dt-rp" widgetVar="dtRPs" var="recuperacao" value="#{recuperacaoController.recuperacoesParalelas}"
+                                     emptyMessage="Nenhuma recuperação encontrada" rowKey="#{recuperacao.id}" styleClass="recuperacao-table"
+                                     style="margin-top: 10px" paginator="true" rows="10" paginatorPosition="bottom">
+
+                            <f:facet name="header">
+                                <div class="p-d-flex p-ai-center p-jc-between">
+                                    <span>Recuperações Paralelas</span>
+                                    <div>
+                                        <p:commandButton id="toggler" type="button" value="Campos" icon="pi pi-align-justify"/>
+                                        <p:columnToggler datasource="dt-rp" trigger="toggler">
+                                            <p:ajax />
+                                        </p:columnToggler>
+                                    </div>
+                                </div>
+                            </f:facet>
+
+                            <p:column headerText="Disciplina" sortBy="#{recuperacao.disciplina.nome}">
+                                <h:outputText value="#{recuperacao.disciplina.nome}" />
+                            </p:column>
+
+                            <p:column headerText="Bimestre" sortBy="#{recuperacao.bimestre}">
+                                <h:outputText value="#{recuperacao.bimestre}" />
+                            </p:column>
+
+                            <p:column headerText="Ano Letivo" sortBy="#{recuperacao.dataProposta}">
+                                <h:outputText value="#{recuperacao.anoLetivo}" />
+                            </p:column>
+
+                            <p:column style="width:2rem">
+                                <p:rowToggler/>
+                            </p:column>
+
+                            <p:rowExpansion>
+                                <p:tabView>
+                                    <p:tab title="Dados">
+                                        <p:panelGrid columns="4"
+                                                     columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
+                                                     layout="grid"
+                                                     styleClass="ui-panelgrid-blank ui-fluid"
+                                                     style="border:0px none; background-color:transparent;">
+
+                                            <p:outputLabel>Curso:</p:outputLabel>
+                                            <p:inputText disabled="true" value="#{recuperacao.disciplina.curso.descricao}"/>
+
+                                            <p:outputLabel>Turma:</p:outputLabel>
+                                            <p:inputText disabled="true" value="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.turmaIdturma.descricao}"/>
+
+                                            <p:outputLabel>Sigla:</p:outputLabel>
+                                            <p:inputText disabled="true" value="#{recuperacao.disciplina.disciplinaPK.sigla}"/>
+
+                                            <p:outputLabel>Disciplina</p:outputLabel>
+                                            <p:inputText disabled="true" value="#{recuperacao.disciplina.nome}"/>
+
+                                            <p:outputLabel>Bimestre</p:outputLabel>
+                                            <p:inputText disabled="true" value="#{recuperacao.bimestre}"/>
+
+                                            <p:outputLabel>Ano Letivo</p:outputLabel>
+                                            <p:inputText disabled="true" value="#{recuperacao.anoLetivo}"/>
+
+                                            <p:outputLabel>Docente(s):</p:outputLabel>
+                                            <p:selectManyMenu id="create_rp_docente" value="#{recuperacao.servidorCollection}"
+                                                              converter="servidorConverter" disabled="true" 
+                                                              required="true" requiredMessage="Selecione ao menos um professor" 
+                                                              filter="true" filterMatchMode="contains" showCheckbox="true" styleClass="manymenu-advanced">
+                                                <f:selectItems value="#{servidorController.servidores}" var="servidor" itemLabel="#{servidor.nome}"
+                                                               itemValue="#{servidor}"/>
+                                            </p:selectManyMenu>
+                                        </p:panelGrid>
+                                    </p:tab>
+                                    <p:tab title="Aulas">
+                                        <p:dataTable id="dt-aulas" widgetVar="dtAulas" var="aula" value="#{recuperacao.aulaCollection}"
+                                                     emptyMessage="Nenhum aula encontrado" rowKey="#{aula.idaula}" styleClass="aulas-table"
+                                                     style="margin-top: 10px" paginator="false">
+
+                                            <p:column headerText="Data" sortBy="#{aula.dia}">
+                                                <h:outputText value="#{aula.dia}" >
+                                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                                </h:outputText>
+                                            </p:column>
+
+                                            <p:column headerText="Hora" sortBy="#{aula.horario}">
+                                                <h:outputText value="#{aula.horario}" >
+                                                    <f:convertDateTime pattern="HH:mm" />
+                                                </h:outputText>
+                                            </p:column>
+
+                                            <p:column headerText="Sala" sortBy="#{aula.saladeaulaidSala.idSala}">
+                                                <h:outputText value="#{aula.saladeaulaidSala.idSala}" />
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:tab>
+                                </p:tabView>
+                            </p:rowExpansion>
+                        </p:dataTable>
+                    </h:form>
+
+                    <h:form id="dialogs">
+                        
+                        <p:dialog id="dialogAut" header="Autorizar RP" showEffect="fade" modal="true"
+                                  widgetVar="autRP" responsive="true">
+                            <p:outputPanel id="aut-rp-content" class="ui-fluid">
+                                <p:panelGrid columns="2" layout="flex" contentStyleClass="align-items-baseline ui-fluid">
+                                    <p:outputLabel for="rp_obsercacoes">Observações: </p:outputLabel>
+                                    <p:inputTextarea id="rp_obsercacoes" required="false"
+                                                     value="#{recuperacaoController.obs}" 
+                                                     autoResize="true"/>
+                                </p:panelGrid>
+                            </p:outputPanel>
+                            <f:facet name="footer">
+                                <p:commandButton id="simBtn" value="Sim" icon="pi pi-check" actionListener="#{recuperacaoController.deferirRpFcc()}"
+                                                 update="aut-rp-content" process="aut-rp-content @this"/>
+                                <p:commandButton value="Não" icon="pi pi-times" onclick="PF('autRP').hide()"
+                                                 class="ui-button-secondary"/>
+                            </f:facet>
+                            <p:blockUI block="dialogAut" trigger="simBtn">
+                                <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
+                            </p:blockUI>
+                        </p:dialog>
+
+                        <p:dialog id="dialogIndef" header="Indeferir recuperação paralela" showEffect="fade" modal="true"
+                                  widgetVar="indefRP" responsive="true">
+                            <p:outputPanel id="indef-rp-content" class="ui-fluid">
+                                <p:panelGrid columns="2" layout="flex" contentStyleClass="align-items-baseline ui-fluid">
+                                    <p:outputLabel for="rp_obsercacoes">Observações: </p:outputLabel>
+                                    <p:inputTextarea id="rp_obsercacoes_indef" required="false"
+                                                     value="#{recuperacaoController.obs}" 
+                                                     autoResize="true"/>
+                                </p:panelGrid>
+                            </p:outputPanel>
+                            <f:facet name="footer">
+                                <p:commandButton id="simBtnIndef" value="Sim" icon="pi pi-check" actionListener="#{recuperacaoController.indeferirRp()}"
+                                                 update="indef-rp-content" process="indef-rp-content @this"/>
+                                <p:commandButton value="Não" icon="pi pi-times" onclick="PF('indefRP').hide()"
+                                                 class="ui-button-secondary"/>
+                            </f:facet>
+                            <p:blockUI block="dialogIndef" trigger="simBtnIndef">
+                                <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
+                            </p:blockUI>
+                        </p:dialog>
+                    
+                    </h:form>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
