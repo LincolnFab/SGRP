@@ -12,11 +12,11 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -49,16 +49,15 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "RecuperacaoParalela.findByBimestre", query = "SELECT r FROM RecuperacaoParalela r WHERE r.bimestre = :bimestre"),
     @NamedQuery(name = "RecuperacaoParalela.findByStatus", query = "SELECT r FROM RecuperacaoParalela r WHERE r.status = :status"),
     @NamedQuery(name = "RecuperacaoParalela.findByQuantidadeAlunos", query = "SELECT r FROM RecuperacaoParalela r WHERE r.quantidadeAlunos = :quantidadeAlunos"),
-    @NamedQuery(name = "RecuperacaoParalela.findByQuantidadeAulas", query = "SELECT r FROM RecuperacaoParalela r WHERE r.quantidadeAulas = :quantidadeAulas"),
-    @NamedQuery(name = "RecuperacaoParalela.findByObservacoes", query = "SELECT r FROM RecuperacaoParalela r WHERE r.observacoes = :observacoes")})
+    @NamedQuery(name = "RecuperacaoParalela.findByQuantidadeAulas", query = "SELECT r FROM RecuperacaoParalela r WHERE r.quantidadeAulas = :quantidadeAulas")})
 public class RecuperacaoParalela implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 11)
-    @Column(name = "id", nullable = false, length = 11)
+    @Size(min = 1, max = 70)
+    @Column(name = "id", nullable = false, length = 70)
     private String id;
     @Basic(optional = false)
     @NotNull
@@ -67,23 +66,27 @@ public class RecuperacaoParalela implements Serializable {
     private Date dataProposta;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 1500)
-    @Column(name = "justificativa", nullable = false, length = 1500)
+    @Lob
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "justificativa", nullable = false, length = 2147483647)
     private String justificativa;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 1500)
-    @Column(name = "objetivo_geral", nullable = false, length = 1500)
+    @Lob
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "objetivo_geral", nullable = false, length = 2147483647)
     private String objetivoGeral;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 1500)
-    @Column(name = "procedimentos_avaliativos", nullable = false, length = 1500)
+    @Lob
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "procedimentos_avaliativos", nullable = false, length = 2147483647)
     private String procedimentosAvaliativos;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 1500)
-    @Column(name = "atividades_propostas", nullable = false, length = 1500)
+    @Lob
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "atividades_propostas", nullable = false, length = 2147483647)
     private String atividadesPropostas;
     @Basic(optional = false)
     @NotNull
@@ -102,17 +105,18 @@ public class RecuperacaoParalela implements Serializable {
     private Integer quantidadeAlunos;
     @Column(name = "quantidade_aulas")
     private Integer quantidadeAulas;
-    @Size(max = 1500)
-    @Column(name = "observacoes", length = 1500)
+    @Lob
+    @Size(max = 2147483647)
+    @Column(name = "observacoes", length = 2147483647)
     private String observacoes;
     @JoinTable(name = "recuperacao_paralela_has_servidor", joinColumns = {
         @JoinColumn(name = "recuperacao_paralela_idrecuperacao_paralela", referencedColumnName = "id", nullable = false)}, inverseJoinColumns = {
         @JoinColumn(name = "servidor_prontuario", referencedColumnName = "prontuario", nullable = false)})
     @ManyToMany
     private Collection<Servidor> servidorCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recuperacaoParalelaId", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recuperacaoParalelaId")
     private Collection<Aula> aulaCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recuperacaoParalela", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recuperacaoParalela")
     private Collection<RecuperacaoParalelaHasEstudante> recuperacaoParalelaHasEstudanteCollection;
     @JoinColumns({
         @JoinColumn(name = "disciplina_sigla", referencedColumnName = "sigla", nullable = false),
@@ -292,7 +296,7 @@ public class RecuperacaoParalela implements Serializable {
 
     @Override
     public String toString() {
-        return "RecuperacaoParalela{" + "id=" + id + ", dataProposta=" + dataProposta + ", justificativa=" + justificativa + ", objetivoGeral=" + objetivoGeral + ", procedimentosAvaliativos=" + procedimentosAvaliativos + ", atividadesPropostas=" + atividadesPropostas + ", anoLetivo=" + anoLetivo + ", bimestre=" + bimestre + ", status=" + status + ", quantidadeAlunos=" + quantidadeAlunos + ", quantidadeAulas=" + quantidadeAulas + ", observacoes=" + observacoes + ", servidorCollection=" + servidorCollection + ", aulaCollection=" + aulaCollection + ", recuperacaoParalelaHasEstudanteCollection=" + recuperacaoParalelaHasEstudanteCollection + ", disciplina=" + disciplina + '}';
+        return "model.RecuperacaoParalela[ id=" + id + " ]";
     }
-
+    
 }

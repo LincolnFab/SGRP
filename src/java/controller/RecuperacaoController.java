@@ -110,7 +110,6 @@ public class RecuperacaoController implements Serializable {
             int size = estudantesRP.size();
             return size > 1 ? size + " Estudantes selecionados" : "1 Estudante Selecionado";
         }
-
         return "Selecione os Estudantes";
     }
 
@@ -164,7 +163,7 @@ public class RecuperacaoController implements Serializable {
     public String cadastrarRecuperacao() {
         Date date = new Date();
 
-        recuperacaoParalela.setId(String.valueOf(recuperacoesParalelas.size() + 1));
+        recuperacaoParalela.setId(recuperacaoParalela.getDisciplina().getNome() + " " + recuperacaoParalela.getBimestre() + " " + turma.getIdturma());
         recuperacaoParalela.setAulaCollection(new ArrayList<Aula>());
         recuperacaoParalela.setRecuperacaoParalelaHasEstudanteCollection(new ArrayList<RecuperacaoParalelaHasEstudante>());
 
@@ -298,9 +297,9 @@ public class RecuperacaoController implements Serializable {
             recuperacaoParalela.setStatus("Deferida - FCC");
             //recuperacaoParalela.setObservacoes(recuperacaoParalela.getObservacoes());
             recuperacaoParalela.setObservacoes(recuperacaoParalela.getObservacoes() + "; " + obs);
-            
+
             recuperacaoDAO.update(recuperacaoParalela);
-            
+
             // enviar email dae
             try {
                 Servidor s = servidorDAO.buscarPorTipo("DAE");
@@ -315,7 +314,7 @@ public class RecuperacaoController implements Serializable {
             fillRecuperacaoParalelaList();
             Util.addMessageInformation("Recuperacao paralela deferida");
             PrimeFaces.current().ajax().update("form:messages", "form:dt-rp");
-            
+
         } catch (EJBException e) {
             PrimeFaces.current().executeScript("PF('autRP').hide()");
             Util.addMessageError("Não foi possível deferir a recuperação paralela");
@@ -329,7 +328,7 @@ public class RecuperacaoController implements Serializable {
             recuperacaoParalela.setObservacoes(recuperacaoParalela.getObservacoes());
 
             recuperacaoDAO.update(recuperacaoParalela);
-            
+
             try {
                 // enviar email docente
                 List<String> emailDocentes = new ArrayList<>();
@@ -343,7 +342,7 @@ public class RecuperacaoController implements Serializable {
                 Util.addMessageError("Erro ao enviar o email para o(a) responsável pela recuperação paralela. Contate o administrador.");
                 PrimeFaces.current().ajax().update("form:messages");
             }
-            
+
             try {
                 // enviar email csp
                 util.JavaMail.emailCspCadastroRp();
@@ -353,7 +352,7 @@ public class RecuperacaoController implements Serializable {
                 Util.addMessageError("Erro ao enviar o email para a CSP. Contate o administrador.");
                 PrimeFaces.current().ajax().update("form:messages");
             }
-            
+
             try {
                 // enviar email pra lista de alunos cadastrados na RP
                 List<String> emailEstudantes = new ArrayList<>();
@@ -541,7 +540,5 @@ public class RecuperacaoController implements Serializable {
     public void setObs(String obs) {
         this.obs = obs;
     }
-    
-    
 
 }

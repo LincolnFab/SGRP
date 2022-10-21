@@ -21,8 +21,8 @@ public class RecuperacaoParalelaHasEstudantePK implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 11)
-    @Column(name = "recuperacao_paralela_id", nullable = false, length = 11)
+    @Size(min = 1, max = 70)
+    @Column(name = "recuperacao_paralela_id", nullable = false, length = 70)
     private String recuperacaoParalelaId;
     @Basic(optional = false)
     @NotNull
