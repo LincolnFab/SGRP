@@ -128,7 +128,7 @@ public class JavaMail {
                 + "<a href=\"https://www.w3schools.com\">Acesse: pep2.ifsp.edu.br/rp</a>"
                 + "<h5>Mensagem automática. Não responda.</h5>"
                 + "</html>";
-        
+         
         try {
             //s = dao.servidorDAO.buscarPorTipo(tipo);
             //System.out.println("s........." + s );

@@ -131,8 +131,7 @@ public class EstudanteController implements Serializable {
             util.Util.addMessageError("Arquivo inválido");
         }
     }
-
-
+    
     public Estudante getEstudante() {
         return estudante;
     }
@@ -156,6 +155,6 @@ public class EstudanteController implements Serializable {
     public void setFile(UploadedFile file) {
         this.file = file;
     }
-    
+
     
 }

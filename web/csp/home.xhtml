@@ -95,7 +95,11 @@
 
                     <p:tieredMenu id="menu" style="width:250px; min-width: 250px; margin-top: 10px; padding: 0px;">
                         <p:menuitem outcome="/csp/home" value="Home" icon="pi pi-home"/>
-                        <p:menuitem outcome="/csp/recuperacoes" value="Recuperações Paralelas" icon="pi pi-book"/>
+                        
+                        <p:submenu label="Consultar" icon="pi pi-search">
+                            <p:menuitem outcome="/csp/consultar/recuperacoes" value="Recuperações Paralelas" icon="pi pi-book"/>
+                            <p:menuitem outcome="/csp/consultar/estudantes" value="Estudantes" icon="pi pi-user-edit"/>
+                        </p:submenu>
                         <p:submenu label="Gerenciamento" icon="pi pi-cog">
                             <p:menuitem outcome="/csp/gerenciamento/estudantes" value="Estudantes" icon="pi pi-user-edit"/>
                             <p:menuitem outcome="/csp/gerenciamento/cursos" value="Cursos" icon="pi pi-sitemap"/>
