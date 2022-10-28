@@ -203,7 +203,7 @@
                                             <p:inputTextarea disabled="true" rows="7" cols="40" value="#{recuperacao.procedimentosAvaliativos}"/>
 
                                             <p:outputLabel>Observações:</p:outputLabel>
-                                            <p:inputTextarea rows="7" cols="40" value="#{recuperacao.procedimentosAvaliativos}"/>
+                                            <p:inputTextarea disabled="true" rows="7" cols="40" value="#{recuperacao.observacoes}"/>
                                         </p:panelGrid>
                                     </p:tab>
                                     <p:tab title="Alunos">
@@ -253,7 +253,7 @@
                     
                     <h:form id="dialogs">
                         
-                        <p:dialog id="dialogAut" header="Autorizar RP" showEffect="fade" modal="true"
+                        <p:dialog id="dialogAut" header="Autorizar recuperação paralela?" showEffect="fade" modal="true"
                                   widgetVar="autRP" responsive="true">
                             <p:outputPanel id="aut-rp-content" class="ui-fluid">
                                 <p:panelGrid columns="2" layout="flex" contentStyleClass="align-items-baseline ui-fluid">

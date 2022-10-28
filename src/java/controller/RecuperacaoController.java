@@ -11,6 +11,9 @@ import dao.RecuperacaoDAO;
 import dao.ServidorDAO;
 import dao.TurmaDAO;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -291,13 +294,25 @@ public class RecuperacaoController implements Serializable {
         minDate = new Date();
         maxDate = new Date(minDate.getTime() + (365 * 24 * 60 * 60 * 1000));
     }
+    
+    private String getDateTime() {
+	DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss");
+	Date date = new Date();
+	return dateFormat.format(date);
+}
 
     public void deferirRpFcc() {
         try {
             recuperacaoParalela.setStatus("Deferida - FCC");
-            //recuperacaoParalela.setObservacoes(recuperacaoParalela.getObservacoes());
-            recuperacaoParalela.setObservacoes(recuperacaoParalela.getObservacoes() + "; " + obs);
-
+            
+            if (recuperacaoParalela.getObservacoes() != null) {
+                    recuperacaoParalela.setObservacoes(recuperacaoParalela.getObservacoes() + "\n");
+            }
+            recuperacaoParalela.setObservacoes(recuperacaoParalela.getObservacoes() + "Aprovada FCC em " + getDateTime());
+            if(obs != null) {
+                recuperacaoParalela.setObservacoes(recuperacaoParalela.getObservacoes() + " - " + obs);
+                obs = null;
+            }
             recuperacaoDAO.update(recuperacaoParalela);
 
             // enviar email dae
@@ -325,7 +340,14 @@ public class RecuperacaoController implements Serializable {
     public void deferirRpDae() {
         try {
             recuperacaoParalela.setStatus("Aprovada");
-            recuperacaoParalela.setObservacoes(recuperacaoParalela.getObservacoes());
+            if (recuperacaoParalela.getObservacoes() != null) {
+                    recuperacaoParalela.setObservacoes(recuperacaoParalela.getObservacoes() + "\n");
+            }
+            recuperacaoParalela.setObservacoes(recuperacaoParalela.getObservacoes() + "Aprovada DAE em " + getDateTime());
+            if(obs != null) {
+                recuperacaoParalela.setObservacoes(recuperacaoParalela.getObservacoes() + " - " + obs);
+                obs = null;
+            }
 
             recuperacaoDAO.update(recuperacaoParalela);
 
@@ -388,6 +410,15 @@ public class RecuperacaoController implements Serializable {
     public void indeferirRp() {
         try {
             recuperacaoParalela.setStatus("Correção");
+            
+            if (recuperacaoParalela.getObservacoes() != null) {
+                    recuperacaoParalela.setObservacoes(recuperacaoParalela.getObservacoes() + "\n");
+            }
+            recuperacaoParalela.setObservacoes(recuperacaoParalela.getObservacoes() + "Indeferido em " + getDateTime());
+            if(obs != null) {
+                recuperacaoParalela.setObservacoes(recuperacaoParalela.getObservacoes() + " - " + obs);
+                obs = null;
+            }
             recuperacaoDAO.update(recuperacaoParalela);
 
             try {

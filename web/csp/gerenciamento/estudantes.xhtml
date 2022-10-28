@@ -91,7 +91,7 @@
                     </h:form>
 
                     <h:form id="fileupload" enctype="multipart/form-data">
-                        <p:dialog header="Importar estudante(s)" widgetVar="importarEstudante" showEffect="fade" modal="true" responsive="true">
+                        <p:dialog id="dialogImport" header="Importar estudante(s)" widgetVar="importarEstudante" showEffect="fade" modal="true" responsive="true">
                             <p:fileUpload value="#{estudanteController.file}"
                                           allowTypes="/(\.|\/)(xls|xlsx)$/"
                                           validateContentType="true" accept=".xls,.xlsx"
@@ -99,7 +99,7 @@
                                           />
                             <f:facet name="footer">
                                 <p:commandButton id="submitBtn" value="Enviar" action="#{estudanteController.importarEstudantes()}"/>
-                                <p:blockUI block="submitBtn" trigger="submitBtn">
+                                <p:blockUI block="dialogImport" trigger="submitBtn">
                                     <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
                                 </p:blockUI>
                                 <p:commandButton value="Cancelar" onclick="PF('importarEstudante').hide()" class="ui-button-secondary"/>
