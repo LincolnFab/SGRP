@@ -38,7 +38,7 @@ public class Frequencia implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "frequencia", nullable = false)
-    private short frequencia;
+    private boolean frequencia;
     @JoinColumn(name = "aula_idaula", referencedColumnName = "idaula", nullable = false, insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Aula aula;
@@ -53,7 +53,7 @@ public class Frequencia implements Serializable {
         this.frequenciaPK = frequenciaPK;
     }
 
-    public Frequencia(FrequenciaPK frequenciaPK, short frequencia) {
+    public Frequencia(FrequenciaPK frequenciaPK, boolean frequencia) {
         this.frequenciaPK = frequenciaPK;
         this.frequencia = frequencia;
     }
@@ -70,11 +70,11 @@ public class Frequencia implements Serializable {
         this.frequenciaPK = frequenciaPK;
     }
 
-    public short getFrequencia() {
+    public boolean getFrequencia() {
         return frequencia;
     }
 
-    public void setFrequencia(short frequencia) {
+    public void setFrequencia(boolean frequencia) {
         this.frequencia = frequencia;
     }
 
