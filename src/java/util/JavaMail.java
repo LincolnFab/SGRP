@@ -86,19 +86,17 @@ public class JavaMail {
         };
     }
     
-    public static void emailFccDae(String email) {
-        //System.out.println("tipo......." + tipo);
+    public static void emailFccDae(String email, String sigla, String nome) {
         ArrayList<String> to = new ArrayList<>();
-        //Servidor s;
-        
-        String subject = "SGRP - Recuperação paralela";
+        String subject = "SGRP - Recuperação paralela - para aprovação fcc e dae";
         
         String htmlBody = 
                 "<html>"
                 + "<h2>Sistema de Gerenciamento de Recuperação Paralela</h2>"
-                + "<p>Uma recuperação paralela foi cadastrada e aguarda sua avaliação.</p>"
+                + "<p>A recuperação paralela" + sigla + " - " + nome + " foi cadastrada e aguarda sua avaliação.</p>"
                 + "<p> Entre no sistema para avaliar. "
                 + "<a href=\"https://www.w3schools.com\">Acesse: pep2.ifsp.edu.br/rp</a>"
+                + "<br>"
                 + "<h5>Mensagem automática. Não responda.</h5>"
                 + "</html>";
         
@@ -113,26 +111,20 @@ public class JavaMail {
         
     }
     
-    public static void emailDocenteCorrecao(List<String> to) {
-        //System.out.println("tipo......." + tipo);
-        //ArrayList<String> to = new ArrayList<>();
-        //Servidor s;
-        
-        String subject = "SGRP - Recuperação paralela";
+    public static void emailDocenteCorrecao(List<String> to, String sigla, String nome) {
+        String subject = "SGRP - Recuperação paralela - docente correção";
         
         String htmlBody = 
                 "<html>"
                 + "<h2>Sistema de Gerenciamento de Recuperação Paralela</h2>"
-                + "<p>A recuperação paralela foi devolvida para correção.</p>"
+                + "<p>A recuperação paralela foi devolvida para correção: " + sigla + " - " + nome +".</p>"
                 + "<p> Entre no sistema para verificar. "
                 + "<a href=\"https://www.w3schools.com\">Acesse: pep2.ifsp.edu.br/rp</a>"
+                + "<br>"
                 + "<h5>Mensagem automática. Não responda.</h5>"
                 + "</html>";
          
         try {
-            //s = dao.servidorDAO.buscarPorTipo(tipo);
-            //System.out.println("s........." + s );
-            //to.add(email);
             util.JavaMail.sendEmail(to, subject, htmlBody);
         } catch(Exception e) {
             System.out.println("Não foi possível enviar o e-mail.");
@@ -140,26 +132,85 @@ public class JavaMail {
         
     }
     
-    public static void emailDocenteAprovacao(List<String> to) {
-        //System.out.println("tipo......." + tipo);
-        //ArrayList<String> to = new ArrayList<>();
-        //Servidor s;
+    public static void emailAprovacaoDae(List<String> to, String sigla, String nome) {
+        String subject = "SGRP - Recuperação paralela - todos";
         
+        String htmlBody = 
+                "<html>"
+                + "<h2>Sistema de Gerenciamento de Recuperação Paralela</h2>"
+                + "<p>Recuperação Paralela: " + sigla + " - " + nome + ".</p>"
+                + "<p> Entre no sistema para verificar.</p>"
+                + "<a href=\"https://www.w3schools.com\">Acesse: pep2.ifsp.edu.br/rp</a>"
+                +"<br>"
+                + "<h5>Mensagem automática. Não responda.</h5>"
+                + "</html>";
+        
+        try {
+            util.JavaMail.sendEmail(to, subject, htmlBody);
+        } catch(Exception e) {
+            System.out.println("Não foi possível enviar o e-mail.");
+        }
+    }
+    
+    public static void emailCadastroNota(List<String> to, String sigla, String nome) {
+        String subject = "SGRP - Recuperação paralela - cadastro de notas";
+        
+        String htmlBody = 
+                "<html>"
+                + "<h2>Sistema de Gerenciamento de Recuperação Paralela</h2>"
+                + "<p>Recuperação Paralela: " + sigla + " - " + nome + ".</p>"
+                + "<p>As notas da recuperação paralela foram cadastradas.</p>"
+                + "<p> Entre no sistema para verificar.</p>"
+                + "<a href=\"https://www.w3schools.com\">Acesse: pep2.ifsp.edu.br/rp</a>"
+                +"<br>"
+                + "<h5>Mensagem automática. Não responda.</h5>"
+                + "</html>";
+        
+        try {
+            util.JavaMail.sendEmail(to, subject, htmlBody);
+        } catch(Exception e) {
+            System.out.println("Não foi possível enviar o e-mail.");
+        }
+    }
+    
+    public static void finalizarRP(List<String> to, String sigla, String nome) {
+        String subject = "SGRP - Recuperação paralela - finalizar rp";
+        
+        // ALTERAR CSP
+        to.add("marilenaoshima@gmail.com");
+        
+        String htmlBody = 
+                "<html>"
+                + "<h2>Sistema de Gerenciamento de Recuperação Paralela</h2>"
+                + "<p>A Recuperação Paralela: " + sigla + " - " + nome + "foi finalizada.</p>"
+                + "<p> Entre no sistema para verificar.</p>"
+                + "<a href=\"https://www.w3schools.com\">Acesse: pep2.ifsp.edu.br/rp</a>"
+                +"<br>"
+                + "<h5>Mensagem automática. Não responda.</h5>"
+                + "</html>";
+        try {
+            util.JavaMail.sendEmail(to, subject, htmlBody);
+        } catch(Exception e) {
+            System.out.println("Não foi possível enviar o e-mail.");
+        }
+    }
+    
+        
+        
+    
+    public static void emailDocenteAprovacao(List<String> to, String sigla) {
         String subject = "SGRP - Recuperação paralela - Aprovacao";
         
         String htmlBody = 
                 "<html>"
                 + "<h2>Sistema de Gerenciamento de Recuperação Paralela</h2>"
-                + "<p>Uma recuperação paralela cadastrada foi aprovada.</p>"
+                + "<p>Houve uma movimentação na recuperação paralela: " + sigla + "</p>"
                 + "<p> Entre no sistema para verificar. "
                 + "<a href=\"https://www.w3schools.com\">Acesse: pep2.ifsp.edu.br/rp</a>"
                 + "<h5>Mensagem automática. Não responda.</h5>"
                 + "</html>";
         
         try {
-            //s = dao.servidorDAO.buscarPorTipo(tipo);
-            //System.out.println("s........." + s );
-            //to.add(email);
             util.JavaMail.sendEmail(to, subject, htmlBody);
         } catch(Exception e) {
             System.out.println("Não foi possível enviar o e-mail.");

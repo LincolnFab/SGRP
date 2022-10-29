@@ -13,7 +13,6 @@ import dao.TurmaDAO;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -194,23 +193,39 @@ public class RecuperacaoController implements Serializable {
         try {
             recuperacaoDAO.create(recuperacaoParalela);
 
-//            try {
-//                // enviar e-mail
-//                String curso = this.curso.getDescricao();
-//                //System.out.println("CURSO...." + curso);
-//                if (curso.toLowerCase().contains("inf")) {
-//                    Servidor s = servidorDAO.buscarPorTipo("FCC INF");
-//                    util.JavaMail.emailFccDae(s.getEmail());
-//                } else if (curso.toLowerCase().contains("mec")) {
-//                    Servidor s = servidorDAO.buscarPorTipo("FCC MEC");
-//                    util.JavaMail.emailFccDae(s.getEmail());
-//                }
-//                Util.addMessageInformation("Um email foi enviado ao Coordenador");
-//            } catch (EJBException e) {
-//                System.out.println(e);
-//                Util.addMessageError("Erro ao enviar o email para o FCC do Curso. Contate o administrador.");
-//                PrimeFaces.current().ajax().update("form:messages");
-//            }
+            try {
+                // enviar e-mail
+                String curso = this.curso.getDescricao();
+                //System.out.println("CURSO...." + curso);
+                if (curso.toLowerCase().contains("inf")) {
+                    Servidor s = servidorDAO.buscarPorTipo("FCC INF");
+                    util.JavaMail.emailFccDae(s.getEmail(), recuperacaoParalela.getDisciplina().getDisciplinaPK().getSigla(), recuperacaoParalela.getDisciplina().getNome());
+                } else if (curso.toLowerCase().contains("mec")) {
+                    Servidor s = servidorDAO.buscarPorTipo("FCC MEC");
+                    util.JavaMail.emailFccDae(s.getEmail(), recuperacaoParalela.getDisciplina().getDisciplinaPK().getSigla(), recuperacaoParalela.getDisciplina().getNome());
+                }
+                Util.addMessageInformation("Um email foi enviado ao Coordenador");
+            } catch (EJBException e) {
+                System.out.println(e);
+                Util.addMessageError("Erro ao enviar o email para o FCC do Curso. Contate o administrador.");
+                PrimeFaces.current().ajax().update("form:messages");
+            }
+
+            try {
+                String curso = this.curso.getDescricao();
+                if (curso.toLowerCase().contains("inf")) {
+                    Servidor s = servidorDAO.buscarPorTipo("FCC INF");
+                    util.JavaMail.emailFccDae(s.getEmail(), recuperacaoParalela.getDisciplina().getDisciplinaPK().getSigla(), recuperacaoParalela.getDisciplina().getNome());
+                } else if (curso.toLowerCase().contains("mec")) {
+                    Servidor s = servidorDAO.buscarPorTipo("FCC MEC");
+                    util.JavaMail.emailFccDae(s.getEmail(), recuperacaoParalela.getDisciplina().getDisciplinaPK().getSigla(), recuperacaoParalela.getDisciplina().getNome());
+                }
+                Util.addMessageInformation("Um email foi enviado ao Coordenador");
+            } catch (EJBException e) {
+                System.out.println(e);
+                Util.addMessageError("Erro ao enviar o email para o FCC do Curso. Contate o administrador.");
+                PrimeFaces.current().ajax().update("form:messages");
+            }
 
             fillRecuperacaoParalelaList();
             Util.addMessageInformation("A recuperação paralela foi enviada para análise");
@@ -324,7 +339,7 @@ public class RecuperacaoController implements Serializable {
             // enviar email dae
             try {
                 Servidor s = servidorDAO.buscarPorTipo("DAE");
-                util.JavaMail.emailFccDae(s.getEmail());
+                util.JavaMail.emailFccDae(s.getEmail(), recuperacaoParalela.getDisciplina().getDisciplinaPK().getSigla(), recuperacaoParalela.getDisciplina().getNome());
                 Util.addMessageInformation("Um email foi enviado ao DAE");
             } catch (EJBException e) {
                 //System.out.println(e);
@@ -356,14 +371,49 @@ public class RecuperacaoController implements Serializable {
             }
 
             recuperacaoDAO.update(recuperacaoParalela);
-
+            
+            try {
+                // enviar email docente responsável, csp e alunos
+                List<String> emails = new ArrayList<>();
+                
+                // Docentes
+                recuperacaoParalela.getServidorCollection().forEach(((servidor) -> {
+                    emails.add(servidor.getEmail());
+                }));
+                
+                //CSP
+                //emails.add("csp.pep@ifsp.edu.br");
+                
+                // Alunos
+                recuperacaoParalela.getRecuperacaoParalelaHasEstudanteCollection().forEach((estudante) -> {
+                    if (estudante.getEstudante().getEmailAluno() != null) {
+                        emails.add(estudante.getEstudante().getEmailAluno());
+                    }
+                    if (estudante.getEstudante().getEmailPessoal() != null) {
+                        emails.add(estudante.getEstudante().getEmailPessoal());
+                    }
+                    if (estudante.getEstudante().getEmailResponsavel() != null) {
+                        emails.add(estudante.getEstudante().getEmailResponsavel());
+                    }
+                });
+                
+                util.JavaMail.emailAprovacaoDae(emails, recuperacaoParalela.getDisciplina().getDisciplinaPK().getSigla(), recuperacaoParalela.getDisciplina().getNome());
+                Util.addMessageInformation("Email enviado para o(a) responsável pela recuperação paralela");
+            } catch (EJBException e) {
+                //System.out.println(e);
+                Util.addMessageError("Erro ao enviar o email para o(a) responsável pela recuperação paralela. Contate o administrador.");
+                PrimeFaces.current().ajax().update("form:messages");
+            }
+            
+            
+            /*
             try {
                 // enviar email docente
                 List<String> emailDocentes = new ArrayList<>();
                 recuperacaoParalela.getServidorCollection().forEach(((servidor) -> {
                     emailDocentes.add(servidor.getEmail());
                 }));
-                util.JavaMail.emailDocenteAprovacao(emailDocentes);
+                util.JavaMail.emailDocenteAprovacao(emailDocentes, recuperacaoParalela.getDisciplina().getDisciplinaPK().getSigla());
                 Util.addMessageInformation("Email enviado para o(a) responsável pela recuperação paralela");
             } catch (EJBException e) {
                 //System.out.println(e);
@@ -401,7 +451,7 @@ public class RecuperacaoController implements Serializable {
                 //System.out.println(e);
                 Util.addMessageError("Erro ao enviar o email para o(s) estudante(s) cadastrados. Contate o administrador.");
                 PrimeFaces.current().ajax().update("form:messages");
-            }
+            }*/
             PrimeFaces.current().executeScript("PF('autRP').hide()");
             fillRecuperacaoParalelaList();
             Util.addMessageInformation("Recuperação paralela deferida");
@@ -433,7 +483,7 @@ public class RecuperacaoController implements Serializable {
                 recuperacaoParalela.getServidorCollection().forEach(((servidor) -> {
                     emailDocentes.add(servidor.getEmail());
                 }));
-                util.JavaMail.emailDocenteCorrecao(emailDocentes);
+                util.JavaMail.emailDocenteCorrecao(emailDocentes, recuperacaoParalela.getDisciplina().getDisciplinaPK().getSigla(), recuperacaoParalela.getDisciplina().getNome());
                 Util.addMessageInformation("Um email foi enviado para o(a) responsável pela recuperação paralela");
             } catch (EJBException e) {
                 Util.addMessageError("Erro ao enviar o email para o(a) responsável pela recuperação paralela. Contate o administrador.");
