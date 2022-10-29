@@ -1,27 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/Documentos/SGRP/src/java/converter/DisciplinaConverter.java</file>
-            <file>file:/E:/Documentos/SGRP/src/java/dao/TurmaDAO.java</file>
-            <file>file:/E:/Documentos/SGRP/src/java/model/Disciplina.java</file>
-            <file>file:/E:/Documentos/SGRP/src/java/controller/RecuperacaoController.java</file>
-            <file>file:/E:/Documentos/SGRP/web/docente/rp/cadastrar/aulas.xhtml</file>
-            <file>file:/E:/Documentos/SGRP/src/java/dao/SalaDAO.java</file>
-            <file>file:/E:/Documentos/SGRP/src/java/model/SalaDeAula.java</file>
-            <file>file:/E:/Documentos/SGRP/web/csp/home.xhtml</file>
-            <file>file:/E:/Documentos/SGRP/web/docente/rp/cadastrar/dados.xhtml</file>
-            <file>file:/E:/Documentos/SGRP/web/csp/gerenciamento/cursos.xhtml</file>
-            <file>file:/E:/Documentos/SGRP/src/java/model/Aula.java</file>
-            <file>file:/E:/Documentos/SGRP/src/java/converter/SalaConverter.java</file>
-            <file>file:/E:/Documentos/SGRP/web/docente/rp/cadastrar/alunos.xhtml</file>
-            <file>file:/E:/Documentos/SGRP/src/java/model/RecuperacaoParalela.java</file>
-            <file>file:/E:/Documentos/SGRP/src/java/controller/ServidorController.java</file>
-            <file>file:/E:/Documentos/SGRP/web/csp/gerenciamento/servidores.xhtml</file>
-            <file>file:/E:/Documentos/SGRP/web/csp/gerenciamento/salas.xhtml</file>
-            <file>file:/E:/Documentos/SGRP/src/java/model/Turma.java</file>
-            <file>file:/E:/Documentos/SGRP/src/java/dao/DisciplinaDAO.java</file>
+            <file>file:/F:/Documents/SGRP/src/java/controller/RecuperacaoController.java</file>
+            <file>file:/F:/Documents/SGRP/web/docente/rp/consultar/recuperacoes.xhtml</file>
+            <file>file:/F:/Documents/SGRP/web/docente/rp/consultar/presencas.xhtml</file>
+            <file>file:/F:/Documents/SGRP/web/docente/rp/consultar/notas.xhtml</file>
         </group>
     </open-files>
 </project-private>
