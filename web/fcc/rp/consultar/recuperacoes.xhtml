@@ -82,11 +82,19 @@
                                 <h:outputText value="#{recuperacao.quantidadeAlunos}" />
                             </p:column>
 
-                            <p:column headerText="Status" filterBy="#{recuperacao.status}" sortBy="#{recuperacao.status}">
-                                <h:outputText value="#{recuperacao.status}" />
+                            <p:column field="status" headerText="Status" filterMatchMode="exact">
+                                <f:facet name="filter">
+                                    <p:selectOneMenu onchange="PF('dtRPs').filter()" styleClass="ui-custom-filter">
+                                        <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItem itemLabel="Aprovada" itemValue="Aprovada"/>
+                                        <f:selectItem itemLabel="Correção" itemValue="Correção"/>
+                                        <f:selectItem itemLabel="Cancelada" itemValue="Cancelada"/>
+                                        <f:selectItem itemLabel="Deferida - FCC" itemValue="Deferida - FCC"/>
+                                        <f:selectItem itemLabel="Finalizada" itemValue="Finalizada"/>
+                                        <f:selectItem itemLabel="Pendente" itemValue="Pendente"/>
+                                    </p:selectOneMenu>
+                                </f:facet>
                             </p:column>
-
-                            
 
                             <p:column headerText="Ações" exportable="false">
                                 <ui:remove>
