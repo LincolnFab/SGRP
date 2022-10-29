@@ -61,6 +61,10 @@
                                     </div>
                                 </div>
                             </f:facet>
+                            
+                            <p:column style="width:2rem">
+                                <p:rowToggler/>
+                            </p:column>
 
                             <p:column headerText="Disciplina" sortBy="#{recuperacao.disciplina.nome}">
                                 <h:outputText value="#{recuperacao.disciplina.nome}" />
@@ -74,9 +78,7 @@
                                 <h:outputText value="#{recuperacao.anoLetivo}" />
                             </p:column>
 
-                            <p:column style="width:2rem">
-                                <p:rowToggler/>
-                            </p:column>
+                            
 
                             <p:rowExpansion>
                                 <p:tabView>

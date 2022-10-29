@@ -61,7 +61,11 @@
                                     </div>
                                 </div>
                             </f:facet>
-
+                            
+                            <p:column style="width:2rem">
+                                <p:rowToggler/>
+                            </p:column>
+                            
                             <p:column headerText="Disciplina" sortBy="#{recuperacao.disciplina.nome}">
                                 <h:outputText value="#{recuperacao.disciplina.nome}" />
                             </p:column>
@@ -82,9 +86,7 @@
                                 <h:outputText value="#{recuperacao.status}" />
                             </p:column>
 
-                            <p:column style="width:2rem">
-                                <p:rowToggler/>
-                            </p:column>
+                            
 
                             <p:column headerText="Ações" exportable="false">
                                 <ui:remove>
