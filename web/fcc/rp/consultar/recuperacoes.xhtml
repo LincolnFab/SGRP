@@ -120,7 +120,7 @@
                                         <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no ui-button-flat" />
                                     </p:confirmDialog>
                                 </ui:remove>
-                            
+
                                 <p:commandButton icon="pi pi-check" update=":dialogs:aut-rp-content"
                                                  oncomplete="PF('autRP').show()"
                                                  styleClass="rounded-button" process="@this"
@@ -141,7 +141,7 @@
                                     <f:setPropertyActionListener value="#{recuperacao}" target="#{recuperacaoController.recuperacaoParalela}"/>
                                     <p:resetInput target=":dialogs:indef-rp-content"/>
                                 </p:commandButton>
-                            
+
                             </p:column>
 
                             <p:rowExpansion>
@@ -236,9 +236,15 @@
                                                 </h:outputText>
                                             </p:column>
 
-                                            <p:column headerText="Hora" sortBy="#{aula.horario}">
+                                            <p:column headerText="Hora de início" sortBy="#{aula.horario}">
                                                 <h:outputText value="#{aula.horario}" >
-                                                    <f:convertDateTime pattern="HH:mm" />
+                                                    <f:convertDateTime pattern="HH:mm" timeZone="GMT-3"/>
+                                                </h:outputText>
+                                            </p:column>
+
+                                            <p:column headerText="Hora de término" sortBy="#{aula.horarioFim}">
+                                                <h:outputText value="#{aula.horarioFim}" >
+                                                    <f:convertDateTime pattern="HH:mm" timeZone="GMT-3"/>
                                                 </h:outputText>
                                             </p:column>
 
@@ -253,7 +259,7 @@
                     </h:form>
 
                     <h:form id="dialogs">
-                        
+
                         <p:dialog id="dialogAut" header="Autorizar recuperação paralela" showEffect="fade" modal="true"
                                   widgetVar="autRP" responsive="true">
                             <p:outputPanel id="aut-rp-content" class="ui-fluid">
@@ -295,7 +301,7 @@
                                 <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
                             </p:blockUI>
                         </p:dialog>
-                    
+
                     </h:form>
                 </div>
             </ui:define>

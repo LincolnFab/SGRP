@@ -6,8 +6,10 @@
 package model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,15 +19,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author linkf
+ * @author Lincoln
  */
 @Entity
 @Table(name = "aula")
@@ -35,7 +39,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Aula.findByIdaula", query = "SELECT a FROM Aula a WHERE a.idaula = :idaula"),
     @NamedQuery(name = "Aula.findByDia", query = "SELECT a FROM Aula a WHERE a.dia = :dia"),
     @NamedQuery(name = "Aula.findByHorario", query = "SELECT a FROM Aula a WHERE a.horario = :horario"),
-    @NamedQuery(name = "Aula.findByFrequencia", query = "SELECT a FROM Aula a WHERE a.frequencia = :frequencia")})
+    @NamedQuery(name = "Aula.findByHorarioFim", query = "SELECT a FROM Aula a WHERE a.horarioFim = :horarioFim")})
 public class Aula implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -54,14 +58,19 @@ public class Aula implements Serializable {
     @Column(name = "horario", nullable = false)
     @Temporal(TemporalType.TIME)
     private Date horario;
-    @Column(name = "frequencia")
-    private Short frequencia;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "horario_fim", nullable = false)
+    @Temporal(TemporalType.TIME)
+    private Date horarioFim;
     @JoinColumn(name = "recuperacao_paralela_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
     private RecuperacaoParalela recuperacaoParalelaId;
     @JoinColumn(name = "sala_de_aula_idSala", referencedColumnName = "idSala", nullable = false)
     @ManyToOne(optional = false)
     private SalaDeAula saladeaulaidSala;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "aula")
+    private Collection<Frequencia> frequenciaCollection;
 
     public Aula() {
     }
@@ -70,10 +79,11 @@ public class Aula implements Serializable {
         this.idaula = idaula;
     }
 
-    public Aula(Integer idaula, Date dia, Date horario) {
+    public Aula(Integer idaula, Date dia, Date horario, Date horarioFim) {
         this.idaula = idaula;
         this.dia = dia;
         this.horario = horario;
+        this.horarioFim = horarioFim;
     }
 
     public Integer getIdaula() {
@@ -100,12 +110,12 @@ public class Aula implements Serializable {
         this.horario = horario;
     }
 
-    public Short getFrequencia() {
-        return frequencia;
+    public Date getHorarioFim() {
+        return horarioFim;
     }
 
-    public void setFrequencia(Short frequencia) {
-        this.frequencia = frequencia;
+    public void setHorarioFim(Date horarioFim) {
+        this.horarioFim = horarioFim;
     }
 
     public RecuperacaoParalela getRecuperacaoParalelaId() {
@@ -122,6 +132,15 @@ public class Aula implements Serializable {
 
     public void setSaladeaulaidSala(SalaDeAula saladeaulaidSala) {
         this.saladeaulaidSala = saladeaulaidSala;
+    }
+
+    @XmlTransient
+    public Collection<Frequencia> getFrequenciaCollection() {
+        return frequenciaCollection;
+    }
+
+    public void setFrequenciaCollection(Collection<Frequencia> frequenciaCollection) {
+        this.frequenciaCollection = frequenciaCollection;
     }
 
     @Override

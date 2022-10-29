@@ -165,9 +165,15 @@
                                                 </h:outputText>
                                             </p:column>
 
-                                            <p:column headerText="Hora" sortBy="#{aula.horario}">
+                                            <p:column headerText="Hora de início" sortBy="#{aula.horario}">
                                                 <h:outputText value="#{aula.horario}" >
-                                                    <f:convertDateTime pattern="HH:mm" />
+                                                    <f:convertDateTime pattern="HH:mm" timeZone="GMT-3"/>
+                                                </h:outputText>
+                                            </p:column>
+
+                                            <p:column headerText="Hora de término" sortBy="#{aula.horarioFim}">
+                                                <h:outputText value="#{aula.horarioFim}" >
+                                                    <f:convertDateTime pattern="HH:mm" timeZone="GMT-3"/>
                                                 </h:outputText>
                                             </p:column>
 

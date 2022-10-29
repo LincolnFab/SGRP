@@ -126,9 +126,15 @@
                                                 </h:outputText>
                                             </p:column>
 
-                                            <p:column headerText="Hora" sortBy="#{aula.horario}">
+                                            <p:column headerText="Hora de início" sortBy="#{aula.horario}">
                                                 <h:outputText value="#{aula.horario}" >
-                                                    <f:convertDateTime pattern="HH:mm" />
+                                                    <f:convertDateTime pattern="HH:mm" timeZone="GMT-3"/>
+                                                </h:outputText>
+                                            </p:column>
+
+                                            <p:column headerText="Hora de término" sortBy="#{aula.horarioFim}">
+                                                <h:outputText value="#{aula.horarioFim}" >
+                                                    <f:convertDateTime pattern="HH:mm" timeZone="GMT-3"/>
                                                 </h:outputText>
                                             </p:column>
 
@@ -143,7 +149,7 @@
                     </h:form>
 
                     <h:form id="dialogs">
-                        
+
                         <p:dialog id="dialogAut" header="Autorizar RP" showEffect="fade" modal="true"
                                   widgetVar="autRP" responsive="true">
                             <p:outputPanel id="aut-rp-content" class="ui-fluid">
@@ -185,7 +191,7 @@
                                 <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
                             </p:blockUI>
                         </p:dialog>
-                    
+
                     </h:form>
                 </div>
             </ui:define>
