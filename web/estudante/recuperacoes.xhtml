@@ -106,13 +106,14 @@
                                             <p:inputText disabled="true" value="#{recuperacao.anoLetivo}"/>
 
                                             <p:outputLabel>Docente(s):</p:outputLabel>
-                                            <p:selectManyMenu id="create_rp_docente" value="#{recuperacao.servidorCollection}"
-                                                              converter="servidorConverter" disabled="true" 
-                                                              required="true" requiredMessage="Selecione ao menos um professor" 
-                                                              filter="true" filterMatchMode="contains" showCheckbox="true" styleClass="manymenu-advanced">
+                                            <p:selectCheckboxMenu value="#{recuperacao.servidorCollection}"
+                                                                  converter="servidorConverter" disabled="true" 
+                                                                  requiredMessage="Selecione ao menos um professor" 
+                                                                  multiple="true" filter="true" filterMatchMode="contains" panelStyle="width: 30rem" scrollHeight="250"
+                                                                  emptyLabel="Selecione um servidor" updateLabel="true">
                                                 <f:selectItems value="#{servidorController.servidores}" var="servidor" itemLabel="#{servidor.nome}"
                                                                itemValue="#{servidor}"/>
-                                            </p:selectManyMenu>
+                                            </p:selectCheckboxMenu>
                                         </p:panelGrid>
                                     </p:tab>
                                     <p:tab title="Aulas">

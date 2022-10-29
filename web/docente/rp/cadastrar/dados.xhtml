@@ -101,14 +101,15 @@
                                 <f:selectItem itemLabel="4" itemValue="4"/>
                             </p:selectOneButton>
 
-                            <p:outputLabel for="create_rp_docente">Servidores</p:outputLabel>
-                            <p:selectManyMenu id="create_rp_docente" value="#{recuperacaoController.recuperacaoParalela.servidorCollection}"
-                                              converter="servidorConverter" style="max-width: 22rem"
-                                              required="true" requiredMessage="Selecione ao menos um professor" 
-                                              filter="true" filterMatchMode="contains" showCheckbox="true" styleClass="manymenu-advanced">
+                            <p:outputLabel for="create_rp_docente">Docente(s)</p:outputLabel>
+                            <p:selectCheckboxMenu id="create_rp_docente" value="#{recuperacaoController.recuperacaoParalela.servidorCollection}"
+                                                  converter="servidorConverter" style="max-width: 22rem"
+                                                  requiredMessage="Selecione ao menos um professor" 
+                                                  multiple="true" filter="true" filterMatchMode="contains" panelStyle="width: 30rem" scrollHeight="250"
+                                                  emptyLabel="Selecione um servidor" updateLabel="true">
                                 <f:selectItems value="#{servidorController.servidores}" var="servidor" itemLabel="#{servidor.nome}"
                                                itemValue="#{servidor}"/>
-                            </p:selectManyMenu>
+                            </p:selectCheckboxMenu>
                         </p:panelGrid>
 
                         <p:panelGrid columns="2"
