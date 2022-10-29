@@ -34,7 +34,7 @@
                                                          style="margin-right: .5rem">
                                             <p:resetInput target=":dialogs:create-disciplina-content"/>
                                         </p:commandButton>
-                                        
+
                                         <p:commandButton id="toggler" type="button" value="Campos" icon="pi pi-align-justify"/>
                                         <p:columnToggler datasource="dt-disciplinas" trigger="toggler">
                                             <p:ajax />
@@ -50,7 +50,7 @@
                             <p:column headerText="Nome" sortBy="#{disciplina.nome}">
                                 <h:outputText value="#{disciplina.nome}"  />
                             </p:column>
-                            
+
                             <p:column headerText="Curso" sortBy="#{disciplina.curso.descricao}">
                                 <h:outputText value="#{disciplina.curso.descricao}"  />
                             </p:column>
@@ -71,9 +71,11 @@
                             </p:column>
                         </p:dataTable>
                     </h:form>
-                    
+
                     <h:form  enctype="multipart/form-data">
-                        <p:dialog id="dialogImport" header="Importar disciplina(s)" widgetVar="importarDisciplina" minHeight="40" width="350" showEffect="fade">
+                        <p:dialog id="dialogImport" header="Importar disciplina(s)"
+                                  showEffect="fade" modal="true" widgetVar="importarDisciplina"
+                                  responsive="true" minHeight="40">
                             <p:fileUpload value="#{disciplinaController.file}" 
                                           allowTypes="/(\.|\/)(xls|xlsx)$/"
                                           validateContentType="true" accept=".xls,.xlsx"
