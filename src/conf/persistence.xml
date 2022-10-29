@@ -3,6 +3,5 @@
   <persistence-unit name="SGRPPU" transaction-type="JTA">
     <jta-data-source>java:app/db_sgrp</jta-data-source>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
-    <properties/>
   </persistence-unit>
 </persistence>
