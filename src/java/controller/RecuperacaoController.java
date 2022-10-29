@@ -76,6 +76,7 @@ public class RecuperacaoController implements Serializable {
     private List<Aula> aulas;
 
     private RecuperacaoParalela recuperacaoParalela;
+    private RecuperacaoParalela recuperacaoParalelaAux;
     private List<RecuperacaoParalela> recuperacoesParalelas;
 
     private String obs;
@@ -179,6 +180,7 @@ public class RecuperacaoController implements Serializable {
         for (Estudante e : estudantesRP) {
             RecuperacaoParalelaHasEstudante rphe = new RecuperacaoParalelaHasEstudante();
             rphe.setEstudante(e);
+            rphe.setNotaPos(0.0f);
             rphe.setRecuperacaoParalela(recuperacaoParalela);
             rphe.setRecuperacaoParalelaHasEstudantePK(new RecuperacaoParalelaHasEstudantePK(recuperacaoParalela.getId(), e.getProntuario()));
             recuperacaoParalela.getRecuperacaoParalelaHasEstudanteCollection().add(rphe);
@@ -192,23 +194,23 @@ public class RecuperacaoController implements Serializable {
         try {
             recuperacaoDAO.create(recuperacaoParalela);
 
-            try {
-                // enviar e-mail
-                String curso = this.curso.getDescricao();
-                //System.out.println("CURSO...." + curso);
-                if (curso.toLowerCase().contains("inf")) {
-                    Servidor s = servidorDAO.buscarPorTipo("FCC INF");
-                    util.JavaMail.emailFccDae(s.getEmail());
-                } else if (curso.toLowerCase().contains("mec")) {
-                    Servidor s = servidorDAO.buscarPorTipo("FCC MEC");
-                    util.JavaMail.emailFccDae(s.getEmail());
-                }
-                Util.addMessageInformation("Um email foi enviado ao Coordenador");
-            } catch (EJBException e) {
-                System.out.println(e);
-                Util.addMessageError("Erro ao enviar o email para o FCC do Curso. Contate o administrador.");
-                PrimeFaces.current().ajax().update("form:messages");
-            }
+//            try {
+//                // enviar e-mail
+//                String curso = this.curso.getDescricao();
+//                //System.out.println("CURSO...." + curso);
+//                if (curso.toLowerCase().contains("inf")) {
+//                    Servidor s = servidorDAO.buscarPorTipo("FCC INF");
+//                    util.JavaMail.emailFccDae(s.getEmail());
+//                } else if (curso.toLowerCase().contains("mec")) {
+//                    Servidor s = servidorDAO.buscarPorTipo("FCC MEC");
+//                    util.JavaMail.emailFccDae(s.getEmail());
+//                }
+//                Util.addMessageInformation("Um email foi enviado ao Coordenador");
+//            } catch (EJBException e) {
+//                System.out.println(e);
+//                Util.addMessageError("Erro ao enviar o email para o FCC do Curso. Contate o administrador.");
+//                PrimeFaces.current().ajax().update("form:messages");
+//            }
 
             fillRecuperacaoParalelaList();
             Util.addMessageInformation("A recuperação paralela foi enviada para análise");
@@ -225,9 +227,13 @@ public class RecuperacaoController implements Serializable {
         return "";
     }
 
-    public void editarRecuperacao(RecuperacaoParalela rp) {
+    public void editarRecuperacao(RecuperacaoParalela rp, String message) {
+        rp.getRecuperacaoParalelaHasEstudanteCollection().isEmpty();
+        rp.getServidorCollection().isEmpty();
+        rp.getAulaCollection().isEmpty();
+
         recuperacaoDAO.update(rp);
-        Util.addMessageInformation("Registro Editado");
+        Util.addMessageInformation(message);
 
         PrimeFaces.current().ajax().update("form:messages");
     }
@@ -294,22 +300,22 @@ public class RecuperacaoController implements Serializable {
         minDate = new Date();
         maxDate = new Date(minDate.getTime() + (365 * 24 * 60 * 60 * 1000));
     }
-    
+
     private String getDateTime() {
-	DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss");
-	Date date = new Date();
-	return dateFormat.format(date);
-}
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss");
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
 
     public void deferirRpFcc() {
         try {
             recuperacaoParalela.setStatus("Deferida - FCC");
-            
+
             if (recuperacaoParalela.getObservacoes() != null) {
-                    recuperacaoParalela.setObservacoes(recuperacaoParalela.getObservacoes() + "\n");
+                recuperacaoParalela.setObservacoes(recuperacaoParalela.getObservacoes() + "\n");
             }
             recuperacaoParalela.setObservacoes(recuperacaoParalela.getObservacoes() + "Aprovada FCC em " + getDateTime());
-            if(obs != null) {
+            if (obs != null) {
                 recuperacaoParalela.setObservacoes(recuperacaoParalela.getObservacoes() + " - " + obs);
                 obs = null;
             }
@@ -341,10 +347,10 @@ public class RecuperacaoController implements Serializable {
         try {
             recuperacaoParalela.setStatus("Aprovada");
             if (recuperacaoParalela.getObservacoes() != null) {
-                    recuperacaoParalela.setObservacoes(recuperacaoParalela.getObservacoes() + "\n");
+                recuperacaoParalela.setObservacoes(recuperacaoParalela.getObservacoes() + "\n");
             }
             recuperacaoParalela.setObservacoes(recuperacaoParalela.getObservacoes() + "Aprovada DAE em " + getDateTime());
-            if(obs != null) {
+            if (obs != null) {
                 recuperacaoParalela.setObservacoes(recuperacaoParalela.getObservacoes() + " - " + obs);
                 obs = null;
             }
@@ -410,12 +416,12 @@ public class RecuperacaoController implements Serializable {
     public void indeferirRp() {
         try {
             recuperacaoParalela.setStatus("Correção");
-            
+
             if (recuperacaoParalela.getObservacoes() != null) {
-                    recuperacaoParalela.setObservacoes(recuperacaoParalela.getObservacoes() + "\n");
+                recuperacaoParalela.setObservacoes(recuperacaoParalela.getObservacoes() + "\n");
             }
             recuperacaoParalela.setObservacoes(recuperacaoParalela.getObservacoes() + "Indeferido em " + getDateTime());
-            if(obs != null) {
+            if (obs != null) {
                 recuperacaoParalela.setObservacoes(recuperacaoParalela.getObservacoes() + " - " + obs);
                 obs = null;
             }
@@ -466,6 +472,14 @@ public class RecuperacaoController implements Serializable {
 
     public void setRecuperacoesParalelas(List<RecuperacaoParalela> recuperacoesParalelas) {
         this.recuperacoesParalelas = recuperacoesParalelas;
+    }
+
+    public RecuperacaoParalela getRecuperacaoParalelaAux() {
+        return recuperacaoParalelaAux;
+    }
+
+    public void setRecuperacaoParalelaAux(RecuperacaoParalela recuperacaoParalelaAux) {
+        this.recuperacaoParalelaAux = recuperacaoParalelaAux;
     }
 
     public List<Estudante> getEstudantesTurma() {

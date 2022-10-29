@@ -165,9 +165,15 @@
                                                 </h:outputText>
                                             </p:column>
 
-                                            <p:column headerText="Hora" sortBy="#{aula.horario}">
+                                            <p:column headerText="Hora de início" sortBy="#{aula.horario}">
                                                 <h:outputText value="#{aula.horario}" >
-                                                    <f:convertDateTime pattern="HH:mm" />
+                                                    <f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
+                                                </h:outputText>
+                                            </p:column>
+
+                                            <p:column headerText="Hora de término" sortBy="#{aula.horarioFim}">
+                                                <h:outputText value="#{aula.horarioFim}" >
+                                                    <f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
                                                 </h:outputText>
                                             </p:column>
 
@@ -178,10 +184,23 @@
                                     </p:tab>
                                 </p:tabView>
                                 <div align="right">
-                                    <p:commandButton value="Editar RP" icon="pi pi-check" actionListener="#{recuperacaoController.editarRecuperacao(recuperacao)}"
+                                    <p:commandButton value="Editar RP" icon="pi pi-check" actionListener="#{recuperacaoController.editarRecuperacao(recuperacao, 'Recuperação Paralela Editada')}"
                                                      update="messages"/>
                                 </div>
                             </p:rowExpansion>
+
+                            <p:column headerText="Ações" exportable="false">
+                                <p:commandButton id="presencas" icon="pi pi-gift" class="rounded-button"
+                                                 action="/docente/rp/consultar/presencas?faces-redirect=true"
+                                                 actionListener="#{recuperacaoController.setRecuperacaoParalelaAux(recuperacao)}" />
+                                <p:tooltip for="presencas" value="Lançar Presenças" position="left"/>
+
+                                <p:commandButton id="notas" icon="pi pi-book" class="rounded-button" style="margin-left: 10px"
+                                                 action="/docente/rp/consultar/notas?faces-redirect=true"
+                                                 actionListener="#{recuperacaoController.setRecuperacaoParalelaAux(recuperacao)}" />
+
+                                <p:tooltip for="notas" value="Lançar Notas" position="left"/>
+                            </p:column>
                         </p:dataTable>
                     </h:form>
                 </div>

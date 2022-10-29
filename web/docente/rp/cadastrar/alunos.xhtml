@@ -70,6 +70,7 @@
 
                         <p:dataTable id="dt-estudantes-rp" widgetVar="dtEstudantesRp" var="estudanteRP"
                                      value="#{recuperacaoController.estudantesRP}"
+                                     editable="true" editMode="cell"
                                      emptyMessage="Nenhum estudante encontrado" rowKey="#{estudanteRP.prontuario}" styleClass="estudante-table"
                                      style="margin-top: 10px; margin-bottom: 10px" paginator="true" rows="10" paginatorPosition="bottom">
 
@@ -86,9 +87,21 @@
                                 <h:outputText value="#{estudanteRP.prontuario}" />
                             </p:column>
 
-                            <p:column headerText="Nome" sortBy="#{rphe.estudante.nome}">
+                            <p:column headerText="Nome" sortBy="#{estudanteRP.nome}">
                                 <h:outputText value="#{estudanteRP.nome}" />
                             </p:column>
+                            <ui:remove>
+                                <p:column headerText="Nota Pré" sortBy="#{rphe.notaPre}">
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <h:outputText value="#{rphe.notaPre}"/>
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:inputText value="#{rphe.notaPre}" style="width:100%"/>
+                                        </f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+                            </ui:remove>    
                         </p:dataTable>
                         <div align="right">
                             <p:commandButton value="Voltar" update="@form" action="#{recuperacaoController.navegar(-1)}" style="margin-right: 30px"/>

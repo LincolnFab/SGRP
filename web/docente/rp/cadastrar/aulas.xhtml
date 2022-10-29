@@ -65,11 +65,6 @@
                                           mindate="#{recuperacaoController.minDate}" maxdate="#{recuperacaoController.maxDate}"
                                           required="true" readonlyInput="true"/>
 
-                            <p:outputLabel for="create_rp_horario_ini">Horário de Início</p:outputLabel>
-                            <p:datePicker id="create_rp_horario_ini" value="#{recuperacaoController.aula.horario}" requiredMessage="Informe um horário"
-                                          mindate="#{recuperacaoController.minTime}" maxdate="#{recuperacaoController.maxTime}"
-                                          required="true" timeOnly="true" pattern="HH:mm"/>
-
                             <p:outputLabel for="create_rp_sala">Sala</p:outputLabel>
                             <p:selectOneMenu id="create_rp_sala" converter="#{salaConverter}"
                                              value="#{recuperacaoController.aula.saladeaulaidSala}" requiredMessage="Selecione uma sala"
@@ -78,6 +73,17 @@
                                 <f:selectItems value="#{salaController.salasDeAula}" var="sala"
                                                itemLabel="#{sala.idSala}" itemValue="#{sala}"/>
                             </p:selectOneMenu>
+
+                            <p:outputLabel for="create_rp_horario_ini">Horário de Início</p:outputLabel>
+                            <p:datePicker id="create_rp_horario_ini" value="#{recuperacaoController.aula.horario}" requiredMessage="Informe um horário de início"
+                                          mindate="#{recuperacaoController.minTime}" maxdate="#{recuperacaoController.maxTime}"
+                                          required="true" timeOnly="true" pattern="HH:mm"/>
+
+                            <p:outputLabel for="create_rp_horario_fim">Horário de Término</p:outputLabel>
+                            <p:datePicker id="create_rp_horario_fim" value="#{recuperacaoController.aula.horarioFim}" requiredMessage="Informe um horário de término"
+                                          mindate="#{recuperacaoController.minTime}" maxdate="#{recuperacaoController.maxTime}"
+                                          required="true" timeOnly="true" pattern="HH:mm"/>
+
                         </p:panelGrid>
                         <div align="right">
                             <p:commandButton value="Adicionar aula" action="#{recuperacaoController.adicionarAula()}" update="messages" style="margin-right: 30px"/>
@@ -101,8 +107,14 @@
                                 </h:outputText>
                             </p:column>
 
-                            <p:column headerText="Hora" sortBy="#{aula.horario}">
+                            <p:column headerText="Hora de início" sortBy="#{aula.horario}">
                                 <h:outputText value="#{aula.horario}" >
+                                    <f:convertDateTime pattern="HH:mm" timeZone="GMT-3"/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column headerText="Hora de término" sortBy="#{aula.horarioFim}">
+                                <h:outputText value="#{aula.horarioFim}" >
                                     <f:convertDateTime pattern="HH:mm" timeZone="GMT-3"/>
                                 </h:outputText>
                             </p:column>

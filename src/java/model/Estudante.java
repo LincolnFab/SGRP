@@ -71,6 +71,8 @@ public class Estudante implements Serializable {
     private String emailResponsavel;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "estudante")
     private Collection<RecuperacaoParalelaHasEstudante> recuperacaoParalelaHasEstudanteCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "estudante")
+    private Collection<Frequencia> frequenciaCollection;
     @JoinColumn(name = "turma_idturma", referencedColumnName = "idturma", nullable = false)
     @ManyToOne(optional = false)
     private Turma turmaIdturma;
@@ -144,6 +146,15 @@ public class Estudante implements Serializable {
 
     public void setRecuperacaoParalelaHasEstudanteCollection(Collection<RecuperacaoParalelaHasEstudante> recuperacaoParalelaHasEstudanteCollection) {
         this.recuperacaoParalelaHasEstudanteCollection = recuperacaoParalelaHasEstudanteCollection;
+    }
+
+    @XmlTransient
+    public Collection<Frequencia> getFrequenciaCollection() {
+        return frequenciaCollection;
+    }
+
+    public void setFrequenciaCollection(Collection<Frequencia> frequenciaCollection) {
+        this.frequenciaCollection = frequenciaCollection;
     }
 
     public Turma getTurmaIdturma() {
