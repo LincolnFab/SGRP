@@ -28,7 +28,7 @@
                         </p:breadCrumb>
 
                         <p:dataTable id="dt-aulas" widgetVar="dtPresencas" var="aula" value="#{recuperacaoController.recuperacaoParalelaAux.aulaCollection}"
-                                     emptyMessage="Nenhum aluno encontrado" rowKey="#{aula.dia}" styleClass="recuperacao-table"
+                                     emptyMessage="Nenhuma aula encontrada" rowKey="#{aula.dia}" styleClass="recuperacao-table"
                                      style="margin-top: 10px" paginator="false">
 
                             <f:facet name="header">
@@ -77,6 +77,7 @@
                                     <p:column headerText="Prontuário">
                                         <h:outputText value="#{frequencia.estudante.prontuario}" />
                                     </p:column>
+
                                     <p:column headerText="Nome">
                                         <h:outputText value="#{frequencia.estudante.nome}" />
                                     </p:column>
@@ -89,7 +90,7 @@
                         </p:dataTable>
 
                         <div align="right">
-                            <p:commandButton id="notas" icon="pi pi-check" value="Lançar notas" style="margin-top: 10px"
+                            <p:commandButton id="notas" icon="pi pi-check" value="Lançar presenças" style="margin-top: 10px"
                                              actionListener="#{recuperacaoController.editarRecuperacao(recuperacaoController.recuperacaoParalelaAux, 'Frequências Lançadas') }" />
                         </div>
                     </h:form>
