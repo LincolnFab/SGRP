@@ -33,6 +33,9 @@ import model.RecuperacaoParalelaHasEstudantePK;
 import model.Servidor;
 import model.Turma;
 import org.primefaces.PrimeFaces;
+import static org.primefaces.component.column.ColumnBase.PropertyKeys.filterBy;
+import org.primefaces.model.FilterMeta;
+import org.primefaces.model.MatchMode;
 import util.Util;
 
 /**
@@ -87,7 +90,7 @@ public class RecuperacaoController implements Serializable {
         setMinMaxTime();
         setMinMaxDate();
     }
-
+    
     public RecuperacaoController() {
         openNew();
     }
@@ -499,6 +502,46 @@ public class RecuperacaoController implements Serializable {
             PrimeFaces.current().ajax().update("form:messages", "form:dt-rp");
         }
     }
+    
+    public void cadastrarNotaPosRp() {
+        List<String> emails = new ArrayList<>();
+        
+        try {
+            // Alunos
+            recuperacaoParalela.getRecuperacaoParalelaHasEstudanteCollection().forEach((estudante) -> {
+                if (estudante.getEstudante().getEmailAluno() != null) {
+                    emails.add(estudante.getEstudante().getEmailAluno());
+                }
+                if (estudante.getEstudante().getEmailPessoal() != null) {
+                    emails.add(estudante.getEstudante().getEmailPessoal());
+                }
+                if (estudante.getEstudante().getEmailResponsavel() != null) {
+                    emails.add(estudante.getEstudante().getEmailResponsavel());
+                }
+            });
+            util.JavaMail.emailCadastroNota(emails, recuperacaoParalela.getDisciplina().getDisciplinaPK().getSigla(), recuperacaoParalela.getDisciplina().getNome());
+            //Util.addMessageInformation("Email enviado para o(s) estudante(s)");
+        } catch (EJBException e) {
+            //Util.addMessageError("Erro ao enviar email para o(s) estudante(s). Contate o administrador.");
+            PrimeFaces.current().ajax().update("form:messages");
+        }
+        
+    }
+    
+    public void finalizarRp() {
+        List<String> emails = new ArrayList<>();
+        
+        try {
+            util.JavaMail.emailCadastroNota(emails, recuperacaoParalela.getDisciplina().getDisciplinaPK().getSigla(), recuperacaoParalela.getDisciplina().getNome());
+            //Util.addMessageInformation("Email enviado para o(a) responsável pela recuperação paralela");
+        } catch (EJBException e) {
+            //Util.addMessageError("Erro ao enviar o email para o(a) responsável pela recuperação paralela. Contate o administrador.");
+            //PrimeFaces.current().ajax().update("form:messages");
+        }
+        
+    }
+    
+    
 
     public Turma getTurma() {
         return turma;
