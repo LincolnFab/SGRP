@@ -213,7 +213,7 @@ public class RecuperacaoController implements Serializable {
                 Util.addMessageError("Erro ao enviar o email para o FCC do Curso. Contate o administrador.");
                 PrimeFaces.current().ajax().update("form:messages");
             }
-
+            /*
             try {
                 String curso = this.curso.getDescricao();
                 if (curso.toLowerCase().contains("inf")) {
@@ -228,7 +228,7 @@ public class RecuperacaoController implements Serializable {
                 System.out.println(e);
                 Util.addMessageError("Erro ao enviar o email para o FCC do Curso. Contate o administrador.");
                 PrimeFaces.current().ajax().update("form:messages");
-            }
+            }*/
 
             fillRecuperacaoParalelaList();
             Util.addMessageInformation("A recuperação paralela foi enviada para análise");
@@ -245,12 +245,19 @@ public class RecuperacaoController implements Serializable {
         return "";
     }
 
-    public void editarRecuperacao(RecuperacaoParalela rp, String message) {
+    public void editarRecuperacao(RecuperacaoParalela rp, String message, boolean email) {
         rp.getRecuperacaoParalelaHasEstudanteCollection().isEmpty();
         rp.getServidorCollection().isEmpty();
         rp.getAulaCollection().isEmpty();
 
         recuperacaoDAO.update(rp);
+        
+        if (email) {
+            //System.out.println("Enviar email para os alunos");
+            emailNotaPosRp(rp);
+        }
+            
+        
         Util.addMessageInformation(message);
 
         PrimeFaces.current().ajax().update("form:messages");
@@ -503,12 +510,13 @@ public class RecuperacaoController implements Serializable {
         }
     }
     
-    public void cadastrarNotaPosRp() {
+    public void emailNotaPosRp(RecuperacaoParalela rp) {
         List<String> emails = new ArrayList<>();
         
+        System.out.println("enviar email para os alunos");
         try {
             // Alunos
-            recuperacaoParalela.getRecuperacaoParalelaHasEstudanteCollection().forEach((estudante) -> {
+            rp.getRecuperacaoParalelaHasEstudanteCollection().forEach((estudante) -> {
                 if (estudante.getEstudante().getEmailAluno() != null) {
                     emails.add(estudante.getEstudante().getEmailAluno());
                 }
@@ -519,8 +527,8 @@ public class RecuperacaoController implements Serializable {
                     emails.add(estudante.getEstudante().getEmailResponsavel());
                 }
             });
-            util.JavaMail.emailCadastroNota(emails, recuperacaoParalela.getDisciplina().getDisciplinaPK().getSigla(), recuperacaoParalela.getDisciplina().getNome());
-            //Util.addMessageInformation("Email enviado para o(s) estudante(s)");
+            util.JavaMail.emailCadastroNota(emails, rp.getDisciplina().getDisciplinaPK().getSigla(), rp.getDisciplina().getNome());
+            Util.addMessageInformation("Email enviado para o(s) estudante(s)");
         } catch (EJBException e) {
             //Util.addMessageError("Erro ao enviar email para o(s) estudante(s). Contate o administrador.");
             PrimeFaces.current().ajax().update("form:messages");
