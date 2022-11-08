@@ -155,6 +155,4 @@ public class EstudanteController implements Serializable {
     public void setFile(UploadedFile file) {
         this.file = file;
     }
-
-    
 }

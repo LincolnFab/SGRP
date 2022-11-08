@@ -32,19 +32,20 @@ public class RecuperacaoDAO extends AbstractDAO<RecuperacaoParalela> {
 //                .getResultList();
 //    }
     
-    /*public List<RecuperacaoParalela> buscarPorEstudante(String prontuario) {
+    public List<RecuperacaoParalela> buscarPorEstudante(String prontuario) {
         
-        List<RecuperacaoParalela> rps = new ArrayList<>();
-        rps = getEntityManager()
+       List<RecuperacaoParalela> rps = new ArrayList<>();
+       rps = getEntityManager()
                 .createQuery("SELECT rp FROM Estudante e JOIN e.recuperacaoParalelaHasEstudanteCollection rphe ON e = rphe.estudante JOIN rphe.recuperacaoParalela rp ON rphe.recuperacaoParalela = rp JOIN rp.aulaCollection a ON rp = a.recuperacaoParalelaId WHERE e.prontuario = :prontuario", RecuperacaoParalela.class)
                 .setParameter("prontuario", prontuario)
                 .getResultList();
         System.out.println("rps......." + rps);
         
-        return rps;
-        return getEntityManager()
+        return rps;   
+        /*return getEntityManager()
                 .createQuery("SELECT rp FROM Estudante e JOIN e.recuperacaoParalelaHasEstudanteCollection rphe ON e = rphe.estudante JOIN rphe.recuperacaoParalela rp ON rphe.recuperacaoParalela = rp JOIN rp.aulaCollection a ON rp = a.recuperacaoParalelaId WHERE e.prontuario = :prontuario", RecuperacaoParalela.class)
                 .setParameter("prontuario", prontuario)
                 .getResultList();
-    }*/
+*/
+    }
 }

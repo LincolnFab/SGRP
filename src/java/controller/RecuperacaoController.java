@@ -70,7 +70,7 @@ public class RecuperacaoController implements Serializable {
     private Curso curso;
     private Aula aula;
     private Disciplina disciplina;
-
+    
     private List<Turma> turmasCurso;
     private List<Disciplina> disciplinasCurso;
     private List<Estudante> estudantesTurma;
@@ -80,13 +80,14 @@ public class RecuperacaoController implements Serializable {
     private RecuperacaoParalela recuperacaoParalela;
     private RecuperacaoParalela recuperacaoParalelaAux;
     private List<RecuperacaoParalela> recuperacoesParalelas;
+    private List<RecuperacaoParalela> recuperacoesParalelasEstudanteAutenticado;
 
     private String obs;
 
     @PostConstruct
     public void fillRecuperacaoParalelaList() {
         recuperacoesParalelas = recuperacaoDAO.buscarTodas();
-
+        
         setMinMaxTime();
         setMinMaxDate();
     }
@@ -708,6 +709,16 @@ public class RecuperacaoController implements Serializable {
 
     public void setObs(String obs) {
         this.obs = obs;
+    }
+    
+    public List<RecuperacaoParalela> getRecuperacoesParalelasEstudanteAutenticado() {
+        // usuario autenticado...
+        recuperacoesParalelasEstudanteAutenticado = recuperacaoDAO.buscarPorEstudante("PE3012905");
+        return recuperacoesParalelasEstudanteAutenticado;
+    }
+
+    public void setRecuperacoesParalelasEstudanteAutenticado(List<RecuperacaoParalela> recuperacoesParalelasEstudanteAutenticado) {
+        this.recuperacoesParalelasEstudanteAutenticado = recuperacoesParalelasEstudanteAutenticado;
     }
 
 }

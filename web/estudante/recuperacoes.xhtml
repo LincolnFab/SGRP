@@ -46,7 +46,7 @@
                             <p:menuitem outcome="/estudante/recuperacoes" value="Consultar Recuperação Paralela"/>
                         </p:breadCrumb>
 
-                        <p:dataTable id="dt-rp" widgetVar="dtRPs" var="recuperacao" value="#{recuperacaoController.recuperacoesParalelas}"
+                        <p:dataTable id="dt-rp" widgetVar="dtRPs" var="recuperacao" value="#{recuperacaoController.recuperacoesParalelasEstudanteAutenticado}"
                                      emptyMessage="Nenhuma recuperação encontrada" rowKey="#{recuperacao.id}" styleClass="recuperacao-table"
                                      style="margin-top: 10px" paginator="true" rows="10" paginatorPosition="bottom">
 
@@ -77,8 +77,6 @@
                             <p:column headerText="Ano Letivo" sortBy="#{recuperacao.dataProposta}">
                                 <h:outputText value="#{recuperacao.anoLetivo}" />
                             </p:column>
-
-                            
 
                             <p:rowExpansion>
                                 <p:tabView>
