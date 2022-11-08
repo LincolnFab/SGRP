@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Login</title>
+        <style type="text/css">
+            #center {
+                left: 50%; 
+                margin: -170px 0 0 -210px; 
+                padding:10px;
+                min-width: 400px;
+                position: absolute;
+                top: 50%;
+            }
+            .ui-inputfield {
+                min-width:100%;
+            }
+            .ui-grid-col-1, .ui-grid-col-2, .ui-grid-col-3,
+            .ui-grid-col-4, .ui-grid-col-5, .ui-grid-col-6, 
+            .ui-grid-col-7, .ui-grid-col-8, .ui-grid-col-9, 
+            .ui-grid-col-10, .ui-grid-col-11, .ui-grid-col-12 {
+                float: none;
+            }
+            .ui-outputlabel {
+                padding-top: 6px;
+                padding-left: 10px;
+                display: inline-block;
+            }
+            .ui-card-body {
+                min-width: 400px !important;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <div id="center">
+            <p:card style="width: 25rem; margin-bottom: 2em">
+                <f:facet class="success" name="title">
+                    Recuperação Paralela IFSP - PEP
+                </f:facet>
+
+                <h:form>
+                    <p:growl id="messages" showDetail="true" />
+
+                    <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-4, ui-grid-col-10">
+                        <p:row styleClass="my-heading-row">
+                            <p:outputLabel style="font-weight: bold" value="Login"/>
+                        </p:row>
+                        <p:outputLabel for="login" value="Login:" />
+                        <p:inputText id="login" value="#{loginController.login}" 
+                                     placeholder="PE3000000" required="true" requiredMessage="Digite o login"
+                                     onblur="value = value.toUpperCase()"/>
+
+                        <p:outputLabel for="senha" value="Senha:" />
+                        <p:password id="senha" value="#{loginController.senha}" 
+                                    required="true" requiredMessage="Digite a senha"
+                                    toggleMask="true" redisplay="true"/>
+
+                        <ui:remove>
+                            <p:selectOneRadio id="tipoUsuario" required="true" requiredMessage="Selecione o perfil" value="#{loginController.tipoUsuario}">
+                                <f:selectItem itemLabel="Servidor" itemValue="Servidor"/>
+                                <f:selectItem itemLabel="Estudante" itemValue="Estudante"/>
+
+                            </p:selectOneRadio>
+                        </ui:remove>
+
+                    </p:panelGrid>
+                    <p:panelGrid columns="1" layout="grid" styleClass="showcase-text-align-center">
+                        <p:commandButton value="Acessar" action="#{loginController.autenticador()}" update="messages">
+                        </p:commandButton>
+                        <p:commandLink id="alterarSenha" action="#{buttonView.buttonAction}" class="mr-4"
+                                       value="Esqueci minha senha."/>
+                    </p:panelGrid>
+                </h:form>
+                
+                <h:form id="dialogs">
+                    <p:dialog header="Alterar Senha" widgetVar="editSenhaDialog" showEffect="fade" modal="true" responsive="true">
+                        <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-4, ui-grid-col-10">
+                        <p:row styleClass="my-heading-row">
+                            <p:outputLabel style="font-weight: bold" value="Login"/>
+                        </p:row>
+                        <p:outputLabel for="loginAlterarSenha" value="Login:" />
+                        <p:inputText id="loginAlterarSenha" value="#{loginController.login}" 
+                                     placeholder="PE3000000" required="true" requiredMessage="Digite o login"
+                                     onblur="value = value.toUpperCase()"/>
+
+                        <p:outputLabel for="senhaAlterarSenha" value="Senha:" />
+                        <p:password id="senhaAlterarSenha" value="#{loginController.senha}" 
+                                    required="true" requiredMessage="Digite a senha"
+                                    toggleMask="true" redisplay="true"/>
+                        
+                        <p:outputLabel for="novaSenha" value="Nova senha:" />
+                        <p:password id="novaSenha" value="#{loginController.novaSenha}" 
+                                    required="true" requiredMessage="Digite a nova senha"
+                                    toggleMask="true" redisplay="true"/>
+                        </p:panelGrid>
+                        <f:facet name="footer">
+                            <p:commandButton value="Alterar" action="#{loginController.alterarSenha()}" />
+                        </f:facet>
+                    </p:dialog>
+                </h:form>
+            </p:card>
+        </div>
+    </h:body>
+</html>
+
