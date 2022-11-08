@@ -191,18 +191,115 @@
                             </p:rowExpansion>
 
                             <p:column headerText="Ações" exportable="false">
-                                <p:commandButton id="presencas" icon="pi pi-gift" class="rounded-button"
-                                                 action="/docente/rp/consultar/presencas?faces-redirect=true"
-                                                 actionListener="#{recuperacaoController.setRecuperacaoParalelaAux(recuperacao)}" />
-                                <p:tooltip for="presencas" value="Lançar Presenças" position="left"/>
+                                <p:panelGrid columns="4" layout="grid" styleClass="showcase-text-align-center">
+                                    <p:commandButton id="presencas" icon="pi pi-gift" class="rounded-button"
+                                                     action="/docente/rp/consultar/presencas?faces-redirect=true"
+                                                     actionListener="#{recuperacaoController.setRecuperacaoParalelaAux(recuperacao)}" />
 
-                                <p:commandButton id="notas" icon="pi pi-book" class="rounded-button" style="margin-left: 10px"
-                                                 action="/docente/rp/consultar/notas?faces-redirect=true"
-                                                 actionListener="#{recuperacaoController.setRecuperacaoParalelaAux(recuperacao)}" />
 
-                                <p:tooltip for="notas" value="Lançar Notas" position="left"/>
+                                    <p:commandButton id="notas" icon="pi pi-book" class="rounded-button" style="margin-left: 7px"
+                                                     action="/docente/rp/consultar/notas?faces-redirect=true"
+                                                     actionListener="#{recuperacaoController.setRecuperacaoParalelaAux(recuperacao)}" />
+
+
+                                    <p:commandButton id="cancelar" icon="pi pi-times" class="rounded-button" style="margin-left: 7px" styleClass="rounded-button ui-button-danger"
+                                                     update=":dialogs:cancelar-content"
+                                                     oncomplete="PF('cancelarRP').show()"
+                                                     process="@this">
+                                        <f:setPropertyActionListener value="#{recuperacao}" target="#{recuperacaoController.recuperacaoParalela}"/>
+                                        <p:resetInput target=":dialogs:cancelar-content"/>
+                                    </p:commandButton>
+                                    
+                                    <p:commandButton id="finalizar" icon="pi pi-check-circle" class="rounded-button" style="margin-left: 7px" styleClass="rounded-button ui-button-success"
+                                                     update=":dialogs:finalizar-content"
+                                                     oncomplete="PF('finalizarRP').show()"
+                                                     process="@this">
+                                        <f:setPropertyActionListener value="#{recuperacao}" target="#{recuperacaoController.recuperacaoParalela}"/>
+                                        <p:resetInput target=":dialogs:finalizar-content"/>
+                                    </p:commandButton>
+
+                                    <ui:remove>
+                                        <p:commandButton id="cancelar"
+                                                         action="#{recuperacaoController.cancelarRP()}"
+                                                         styleClass="ui-button-danger rounded-button" icon="pi pi-times"
+                                                         style="margin-left: 7px;"
+                                                         >
+                                            <f:setPropertyActionListener value="#{recuperacao}" target="#{recuperacaoController.recuperacaoParalela}"/>
+                                            <p:confirm header="Cancelar Recuperação Paralela" message="Deseja cancelar a recuperacao paralela?" icon="pi pi-exclamation-triangle"/>
+                                        </p:commandButton>
+
+                                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                                            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" />
+                                        </p:confirmDialog>
+
+                                        <p:commandButton id="finalizar"
+                                                         action="#{recuperacaoController.finalizarRp()}"
+                                                         styleClass="rounded-button ui-button-success" icon="pi pi-check-circle"
+                                                         style="margin-left: 7px;"
+                                                         >
+                                            <f:setPropertyActionListener value="#{recuperacao}" target="#{recuperacaoController.recuperacaoParalela}"/>
+                                            <p:confirm header="Finalizar Recuperação Paralela" message="Deseja finalizar a recuperacao paralela?" icon="pi pi-exclamation-triangle"/>
+                                        </p:commandButton>
+
+                                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                                            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                                            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" />
+                                        </p:confirmDialog>
+                                    </ui:remove>
+                                </p:panelGrid>
+                                <p:panelGrid columns="4" layout="grid" styleClass="showcase-text-align-center">
+                                    <p:tooltip for="presencas" value="Lançar Presenças" position="left"/>
+                                    <p:tooltip for="notas" value="Lançar Notas" position="left"/> 
+                                    <p:tooltip for="cancelar" value="Cancelar RP" position="left"/>
+                                    <p:tooltip for="finalizar" value="Finalizar RP" position="left"/>
+                                </p:panelGrid>
                             </p:column>
                         </p:dataTable>
+                    </h:form>
+
+                    <h:form id="dialogs">
+                        <p:dialog id="dialogCancelar" header="Cancelar recuperação paralela"
+                                  showEffect="fade" modal="true"
+                                  widgetVar="cancelarRP" responsive="true">
+                            <p:outputPanel id="cancelar-content" class="ui-fluid">
+                                
+                                <i class="pi pi-exclamation-triangle"></i>
+                                <p:outputLabel> Deseja cancelar a recuperação paralela?</p:outputLabel>
+                            
+                            </p:outputPanel>
+                            
+                            <f:facet name="footer">
+                                <p:commandButton value="Não" icon="pi pi-times" onclick="PF('cancelarRP').hide()"
+                                                 class="ui-button-secondary"/>
+                                <p:commandButton id="simBtn" value="Sim" icon="pi pi-check" actionListener="#{recuperacaoController.cancelarRP()}"
+                                                 update="cancelar-content" process="cancelar-content @this"/>
+                            </f:facet>
+                            <p:blockUI block="dialogCancelar" trigger="simBtn">
+                                <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
+                            </p:blockUI>
+                        </p:dialog>
+                        
+                        <p:dialog id="dialogFinalizar" header="Finalizar recuperação paralela"
+                                  showEffect="fade" modal="true"
+                                  widgetVar="finalizarRP" responsive="true">
+                            <p:outputPanel id="finalizar-content" class="ui-fluid">
+                                
+                                <i class="pi pi-exclamation-triangle"></i>
+                                <p:outputLabel> Deseja finalizar a recuperação paralela?</p:outputLabel>
+                            
+                            </p:outputPanel>
+                            
+                            <f:facet name="footer">
+                                <p:commandButton value="Não" icon="pi pi-times" onclick="PF('finalizarRP').hide()"
+                                                 class="ui-button-secondary"/>
+                                <p:commandButton id="simBtnFinalizar" value="Sim" icon="pi pi-check" actionListener="#{recuperacaoController.finalizarRp()}"
+                                                 update="finalizar-content" process="finalizar-content @this"/>
+                            </f:facet>
+                            <p:blockUI block="dialogFinalizar" trigger="simBtnFinalizar">
+                                <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
+                            </p:blockUI>
+                        </p:dialog>
                     </h:form>
                 </div>
             </ui:define>
