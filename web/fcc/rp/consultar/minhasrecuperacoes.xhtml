@@ -15,7 +15,7 @@
     </h:head>
 
     <h:body>
-        <ui:composition template="/dae/home.xhtml">
+        <ui:composition template="/fcc/home.xhtml">
             <ui:define name="content">
                 <style>
                     /* reset on the showcase style*/
@@ -42,8 +42,8 @@
                         <p:growl id="messages" showDetail="true"/>
 
                         <p:breadCrumb>
-                            <p:menuitem outcome="/dae/home" value="Home"/>
-                            <p:menuitem outcome="/dae/rp/consultar/recuperacoes" value="Consultar Recuperação Paralela"/>
+                            <p:menuitem outcome="/fcc/home" value="Home"/>
+                            <p:menuitem outcome="/fcc/rp/consultar/recuperacoes" value="Consultar Recuperação Paralela"/>
                         </p:breadCrumb>
 
                         <p:dataTable id="dt-rp" widgetVar="dtRPs" var="recuperacao" value="#{recuperacaoController.recuperacoesParalelas}"
@@ -82,18 +82,26 @@
                                 <h:outputText value="#{recuperacao.quantidadeAlunos}" />
                             </p:column>
 
-                            <p:column headerText="Status" filterBy="#{recuperacao.status}" sortBy="#{recuperacao.status}">
-                                <h:outputText value="#{recuperacao.status}" />
+                            <p:column field="status" headerText="Status" filterMatchMode="exact">
+                                <f:facet name="filter">
+                                    <p:selectOneMenu onchange="PF('dtRPs').filter()" styleClass="ui-custom-filter">
+                                        <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItem itemLabel="Aprovada" itemValue="Aprovada"/>
+                                        <f:selectItem itemLabel="Correção" itemValue="Correção"/>
+                                        <f:selectItem itemLabel="Cancelada" itemValue="Cancelada"/>
+                                        <f:selectItem itemLabel="Deferida - FCC" itemValue="Deferida - FCC"/>
+                                        <f:selectItem itemLabel="Finalizada" itemValue="Finalizada"/>
+                                        <f:selectItem itemLabel="Pendente" itemValue="Pendente"/>
+                                    </p:selectOneMenu>
+                                </f:facet>
                             </p:column>
-
-                            
 
                             <p:column headerText="Ações" exportable="false">
                                 <ui:remove>
-                                    <p:commandButton action="#{recuperacaoController.deferirRpDae()}"
+                                    <p:commandButton action="#{recuperacaoController.deferirRpFcc}"
                                                      styleClass="rounded-button"  icon="pi pi-check"
                                                      title="Deferir"
-                                                     disabled="#{recuperacao.status != 'Deferida - FCC'}"
+                                                     disabled="#{recuperacao.status != 'pendente' and recuperacao.status != 'Pendente'}"
                                                      >
                                         <f:setPropertyActionListener value="#{recuperacao}" target="#{recuperacaoController.recuperacaoParalela}"/>
                                         <p:confirm header="Deferir Recuperação Paralela" message="Deseja deferir a recuperacao paralela?" icon="pi pi-exclamation-triangle"/>
@@ -103,7 +111,7 @@
                                                      styleClass="ui-button-danger rounded-button" icon="pi pi-times"
                                                      title="Indeferir"
                                                      style="margin-left: 7px;"
-                                                     disabled="#{recuperacao.status != 'Deferida - FCC'}"
+                                                     disabled="#{recuperacao.status != 'pendente' and recuperacao.status != 'Pendente'}"
                                                      >
                                         <f:setPropertyActionListener value="#{recuperacao}" target="#{recuperacaoController.recuperacaoParalela}"/>
                                         <p:confirm header="Indeferir Recuperação Paralela" message="Deseja indeferir a recuperacao paralela?" icon="pi pi-exclamation-triangle"/>
@@ -122,12 +130,12 @@
                                         <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no ui-button-flat" />
                                     </p:confirmDialog>
                                 </ui:remove>
-                                
+
                                 <p:commandButton icon="pi pi-check" update=":dialogs:aut-rp-content"
                                                  oncomplete="PF('autRP').show()"
                                                  styleClass="rounded-button" process="@this"
                                                  title="Deferir"
-                                                 disabled="#{recuperacao.status != 'Deferida - FCC'}"
+                                                 disabled="#{recuperacao.status != 'pendente' and recuperacao.status != 'Pendente'}"
                                                  >
                                     <f:setPropertyActionListener value="#{recuperacao}" target="#{recuperacaoController.recuperacaoParalela}"/>
                                     <p:resetInput target=":dialogs:aut-rp-content"/>
@@ -138,11 +146,12 @@
                                                  oncomplete="PF('indefRP').show()"
                                                  styleClass="ui-button-danger rounded-button" process="@this"
                                                  title="Indeferir"
-                                                 disabled="#{recuperacao.status != 'Deferida - FCC'}"
+                                                 disabled="#{recuperacao.status != 'pendente' and recuperacao.status != 'Pendente'}"
                                                  >
                                     <f:setPropertyActionListener value="#{recuperacao}" target="#{recuperacaoController.recuperacaoParalela}"/>
                                     <p:resetInput target=":dialogs:indef-rp-content"/>
                                 </p:commandButton>
+
                             </p:column>
 
                             <p:rowExpansion>
@@ -249,7 +258,7 @@
                                                     <f:convertDateTime pattern="HH:mm" timeZone="GMT-3"/>
                                                 </h:outputText>
                                             </p:column>
-                                            
+
                                             <p:column headerText="Sala" sortBy="#{aula.saladeaulaidSala.idSala}">
                                                 <h:outputText value="#{aula.saladeaulaidSala.idSala}" />
                                             </p:column>
@@ -259,9 +268,10 @@
                             </p:rowExpansion>
                         </p:dataTable>
                     </h:form>
-                    
+
                     <h:form id="dialogs">
-                        <p:dialog id="dialogAut" header="Autorizar recuperação paralela?" showEffect="fade" modal="true"
+
+                        <p:dialog id="dialogAut" header="Autorizar recuperação paralela" showEffect="fade" modal="true"
                                   widgetVar="autRP" responsive="true">
                             <p:outputPanel id="aut-rp-content" class="ui-fluid">
                                 <p:panelGrid columns="2" layout="flex" contentStyleClass="align-items-baseline ui-fluid">
@@ -272,7 +282,7 @@
                                 </p:panelGrid>
                             </p:outputPanel>
                             <f:facet name="footer">
-                                <p:commandButton id="simBtn" value="Sim" icon="pi pi-check" actionListener="#{recuperacaoController.deferirRpDae()}"
+                                <p:commandButton id="simBtn" value="Sim" icon="pi pi-check" actionListener="#{recuperacaoController.deferirRpFcc()}"
                                                  update="aut-rp-content" process="aut-rp-content @this"/>
                                 <p:commandButton value="Não" icon="pi pi-times" onclick="PF('autRP').hide()"
                                                  class="ui-button-secondary"/>
@@ -302,7 +312,7 @@
                                 <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
                             </p:blockUI>
                         </p:dialog>
-                    
+
                     </h:form>
                 </div>
             </ui:define>

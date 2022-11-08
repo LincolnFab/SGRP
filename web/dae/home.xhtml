@@ -30,9 +30,12 @@
                     
                    <p:tieredMenu id="menu" style="width:250px; min-width: 250px; margin-top: 10px; padding: 0px;">
                         <p:menuitem outcome="/dae/home" value="Home" icon="pi pi-home"/>
-                        <p:menuitem outcome="/dae/rp/consultar/recuperacoes" value="Consultar RP" icon="pi pi-list"/>
+                        <p:menuitem outcome="/docente/rp/cadastrar/dados" value="Cadastrar RP" icon="pi pi-plus"/>
+                        <p:submenu label="Consultar" icon="pi pi-search">
+                            <p:menuitem outcome="/dae/rp/consultar/recuperacoes" value="Todas Recuperações Paralelas" />
+                            <p:menuitem outcome="/dae/rp/consultar/minhasrecuperacoes" value="Minhas Recuperações Paralelas"/>
+                        </p:submenu>
                     </p:tieredMenu>
-
                     <p:sticky target="menu"/>
                 </h:form>
             </ui:insert>
