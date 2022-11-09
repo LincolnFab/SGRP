@@ -21,14 +21,26 @@
                     <h:form id="form">
                         <p:growl id="messages" showDetail="true"/>
 
-                        <p:breadCrumb>
-                            <p:menuitem outcome="/csp/home" value="Home"/>
-                            <p:menuitem outcome="/csp/consultar/recuperacoes" value="Consultar Recuperação Paralela"/>
-                        </p:breadCrumb>
+                            <p:breadCrumb>
+                                <p:menuitem outcome="/csp/home" value="Home"/>
+                                <p:menuitem outcome="/csp/consultar/recuperacoes" value="Consultar Recuperação Paralela"/>
+                            </p:breadCrumb>
 
+                        <div class="flex justify-content-between">
+                            <div>
+                                <p:commandButton value="XLSX" styleClass="mr-2 mb-2" >
+                                    <p:dataExporter type="xlsxstream" target="dt-rp" fileName="relatorio" visibleOnly="true"/>
+                                </p:commandButton>
+
+                                <p:commandButton value="PDF" styleClass="mr-2 mb-2" >
+                                    <p:dataExporter type="pdf" target="dt-rp" fileName="relatorio" visibleOnly="true"/>
+                                </p:commandButton>
+                            </div>
+                        </div>
                         <p:dataTable id="dt-rp" widgetVar="dtRPs" var="recuperacao" value="#{recuperacaoController.recuperacoesParalelas}"
                                      emptyMessage="Nenhuma recuperação encontrada" rowKey="#{recuperacao.id}" styleClass="recuperacao-table"
-                                     style="margin-top: 10px" paginator="true" rows="10" paginatorPosition="bottom">
+                                     style="margin-top: 10px" paginator="true" rows="10" paginatorPosition="bottom"
+                                     scrollable="true" scrollWidth="90%" >
 
                             <f:facet name="header">
                                 <div class="p-d-flex p-ai-center p-jc-between">
@@ -41,11 +53,31 @@
                                     </div>
                                 </div>
                             </f:facet>
-
-                            <p:column style="width:2rem">
-                                <p:rowToggler/>
+                                                        
+                            <p:column headerText="Curso" sortBy="#{recuperacao.disciplina.curso.descricao}">
+                                <h:outputText value="#{recuperacao.disciplina.curso.descricao}" />
+                            </p:column>
+                            
+                            <p:column headerText="ID Turma" sortBy="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.turmaIdturma}">
+                                <h:outputText value="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.turmaIdturma}" />
+                            </p:column>
+                            
+                            <p:column headerText="Turma" sortBy="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.turmaIdturma.descricao}">
+                                <h:outputText value="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.turmaIdturma.descricao}" />
+                            </p:column>
+                            
+                            <p:column headerText="Prontuário" sortBy="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.prontuario}">
+                                <h:outputText value="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.prontuario}" />
+                            </p:column>
+                            
+                            <p:column headerText="Nome" sortBy="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.nome}">
+                                <h:outputText value="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.nome}" />
                             </p:column>
 
+                            <p:column headerText="Disciplina" sortBy="#{recuperacao.disciplina.disciplinaPK.sigla}">
+                                <h:outputText value="#{recuperacao.disciplina.disciplinaPK.sigla}" />
+                            </p:column>
+                            
                             <p:column headerText="Disciplina" sortBy="#{recuperacao.disciplina.nome}">
                                 <h:outputText value="#{recuperacao.disciplina.nome}" />
                             </p:column>
@@ -61,11 +93,25 @@
                             <p:column headerText="Total Alunos" sortBy="#{recuperacao.quantidadeAlunos}">
                                 <h:outputText value="#{recuperacao.quantidadeAlunos}" />
                             </p:column>
+                            
+                            <p:column headerText="Total Aulas" sortBy="#{recuperacao.quantidadeAulas}">
+                                <h:outputText value="#{recuperacao.quantidadeAulas}" />
+                            </p:column>
 
                             <p:column headerText="Status" sortBy="#{recuperacao.status}">
                                 <h:outputText value="#{recuperacao.status}" />
                             </p:column>
-
+                            
+                            <p:column headerText="Nota Pré" sortBy="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].notaPre}">
+                                <h:outputText value="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].notaPre}" />
+                            </p:column>
+                            
+                            <p:column headerText="Nota Pós" sortBy="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].notaPos}">
+                                <h:outputText value="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].notaPos}" />
+                            </p:column>
+                            
+                            
+                            <ui:remove>
                             <p:rowExpansion>
                                 <p:tabView>
                                     <p:tab title="Dados">
@@ -86,6 +132,9 @@
 
                                             <p:outputLabel>Disciplina:</p:outputLabel>
                                             <p:inputText disabled="true" value="#{recuperacao.disciplina.nome}"/>
+                                            
+                                            <p:outputLabel>Estudante:</p:outputLabel>
+                                            <p:inputText disabled="true" value="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.turmaIdturma.descricao}"/>
 
                                             <p:outputLabel>Bimestre: </p:outputLabel>
                                             <p:selectOneButton id="create_rp_bimestre" disabled="true"
@@ -185,6 +234,7 @@
                                     </p:tab>
                                 </p:tabView>
                             </p:rowExpansion>
+                                </ui:remove>
                         </p:dataTable>
                     </h:form>
                 </div>

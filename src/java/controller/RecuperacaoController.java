@@ -81,7 +81,7 @@ public class RecuperacaoController implements Serializable {
     private RecuperacaoParalela recuperacaoParalelaAux;
     private List<RecuperacaoParalela> recuperacoesParalelas;
     private List<RecuperacaoParalela> recuperacoesParalelasEstudanteAutenticado;
-
+    
     private String obs;
 
     @PostConstruct
