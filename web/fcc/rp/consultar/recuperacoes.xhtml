@@ -131,7 +131,7 @@
                                     </p:confirmDialog>
                                 </ui:remove>
 
-                                <p:commandButton icon="pi pi-check" update=":dialogs:aut-rp-content"
+                                <p:commandButton id="deferir" icon="pi pi-check" update=":dialogs:aut-rp-content"
                                                  oncomplete="PF('autRP').show()"
                                                  styleClass="rounded-button" process="@this"
                                                  title="Deferir"
@@ -140,8 +140,9 @@
                                     <f:setPropertyActionListener value="#{recuperacao}" target="#{recuperacaoController.recuperacaoParalela}"/>
                                     <p:resetInput target=":dialogs:aut-rp-content"/>
                                 </p:commandButton>
+                                <p:tooltip for="deferir" value="Deferir RP" position="left"/>
 
-                                <p:commandButton icon="pi pi-times" update=":dialogs:aut-rp-content"
+                                <p:commandButton id="indeferir" icon="pi pi-times" update=":dialogs:aut-rp-content"
                                                  style="margin-left: 7px;"
                                                  oncomplete="PF('indefRP').show()"
                                                  styleClass="ui-button-danger rounded-button" process="@this"
@@ -151,7 +152,7 @@
                                     <f:setPropertyActionListener value="#{recuperacao}" target="#{recuperacaoController.recuperacaoParalela}"/>
                                     <p:resetInput target=":dialogs:indef-rp-content"/>
                                 </p:commandButton>
-
+                                <p:tooltip for="indeferir" value="Indeferir RP" position="left"/>
                             </p:column>
 
                             <p:rowExpansion>
@@ -282,10 +283,10 @@
                                 </p:panelGrid>
                             </p:outputPanel>
                             <f:facet name="footer">
-                                <p:commandButton id="simBtn" value="Sim" icon="pi pi-check" actionListener="#{recuperacaoController.deferirRpFcc()}"
+                                
+                               
+                                <p:commandButton id="simBtn" value="Salvar" icon="pi pi-check" actionListener="#{recuperacaoController.deferirRpFcc()}"
                                                  update="aut-rp-content" process="aut-rp-content @this"/>
-                                <p:commandButton value="Não" icon="pi pi-times" onclick="PF('autRP').hide()"
-                                                 class="ui-button-secondary"/>
                             </f:facet>
                             <p:blockUI block="dialogAut" trigger="simBtn">
                                 <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
@@ -303,10 +304,9 @@
                                 </p:panelGrid>
                             </p:outputPanel>
                             <f:facet name="footer">
-                                <p:commandButton id="simBtnIndef" value="Sim" icon="pi pi-check" actionListener="#{recuperacaoController.indeferirRp()}"
+                                
+                                <p:commandButton id="simBtnIndef" value="Salvar" icon="pi pi-check" actionListener="#{recuperacaoController.indeferirRp()}"
                                                  update="indef-rp-content" process="indef-rp-content @this"/>
-                                <p:commandButton value="Não" icon="pi pi-times" onclick="PF('indefRP').hide()"
-                                                 class="ui-button-secondary"/>
                             </f:facet>
                             <p:blockUI block="dialogIndef" trigger="simBtnIndef">
                                 <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
