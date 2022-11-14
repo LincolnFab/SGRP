@@ -51,10 +51,10 @@
                             <p:column headerText="Nota Pré" sortBy="#{rphe.notaPre}">
                                 <p:cellEditor>
                                     <f:facet name="output">
-                                        <h:outputText value="#{rphe.notaPre}"/>
+                                        <h:outputText value="#{rphe.notaPre == 0 ? ''.concat(rphe.notaPre).concat(' - Editar'): rphe.notaPre}"/>
                                     </f:facet>
                                     <f:facet name="input">
-                                        <p:inputText value="#{rphe.notaPre}" style="width:100%"/>
+                                        <p:inputText value="#{rphe.notaPre}" style="width:100%;"/>
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
@@ -62,7 +62,7 @@
                             <p:column headerText="Nota Pós" sortBy="#{rphe.notaPos}">
                                 <p:cellEditor>
                                     <f:facet name="output">
-                                        <h:outputText value="#{rphe.notaPos}"/>
+                                        <h:outputText value="#{rphe.notaPre == 0 ? ''.concat(rphe.notaPos).concat(' - Editar'): rphe.notaPos}"/>
                                     </f:facet>
                                     <f:facet name="input">
                                         <p:inputText value="#{rphe.notaPos}" style="width:100%"/>
@@ -73,7 +73,7 @@
 
                         <div align="right">
                             <p:commandButton id="notas" icon="pi pi-check" value="Lançar notas" style="margin-top: 10px"
-                                             actionListener="#{recuperacaoController.editarRecuperacao(recuperacaoController.recuperacaoParalelaAux, 'Notas Lançadas', true)}" />
+                                             actionListener="#{recuperacaoController.editarRecuperacao(recuperacaoController.recuperacaoParalelaAux, 'Notas Lançadas', false)}" />
                         </div>
 
                     </h:form>
