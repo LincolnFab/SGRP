@@ -40,7 +40,9 @@
                         <p:dataTable id="dt-rp" widgetVar="dtRPs" var="recuperacao" value="#{recuperacaoController.recuperacoesParalelas}"
                                      emptyMessage="Nenhuma recuperação encontrada" rowKey="#{recuperacao.id}" styleClass="recuperacao-table"
                                      style="margin-top: 10px" paginator="true" rows="10" paginatorPosition="bottom"
-                                     scrollable="true" scrollWidth="90%" >
+                                     scrollable="true"
+                                     scrollWidth="98%"
+                                     >
 
                             <f:facet name="header">
                                 <div class="p-d-flex p-ai-center p-jc-between">
@@ -54,15 +56,18 @@
                                 </div>
                             </f:facet>
                                                         
-                            <p:column headerText="Curso" sortBy="#{recuperacao.disciplina.curso.descricao}">
+                            <p:column headerText="Curso" sortBy="#{recuperacao.disciplina.curso.descricao}" 
+                                      filterBy="#{recuperacao.disciplina.curso.descricao}" filterMatchMode="contains">
                                 <h:outputText value="#{recuperacao.disciplina.curso.descricao}" />
                             </p:column>
                             
-                            <p:column headerText="ID Turma" sortBy="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.turmaIdturma}">
+                            <p:column headerText="ID Turma" sortBy="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.turmaIdturma}"
+                                      filterBy="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.turmaIdturma}" filterMatchMode="contains">
                                 <h:outputText value="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.turmaIdturma}" />
                             </p:column>
                             
-                            <p:column headerText="Turma" sortBy="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.turmaIdturma.descricao}">
+                            <p:column headerText="Turma" sortBy="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.turmaIdturma.descricao}"
+                                      filterBy="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.turmaIdturma.descricao}" filterMatchMode="contains">
                                 <h:outputText value="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.turmaIdturma.descricao}" />
                             </p:column>
                             
@@ -74,7 +79,7 @@
                                 <h:outputText value="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.nome}" />
                             </p:column>
 
-                            <p:column headerText="Disciplina" sortBy="#{recuperacao.disciplina.disciplinaPK.sigla}">
+                            <p:column headerText="Sigla da disciplina" sortBy="#{recuperacao.disciplina.disciplinaPK.sigla}">
                                 <h:outputText value="#{recuperacao.disciplina.disciplinaPK.sigla}" />
                             </p:column>
                             
@@ -86,7 +91,8 @@
                                 <h:outputText value="#{recuperacao.bimestre}" />
                             </p:column>
 
-                            <p:column headerText="Ano Letivo" sortBy="#{recuperacao.dataProposta}">
+                            <p:column headerText="Ano Letivo" sortBy="#{recuperacao.anoLetivo}"
+                                      filterBy="#{recuperacao.anoLetivo}" filterMatchMode="contains">  
                                 <h:outputText value="#{recuperacao.anoLetivo}" />
                             </p:column>
 
@@ -98,15 +104,16 @@
                                 <h:outputText value="#{recuperacao.quantidadeAulas}" />
                             </p:column>
 
-                            <p:column headerText="Status" sortBy="#{recuperacao.status}">
+                            <p:column headerText="Status" sortBy="#{recuperacao.status}"
+                                      filterBy="#{recuperacao.status}" filterMatchMode="contains">  
                                 <h:outputText value="#{recuperacao.status}" />
                             </p:column>
                             
-                            <p:column headerText="Nota Pré" sortBy="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].notaPre}">
+                            <p:column headerText="Nota do Bimestre" sortBy="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].notaPre}">
                                 <h:outputText value="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].notaPre}" />
                             </p:column>
                             
-                            <p:column headerText="Nota Pós" sortBy="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].notaPos}">
+                            <p:column headerText="Nota da Recuperação" sortBy="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].notaPos}">
                                 <h:outputText value="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].notaPos}" />
                             </p:column>
                             
