@@ -61,12 +61,12 @@
                                     </div>
                                 </div>
                             </f:facet>
-                            
+
                             <p:column style="width:2rem">
                                 <p:rowToggler/>
                             </p:column>
 
-                            <p:column headerText="Disciplina" sortBy="#{recuperacao.disciplina.nome}">
+                            <p:column headerText="Disciplina" sortBy="#{recuperacao.disciplina.nome}" filterBy="#{recuperacao.disciplina.nome}" filterMatchMode="contains">
                                 <h:outputText value="#{recuperacao.disciplina.nome}" />
                             </p:column>
 
@@ -116,83 +116,57 @@
                                             </p:selectCheckboxMenu>
                                         </p:panelGrid>
                                     </p:tab>
-                                    <p:tab title="Aulas">
-                                        <p:dataTable id="dt-aulas" widgetVar="dtAulas" var="aula" value="#{recuperacao.aulaCollection}"
-                                                     emptyMessage="Nenhum aula encontrado" rowKey="#{aula.idaula}" styleClass="aulas-table"
+                                    <p:tab title="Frequências">
+                                        <ui:repeat value="#{recuperacao.aulaCollection}" var="aula">
+                                            <p:dataTable id="dt-frequencias" widgetVar="dtFrequencias" var="frequencia" value="#{aula.frequenciaCollection}"
+                                                         emptyMessage="Nenhum frequencia encontrada" rowKey="#{frequencia.aula.idaula}" styleClass="frequencia-table"
+                                                         style="margin-top: 10px" paginator="false">
+
+                                                <p:column headerText="Presença">
+                                                    <p:selectBooleanCheckbox value="#{frequencia.frequencia}" disabled="true"/>
+                                                </p:column>
+
+                                                <p:column headerText="Data" sortBy="#{frequencia.aula.dia}">
+                                                    <h:outputText value="#{frequencia.aula.dia}" >
+                                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                                    </h:outputText>
+                                                </p:column>
+
+                                                <p:column headerText="Hora de início" sortBy="#{frequencia.aula.horario}">
+                                                    <h:outputText value="#{frequencia.aula.horario}" >
+                                                        <f:convertDateTime pattern="HH:mm" timeZone="GMT-3"/>
+                                                    </h:outputText>
+                                                </p:column>
+
+                                                <p:column headerText="Hora de término" sortBy="#{frequencia.aula.horarioFim}">
+                                                    <h:outputText value="#{frequencia.aula.horarioFim}" >
+                                                        <f:convertDateTime pattern="HH:mm" timeZone="GMT-3"/>
+                                                    </h:outputText>
+                                                </p:column>
+
+                                                <p:column headerText="Sala" sortBy="#{frequencia.aula.saladeaulaidSala.idSala}">
+                                                    <h:outputText value="#{frequencia.aula.saladeaulaidSala.idSala}" />
+                                                </p:column>
+                                            </p:dataTable>
+                                        </ui:repeat>
+                                    </p:tab>
+                                    <p:tab title="Nota">
+                                        <p:dataTable id="dt-rphe" widgetVar="dtRphe" var="rphe" value="#{recuperacao.recuperacaoParalelaHasEstudanteCollection}"
+                                                     emptyMessage="Nota não encontrada" styleClass="rphe-table"
                                                      style="margin-top: 10px" paginator="false">
 
-                                            <p:column headerText="Data" sortBy="#{aula.dia}">
-                                                <h:outputText value="#{aula.dia}" >
-                                                    <f:convertDateTime pattern="dd/MM/yyyy" />
-                                                </h:outputText>
+                                            <p:column headerText="Nota do Bimestre">
+                                                <h:outputText value="#{rphe.notaPre}" />
                                             </p:column>
 
-                                            <p:column headerText="Hora de início" sortBy="#{aula.horario}">
-                                                <h:outputText value="#{aula.horario}" >
-                                                    <f:convertDateTime pattern="HH:mm" timeZone="GMT-3"/>
-                                                </h:outputText>
-                                            </p:column>
-
-                                            <p:column headerText="Hora de término" sortBy="#{aula.horarioFim}">
-                                                <h:outputText value="#{aula.horarioFim}" >
-                                                    <f:convertDateTime pattern="HH:mm" timeZone="GMT-3"/>
-                                                </h:outputText>
-                                            </p:column>
-
-                                            <p:column headerText="Sala" sortBy="#{aula.saladeaulaidSala.idSala}">
-                                                <h:outputText value="#{aula.saladeaulaidSala.idSala}" />
+                                            <p:column headerText="Nota da Recuperação">
+                                                <h:outputText value="#{rphe.notaPre}" />
                                             </p:column>
                                         </p:dataTable>
                                     </p:tab>
                                 </p:tabView>
                             </p:rowExpansion>
                         </p:dataTable>
-                    </h:form>
-
-                    <h:form id="dialogs">
-
-                        <p:dialog id="dialogAut" header="Autorizar RP" showEffect="fade" modal="true"
-                                  widgetVar="autRP" responsive="true">
-                            <p:outputPanel id="aut-rp-content" class="ui-fluid">
-                                <p:panelGrid columns="2" layout="flex" contentStyleClass="align-items-baseline ui-fluid">
-                                    <p:outputLabel for="rp_obsercacoes">Observações: </p:outputLabel>
-                                    <p:inputTextarea id="rp_obsercacoes" required="false"
-                                                     value="#{recuperacaoController.obs}" 
-                                                     autoResize="true"/>
-                                </p:panelGrid>
-                            </p:outputPanel>
-                            <f:facet name="footer">
-                                <p:commandButton id="simBtn" value="Sim" icon="pi pi-check" actionListener="#{recuperacaoController.deferirRpFcc()}"
-                                                 update="aut-rp-content" process="aut-rp-content @this"/>
-                                <p:commandButton value="Não" icon="pi pi-times" onclick="PF('autRP').hide()"
-                                                 class="ui-button-secondary"/>
-                            </f:facet>
-                            <p:blockUI block="dialogAut" trigger="simBtn">
-                                <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
-                            </p:blockUI>
-                        </p:dialog>
-
-                        <p:dialog id="dialogIndef" header="Indeferir recuperação paralela" showEffect="fade" modal="true"
-                                  widgetVar="indefRP" responsive="true">
-                            <p:outputPanel id="indef-rp-content" class="ui-fluid">
-                                <p:panelGrid columns="2" layout="flex" contentStyleClass="align-items-baseline ui-fluid">
-                                    <p:outputLabel for="rp_obsercacoes">Observações: </p:outputLabel>
-                                    <p:inputTextarea id="rp_obsercacoes_indef" required="false"
-                                                     value="#{recuperacaoController.obs}" 
-                                                     autoResize="true"/>
-                                </p:panelGrid>
-                            </p:outputPanel>
-                            <f:facet name="footer">
-                                <p:commandButton id="simBtnIndef" value="Sim" icon="pi pi-check" actionListener="#{recuperacaoController.indeferirRp()}"
-                                                 update="indef-rp-content" process="indef-rp-content @this"/>
-                                <p:commandButton value="Não" icon="pi pi-times" onclick="PF('indefRP').hide()"
-                                                 class="ui-button-secondary"/>
-                            </f:facet>
-                            <p:blockUI block="dialogIndef" trigger="simBtnIndef">
-                                <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
-                            </p:blockUI>
-                        </p:dialog>
-
                     </h:form>
                 </div>
             </ui:define>
