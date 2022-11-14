@@ -109,7 +109,7 @@
 
                     <h:form id="dialogs">
                         <p:dialog header="Cadastrar Estudante" showEffect="fade" modal="true"
-                                  widgetVar="createEstudanteDialog" responsive="true" height="400">
+                                  widgetVar="createEstudanteDialog" responsive="true" height="400" fitViewport="true">
                             <p:outputPanel rendered="#{not empty estudanteController.estudante}"
                                            id="create-estudante-content" class="ui-fluid">
                                 <div class="p-field">
@@ -163,7 +163,7 @@
                         </p:dialog>
 
                         <p:dialog header="Editar Estudante" showEffect="fade" modal="true"
-                                  widgetVar="editEstudanteDialog" responsive="true">
+                                  widgetVar="editEstudanteDialog" responsive="true" fitViewport="true">
                             <p:outputPanel rendered="#{not empty estudanteController.estudante}"
                                            id="edit-estudante-content" class="ui-fluid">
                                 <div class="p-field">

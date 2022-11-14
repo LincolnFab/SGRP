@@ -67,7 +67,7 @@
 
                     <h:form id="dialogs">
                         <p:dialog header="Cadastrar Curso" showEffect="fade" modal="true"
-                                  widgetVar="createCursoDialog" responsive="true">
+                                  widgetVar="createCursoDialog" responsive="true" fitViewport="true">
                             <p:outputPanel id="create-curso-content" class="ui-fluid">
                                 <p:outputPanel rendered="#{not empty cursoController.curso}">
                                     
@@ -93,7 +93,7 @@
                         </p:dialog>
 
                         <p:dialog header="Editar Curso" showEffect="fade" modal="true"
-                                  widgetVar="editCursoDialog" responsive="true">
+                                  widgetVar="editCursoDialog" responsive="true" fitViewport="true">
                             <p:outputPanel id="edit-curso-content" class="ui-fluid">
                                 <p:outputPanel rendered="#{not empty cursoController.curso}">
 

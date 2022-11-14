@@ -90,7 +90,7 @@
 
                     <h:form id="dialogs">
                         <p:dialog header="Cadastrar Turma" showEffect="fade" modal="true"
-                                  widgetVar="createTurmaDialog" responsive="true">
+                                  widgetVar="createTurmaDialog" responsive="true" fitViewport="true">
                             <p:outputPanel id="create-turma-content" class="ui-fluid">
                                 <p:outputPanel rendered="#{not empty turmaController.turma}">
                                     
@@ -126,7 +126,7 @@
                         </p:dialog>
 
                         <p:dialog header="Editar Turma" showEffect="fade" modal="true"
-                                  widgetVar="editTurmaDialog" responsive="true">
+                                  widgetVar="editTurmaDialog" responsive="true" fitViewport="true">
                             <p:outputPanel id="edit-turma-content" class="ui-fluid">
                                 <p:outputPanel rendered="#{not empty turmaController.turma}">
                                     

@@ -87,7 +87,7 @@
 
                     <h:form id="dialogs">
                         <p:dialog header="Cadastrar Sala" showEffect="fade" modal="true"
-                                  widgetVar="createSalaDialog" responsive="true">
+                                  widgetVar="createSalaDialog" responsive="true" fitViewport="true">
                             <p:outputPanel id="create-sala-content" class="ui-fluid">
                                 <p:outputPanel rendered="#{not empty salaController.salaDeAula}">
 
@@ -117,7 +117,7 @@
                         </p:dialog>
 
                         <p:dialog header="Editar Sala" showEffect="fade" modal="true"
-                                  widgetVar="editSalaDialog" responsive="true">
+                                  widgetVar="editSalaDialog" responsive="true" fitViewport="true">
                             <p:outputPanel id="edit-sala-content" class="ui-fluid">
                                 <p:outputPanel rendered="#{not empty salaController.salaDeAula}">
 

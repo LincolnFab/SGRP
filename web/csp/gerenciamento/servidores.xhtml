@@ -95,7 +95,7 @@
 
                     <h:form id="dialogs">
                         <p:dialog header="Cadastrar Servidor" showEffect="fade" modal="true"
-                                  widgetVar="createServidorDialog" responsive="true">
+                                  widgetVar="createServidorDialog" responsive="true" fitViewport="true">
                             <p:outputPanel id="create-servidor-content" class="ui-fluid">
                                 <p:outputPanel rendered="#{not empty servidorController.servidor}">
 
@@ -143,7 +143,7 @@
                         </p:dialog>
 
                         <p:dialog header="Editar Servidor" showEffect="fade" modal="true"
-                                  widgetVar="editServidorDialog" responsive="true">
+                                  widgetVar="editServidorDialog" responsive="true" fitViewport="true">
                             <p:outputPanel id="edit-servidor-content" class="ui-fluid">
                                 <p:outputPanel rendered="#{not empty servidorController.servidor}">
 
