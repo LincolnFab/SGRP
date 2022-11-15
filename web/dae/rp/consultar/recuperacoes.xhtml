@@ -224,8 +224,12 @@
                                                 <h:outputText value="#{rphe.estudante.nome}" />
                                             </p:column>
 
-                                            <p:column headerText="Email" sortBy="#{rphe.estudante.emailPessoal}">
-                                                <h:outputText value="#{rphe.estudante.emailPessoal}" />
+                                            <p:column headerText="Nota Bimestre" sortBy="#{rphe.notaPre}">
+                                                <h:outputText value="#{rphe.notaPre}" />
+                                            </p:column>
+                                            
+                                            <p:column headerText="Nota da Recuperação">
+                                                <h:outputText value="#{rphe.notaPos}" />
                                             </p:column>
                                         </p:dataTable>
                                     </p:tab>

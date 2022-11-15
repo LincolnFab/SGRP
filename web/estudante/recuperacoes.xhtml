@@ -45,7 +45,7 @@
                             <p:menuitem outcome="/estudante/home" value="Home"/>
                             <p:menuitem outcome="/estudante/recuperacoes" value="Consultar Recuperação Paralela"/>
                         </p:breadCrumb>
-
+                        
                         <p:dataTable id="dt-rp" widgetVar="dtRPs" var="recuperacao" value="#{recuperacaoController.recuperacoesParalelasEstudanteAutenticado}"
                                      emptyMessage="Nenhuma recuperação encontrada" rowKey="#{recuperacao.id}" styleClass="recuperacao-table"
                                      style="margin-top: 10px" paginator="true" rows="10" paginatorPosition="bottom">
@@ -160,7 +160,7 @@
                                             </p:column>
 
                                             <p:column headerText="Nota da Recuperação">
-                                                <h:outputText value="#{rphe.notaPre}" />
+                                                <h:outputText value="#{rphe.notaPos}" />
                                             </p:column>
                                         </p:dataTable>
                                     </p:tab>
