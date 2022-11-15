@@ -21,6 +21,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.security.auth.Subject;
 import model.Servidor;
 
 /**
@@ -84,6 +85,27 @@ public class JavaMail {
         } catch (MessagingException e) {
             e.printStackTrace();
         };
+    }
+    
+    public static void email(List<String> to, String assunto, String sigla, String nome, String mensagem) {
+        String subject = assunto + " - " + sigla;
+        
+        String htmlBody = 
+                "<html>"
+                + "<h2>Sistema de Gerenciamento de Recuperação Paralela</h2>"
+                + "<p>" + sigla + " - " + nome +".</p>"
+                + "<p>" + mensagem +"</p>"
+                + "<p> Entre no sistema para verificar. "
+                + "<a href=\"https://www.w3schools.com\">Acesse: pep2.ifsp.edu.br/rp</a>"
+                + "<br>"
+                + "<h5>Mensagem automática. Não responda.</h5>"
+                + "</html>";
+        
+        try {
+            util.JavaMail.sendEmail(to, subject, htmlBody);
+        } catch(Exception e) {
+            System.out.println("Não foi possível enviar o e-mail.");
+        }
     }
     
     public static void emailFccDae(String email, String sigla, String nome) {
