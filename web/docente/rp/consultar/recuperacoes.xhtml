@@ -194,12 +194,16 @@
                                 <p:panelGrid columns="4" layout="grid" styleClass="showcase-text-align-center">
                                     <p:commandButton id="presencas" icon="pi pi-gift" class="rounded-button"
                                                      action="/docente/rp/consultar/presencas?faces-redirect=true"
-                                                     actionListener="#{recuperacaoController.setRecuperacaoParalelaAux(recuperacao)}" />
+                                                     actionListener="#{recuperacaoController.setRecuperacaoParalelaAux(recuperacao)}" 
+                                                     disabled="#{recuperacao.status != 'Aprovada'}"
+                                                     />
 
 
                                     <p:commandButton id="notas" icon="pi pi-book" class="rounded-button" style="margin-left: 7px"
                                                      action="/docente/rp/consultar/notas?faces-redirect=true"
-                                                     actionListener="#{recuperacaoController.setRecuperacaoParalelaAux(recuperacao)}" />
+                                                     actionListener="#{recuperacaoController.setRecuperacaoParalelaAux(recuperacao)}" 
+                                                     disabled="#{recuperacao.status != 'Aprovada'}"
+                                                     />
 
 
                                     <p:commandButton id="cancelar" icon="pi pi-times" class="rounded-button" style="margin-left: 7px" styleClass="rounded-button ui-button-danger"
@@ -213,7 +217,8 @@
                                     <p:commandButton id="finalizar" icon="pi pi-check-circle" class="rounded-button" style="margin-left: 7px" styleClass="rounded-button ui-button-success"
                                                      update=":dialogs:finalizar-content"
                                                      oncomplete="PF('finalizarRP').show()"
-                                                     process="@this">
+                                                     process="@this"
+                                                     disabled="#{recuperacao.status != 'Aprovada'}">
                                         <f:setPropertyActionListener value="#{recuperacao}" target="#{recuperacaoController.recuperacaoParalela}"/>
                                         <p:resetInput target=":dialogs:finalizar-content"/>
                                     </p:commandButton>
