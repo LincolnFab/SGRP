@@ -56,18 +56,19 @@
                             </p:column>
 
                             <p:column headerText="Ações" exportable="false">
-                                <p:commandButton icon="pi pi-pencil" update=":dialogs:edit-disciplina-content"
+                                <p:commandButton id="editar" icon="pi pi-pencil" update=":dialogs:edit-disciplina-content"
                                                  oncomplete="PF('editDisciplinaDialog').show()"
                                                  styleClass="edit-button rounded-button" process="@this">
                                     <f:setPropertyActionListener value="#{disciplina}" target="#{disciplinaController.disciplina}"/>
                                     <p:resetInput target=":dialogs:edit-disciplina-content"/>
                                 </p:commandButton>
-
-                                <p:commandButton icon="pi pi-times" style="margin-left: 7px;"
+                                <p:tooltip for="editar" value="Editar RP" position="left"/>
+                                <p:commandButton id="deletar" icon="pi pi-times" style="margin-left: 7px;"
                                                  oncomplete="PF('deleteDisciplinaDialog').show()" 
                                                  styleClass="ui-button-danger rounded-button" process="@this">
                                     <f:setPropertyActionListener value="#{disciplina}" target="#{disciplinaController.disciplina}"/>
                                 </p:commandButton>
+                                <p:tooltip for="deletar" value="Deletar RP" position="left"/>
                             </p:column>
                         </p:dataTable>
                     </h:form>
@@ -79,9 +80,9 @@
                             <p:fileUpload 
                                 id="fileupload-content"
                                 value="#{disciplinaController.file}" 
-                                          allowTypes="/(\.|\/)(xls|xlsx)$/"
-                                          validateContentType="true" accept=".xls,.xlsx"
-                                          mode="simple" skinSimple="true" label="Planilha"/>
+                                allowTypes="/(\.|\/)(xls|xlsx)$/"
+                                validateContentType="true" accept=".xls,.xlsx"
+                                mode="simple" skinSimple="true" label="Planilha"/>
                             <f:facet name="footer">
                                 <p:commandButton id="submitBtn" value="Enviar" action="#{disciplinaController.importarDisciplina()}"/>
                                 <p:blockUI block="dialogImport" trigger="submitBtn">

@@ -124,11 +124,12 @@
                             </p:column>
 
                             <p:column headerText="Ações" exportable="false">
-                                <p:commandButton icon="pi pi-times" style="margin-left: 7px;"
+                                <p:commandButton id="deletar" icon="pi pi-times" style="margin-left: 7px;"
                                                  oncomplete="PF('deleteAulaDialog').show()" 
                                                  styleClass="ui-button-danger rounded-button" process="@this">
                                     <f:setPropertyActionListener value="#{aula}" target="#{recuperacaoController.aula}"/>
                                 </p:commandButton>
+                                <p:tooltip for="deletar" value="Deletar Aula" position="left"/>
                             </p:column>
                         </p:dataTable>
 

@@ -74,18 +74,20 @@
                             </p:column>
 
                             <p:column headerText="Ações" exportable="false">
-                                <p:commandButton icon="pi pi-pencil" update=":dialogs:edit-estudante-content"
+                                <p:commandButton id="editar" icon="pi pi-pencil" update=":dialogs:edit-estudante-content"
                                                  oncomplete="PF('editEstudanteDialog').show()"
                                                  styleClass="edit-button rounded-button" process="@this">
                                     <f:setPropertyActionListener value="#{estudante}" target="#{estudanteController.estudante}"/>
                                     <p:resetInput target=":dialogs:edit-estudante-content"/>
                                 </p:commandButton>
-
-                                <p:commandButton icon="pi pi-times" style="margin-left: 7px;"
+                                <p:tooltip for="editar" value="Editar RP" position="left"/>
+                                
+                                <p:commandButton id="deletar" icon="pi pi-times" style="margin-left: 7px;"
                                                  oncomplete="PF('deleteEstudanteDialog').show()" 
                                                  styleClass="ui-button-danger rounded-button" process="@this">
                                     <f:setPropertyActionListener value="#{estudante}" target="#{estudanteController.estudante}"/>
                                 </p:commandButton>
+                                <p:tooltip for="deletar" value="Deletar RP" position="left"/>
                             </p:column>
                         </p:dataTable>
                     </h:form>
