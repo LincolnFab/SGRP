@@ -39,11 +39,32 @@
         </div>
 
         <div id="content" class="left_content">
+            <h:form>
+                <p:menubar style="max-height: 3.5rem !important; margin-bottom: 10px;">
+                    <p:clock />
+                    <p:menuitem >
+                    </p:menuitem>
+
+                    <f:facet name="options">
+                        <p:menuButton value="Usuário" icon="pi pi-user" buttonStyleClass="ui-button-flat ui-button-plain">
+                            <p:menuitem value="Sair" icon="pi pi-power-off" action="#{loginController.logout()}"/>
+                            <p:divider />
+                            <p:menuitem value="Alterar Senha" icon="pi pi-unlock"/>
+                        </p:menuButton>
+                    </f:facet>
+                </p:menubar>
+            </h:form>
             <ui:insert name="content">
-                <div class="card">
-                    <h:form>
-                    </h:form>
-                </div>
+                <h:form>
+                    <p:card style="width: 25rem; margin-bottom: 2em; background-color: transparent !important">
+                        <f:facet name="title">
+                            Bem Vindo
+                        </f:facet>
+                        <p>
+                            Sistema de Recuperações Paralelas
+                        </p>
+                    </p:card>
+                </h:form>
             </ui:insert>
         </div>
 
