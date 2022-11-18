@@ -102,7 +102,8 @@
 
                                             <p:outputLabel>Docente(s):</p:outputLabel>
                                             <p:selectCheckboxMenu value="#{recuperacao.servidorCollection}"
-                                                                  converter="servidorConverter" disabled="true" 
+                                                                  converter="servidorConverter"  required="true"
+                                                                  disabled="#{recuperacao.status == 'Aprovada'}"
                                                                   requiredMessage="Selecione ao menos um professor" 
                                                                   multiple="true" filter="true" filterMatchMode="contains" panelStyle="width: 30rem" scrollHeight="250"
                                                                   emptyLabel="Selecione um servidor" updateLabel="true">
@@ -122,16 +123,16 @@
                                             </p:row>
 
                                             <p:outputLabel>Justificativa:</p:outputLabel>
-                                            <p:inputTextarea disabled="true" rows="7" cols="40" value="#{recuperacao.justificativa}"/>
+                                            <p:inputTextarea rows="7" cols="40" value="#{recuperacao.justificativa}" required="true" disabled="#{recuperacao.status == 'Aprovada'}"/>
 
                                             <p:outputLabel>Objetivo Geral:</p:outputLabel>
-                                            <p:inputTextarea disabled="true" rows="7" cols="40" value="#{recuperacao.objetivoGeral}"/>
+                                            <p:inputTextarea rows="7" cols="40" value="#{recuperacao.objetivoGeral}" required="true" disabled="#{recuperacao.status == 'Aprovada'}"/>
 
                                             <p:outputLabel>Atividades propostas:</p:outputLabel>
-                                            <p:inputTextarea disabled="true" rows="7" cols="40" value="#{recuperacao.atividadesPropostas}"/>
+                                            <p:inputTextarea rows="7" cols="40" value="#{recuperacao.atividadesPropostas}" required="true" disabled="#{recuperacao.status == 'Aprovada'}"/>
 
                                             <p:outputLabel>Procedimentos avaliativos:</p:outputLabel>
-                                            <p:inputTextarea disabled="true" rows="7" cols="40" value="#{recuperacao.procedimentosAvaliativos}"/>
+                                            <p:inputTextarea rows="7" cols="40" value="#{recuperacao.procedimentosAvaliativos}" required="true" disabled="#{recuperacao.status == 'Aprovada'}"/>
 
                                             <p:outputLabel>Observações:</p:outputLabel>
                                             <p:inputTextarea rows="7" cols="40" value="#{recuperacao.observacoes}"/>
@@ -161,7 +162,7 @@
                                     </p:tab>
                                     <p:tab title="Aulas">
                                         <p:dataTable id="dt-aulas" widgetVar="dtAulas" var="aula" value="#{recuperacao.aulaCollection}"
-                                                     emptyMessage="Nenhum aula encontrado" rowKey="#{aula.idaula}" styleClass="aulas-table"
+                                                     emptyMessage="Nenhuma aula encontrada" rowKey="#{aula.idaula}" styleClass="aulas-table"
                                                      style="margin-top: 10px" paginator="false">
 
                                             <p:column headerText="Data" sortBy="#{aula.dia}">
@@ -217,7 +218,7 @@
                                         <f:setPropertyActionListener value="#{recuperacao}" target="#{recuperacaoController.recuperacaoParalela}"/>
                                         <p:resetInput target=":dialogs:cancelar-content"/>
                                     </p:commandButton>
-                                    
+
                                     <p:commandButton id="finalizar" icon="pi pi-check-circle" class="rounded-button" style="margin-left: 7px" styleClass="rounded-button ui-button-success"
                                                      update=":dialogs:finalizar-content"
                                                      oncomplete="PF('finalizarRP').show()"
@@ -272,12 +273,12 @@
                                   showEffect="fade" modal="true"
                                   widgetVar="cancelarRP" responsive="true">
                             <p:outputPanel id="cancelar-content" class="ui-fluid">
-                                
+
                                 <i class="pi pi-exclamation-triangle"></i>
                                 <p:outputLabel> Deseja cancelar a recuperação paralela?</p:outputLabel>
-                            
+
                             </p:outputPanel>
-                            
+
                             <f:facet name="footer">
                                 <p:commandButton value="Não" icon="pi pi-times" onclick="PF('cancelarRP').hide()"
                                                  class="ui-button-secondary"/>
@@ -288,17 +289,17 @@
                                 <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
                             </p:blockUI>
                         </p:dialog>
-                        
+
                         <p:dialog id="dialogFinalizar" header="Finalizar recuperação paralela"
                                   showEffect="fade" modal="true"
                                   widgetVar="finalizarRP" responsive="true">
                             <p:outputPanel id="finalizar-content" class="ui-fluid">
-                                
+
                                 <i class="pi pi-exclamation-triangle"></i>
                                 <p:outputLabel> Deseja finalizar a recuperação paralela?</p:outputLabel>
-                            
+
                             </p:outputPanel>
-                            
+
                             <f:facet name="footer">
                                 <p:commandButton value="Não" icon="pi pi-times" onclick="PF('finalizarRP').hide()"
                                                  class="ui-button-secondary"/>
