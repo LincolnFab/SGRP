@@ -591,7 +591,12 @@ public class RecuperacaoController implements Serializable {
             PrimeFaces.current().ajax().update("form:messages", "form:dt-rp");
         }
     }
-
+    
+    public void teste() {
+        List <RecuperacaoParalela> rp;
+        rp = recuperacaoDAO.buscarTeste();
+    }
+    
     public Turma getTurma() {
         return turma;
     }
