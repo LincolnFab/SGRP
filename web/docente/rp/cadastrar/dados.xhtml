@@ -76,7 +76,7 @@
                             <p:selectOneMenu id="create_rp_disciplina" style="max-width: 22rem"
                                              value="#{recuperacaoController.recuperacaoParalela.disciplina}"
                                              required="true" requiredMessage="Selecione uma Disciplina"
-                                             filter="true" filterMatchMode="startsWith">
+                                             filter="true" filterMatchMode="contains">
                                 <f:selectItem itemLabel="Selecione a Disciplina" itemValue=""/>
                                 <f:selectItems value="#{recuperacaoController.disciplinasCurso}" var="disciplina"
                                                itemLabel="#{disciplina.nome}" itemValue="#{disciplina}"/>
