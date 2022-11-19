@@ -112,6 +112,14 @@
                                                       filterBy="#{rp.recuperacaoParalela.bimestre}" filterMatchMode="contains" >
                                                 <h:outputText value="#{rp.recuperacaoParalela.bimestre}" />
                                             </p:column>
+                                            
+                                            <p:column headerText="Nota do Bimestre">
+                                                <h:outputText value="#{rp.recuperacaoParalela.recuperacaoParalelaHasEstudanteCollection[0].notaPre}" />
+                                            </p:column>
+                                            
+                                            <p:column headerText="Nota da Recuperação">
+                                                <h:outputText value="#{rp.recuperacaoParalela.recuperacaoParalelaHasEstudanteCollection[0].notaPos}" />
+                                            </p:column>
                                         </p:dataTable>
                                     </p:tab>
                                 </p:tabView>

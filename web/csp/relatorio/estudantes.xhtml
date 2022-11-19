@@ -23,17 +23,17 @@
 
                         <p:breadCrumb>
                             <p:menuitem outcome="/csp/home" value="Home"/>
-                            <p:menuitem outcome="/csp/relatorio/recuperacoes" value="Relatório Recuperação Paralela"/>
+                            <p:menuitem outcome="/csp/relatorio/estudantes" value="Relatório Recuperação Paralela por Estudante"/>
                         </p:breadCrumb>
 
                         <div class="flex justify-content-between">
                             <div>
                                 <p:commandButton value="XLSX" styleClass="mr-2 mb-2" >
-                                    <p:dataExporter type="xlsxstream" target="dt-rp" fileName="relatorio" visibleOnly="true"/>
+                                    <p:dataExporter type="xlsxstream" target="dt-rp" fileName="relatorio" pageOnly="true"/>
                                 </p:commandButton>
 
                                 <p:commandButton value="PDF" styleClass="mr-2 mb-2">
-                                    <p:dataExporter type="pdf" target="dt-rp" fileName="documents"/>
+                                    <p:dataExporter type="pdf" target="dt-rp" fileName="documents" pageOnly="true"/>
                                 </p:commandButton>
                             </div>
                         </div>
@@ -42,11 +42,12 @@
                                      style="margin-top: 10px" paginator="true" rows="10" paginatorPosition="bottom"
                                      scrollable="true"
                                      scrollWidth="98%"
+                                     scrollHeight="500"
                                      >
 
                             <f:facet name="header">
                                 <div class="p-d-flex p-ai-center p-jc-between">
-                                    <span>Recuperações Paralelas</span>
+                                    <span>Recuperações Paralelas por Estudante</span>
                                     <div>
                                         <p:commandButton id="toggler" type="button" value="Campos" icon="pi pi-align-justify"/>
                                         <p:columnToggler datasource="dt-rp" trigger="toggler">
