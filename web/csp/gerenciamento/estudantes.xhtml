@@ -65,11 +65,11 @@
                                 <h:outputText value="#{estudante.emailResponsavel}" />
                             </p:column>
 
-                            <p:column headerText="Curso" sortBy="#{estudante.turmaIdturma.cursoId.descricao}">
+                            <p:column headerText="Curso" sortBy="#{estudante.turmaIdturma.cursoId.descricao}" filterBy="#{estudante.turmaIdturma.cursoId.descricao}" filterMatchMode="contains">
                                 <h:outputText value="#{estudante.turmaIdturma.cursoId.descricao}" />
                             </p:column>
 
-                            <p:column headerText="Turma" sortBy="#{estudante.turmaIdturma.descricao}">
+                            <p:column headerText="Turma" sortBy="#{estudante.turmaIdturma.descricao}" filterBy="#{estudante.turmaIdturma.descricao}" filterMatchMode="contains">
                                 <h:outputText value="#{estudante.turmaIdturma.descricao}" />
                             </p:column>
 

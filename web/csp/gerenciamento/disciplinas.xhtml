@@ -43,15 +43,15 @@
                                 </div>
                             </f:facet>
 
-                            <p:column headerText="Sigla" sortBy="#{disciplina.disciplinaPK.sigla}">
+                            <p:column headerText="Sigla" sortBy="#{disciplina.disciplinaPK.sigla}" filterBy="#{disciplina.disciplinaPK.sigla}" filterMatchMode="contains">
                                 <h:outputText value="#{disciplina.disciplinaPK.sigla}" />
                             </p:column>
 
-                            <p:column headerText="Nome" sortBy="#{disciplina.nome}">
+                            <p:column headerText="Nome" sortBy="#{disciplina.nome}" filterBy="#{disciplina.nome}" filterMatchMode="contains">
                                 <h:outputText value="#{disciplina.nome}"  />
                             </p:column>
 
-                            <p:column headerText="Curso" sortBy="#{disciplina.curso.descricao}">
+                            <p:column headerText="Curso" sortBy="#{disciplina.curso.descricao}" filterBy="#{disciplina.curso.descricao}" filterMatchMode="contains">
                                 <h:outputText value="#{disciplina.curso.descricao}"  />
                             </p:column>
 

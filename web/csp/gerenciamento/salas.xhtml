@@ -43,11 +43,11 @@
                                 </div>
                             </f:facet>
 
-                            <p:column headerText="ID" sortBy="#{sala.idSala}">
+                            <p:column headerText="ID" sortBy="#{sala.idSala}" filterBy="#{sala.idSala}" filterMatchMode="contains">
                                 <h:outputText value="#{sala.idSala}" />
                             </p:column>
 
-                            <p:column headerText="Tipo" sortBy="#{sala.tipo}">
+                            <p:column headerText="Tipo" sortBy="#{sala.tipo}" filterBy="#{sala.tipo}" filterMatchMode="contains">
                                 <h:outputText value="#{sala.tipo}"  />
                             </p:column>
 

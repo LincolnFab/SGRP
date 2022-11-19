@@ -43,15 +43,15 @@
                                 </div>
                             </f:facet>
 
-                            <p:column headerText="ID" sortBy="#{turma.idturma}">
+                            <p:column headerText="ID" sortBy="#{turma.idturma}" filterBy="#{turma.idturma}" filterMatchMode="contains">
                                 <h:outputText value="#{turma.idturma}" />
                             </p:column>
 
-                            <p:column headerText="Descrição" sortBy="#{turma.descricao}">
+                            <p:column headerText="Descrição" sortBy="#{turma.descricao}" filterBy="#{turma.descricao}" filterMatchMode="contains">
                                 <h:outputText value="#{turma.descricao}"  />
                             </p:column>
 
-                            <p:column headerText="Curso" sortBy="#{turma.cursoId.descricao}">
+                            <p:column headerText="Curso" sortBy="#{turma.cursoId.descricao}" filterBy="#{turma.cursoId.descricao}" filterMatchMode="contains">
                                 <h:outputText value="#{turma.cursoId.descricao}"  />
                             </p:column>
 
