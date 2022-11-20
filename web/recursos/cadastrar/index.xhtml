@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <style>
+            /* reset on the showcase style*/
+            body .ui-panelgrid .ui-panelgrid-cell {
+                background-color: transparent;
+            }
+
+            /* example use of styles for your form */
+            .my-heading-row {
+                background-color: var(--surface-c);
+                font-weight: bold;
+                margin-top: 0.5em;
+            }
+        </style>
+        <p:tabView id="tabView">
+            <p:tab>
+                <f:facet name="title">
+                    <i class="pi pi-fw pi-database"></i> Dados da RP
+                </f:facet>
+
+                <ui:include src="/recursos/cadastrar/dados.xhtml"></ui:include>
+            </p:tab>
+
+            <p:tab>
+                <f:facet name="title">
+                    <i class="pi pi-fw pi-users"></i> Alunos
+                </f:facet>
+
+                <ui:include src="/recursos/cadastrar/alunos.xhtml"></ui:include>
+            </p:tab>
+
+            <p:tab>
+                <f:facet name="title">
+                    <i class="pi pi-fw pi-copy"></i> Aulas
+                </f:facet>
+
+                <ui:include src="/recursos/cadastrar/aulas.xhtml"></ui:include>
+            </p:tab>
+        </p:tabView>
+    </h:body>
+</html>

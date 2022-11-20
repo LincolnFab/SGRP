@@ -33,9 +33,6 @@ import model.RecuperacaoParalelaHasEstudantePK;
 import model.Servidor;
 import model.Turma;
 import org.primefaces.PrimeFaces;
-import static org.primefaces.component.column.ColumnBase.PropertyKeys.filterBy;
-import org.primefaces.model.FilterMeta;
-import org.primefaces.model.MatchMode;
 import util.Util;
 
 /**
@@ -70,8 +67,8 @@ public class RecuperacaoController implements Serializable {
     private Curso curso;
     private Aula aula;
     private Disciplina disciplina;
-    private LoginController loginController;;
-    
+    private LoginController loginController;
+
     private List<Turma> turmasCurso;
     private List<Disciplina> disciplinasCurso;
     private List<Estudante> estudantesTurma;
@@ -82,7 +79,7 @@ public class RecuperacaoController implements Serializable {
     private RecuperacaoParalela recuperacaoParalelaAux;
     private List<RecuperacaoParalela> recuperacoesParalelas;
     private List<RecuperacaoParalela> recuperacoesParalelasEstudanteAutenticado;
-    
+
     private String obs;
 
     @PostConstruct
@@ -95,10 +92,6 @@ public class RecuperacaoController implements Serializable {
 
     public RecuperacaoController() {
         openNew();
-    }
-    
-    void init() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public void buscarDisciplinasCurso() {
@@ -169,6 +162,7 @@ public class RecuperacaoController implements Serializable {
         aula = new Aula();
         aulas = new ArrayList<>();
         recuperacaoParalela = new RecuperacaoParalela();
+        estudantesTurma = new ArrayList<>();
         recuperacaoParalela.setDisciplina(new Disciplina());
     }
 
@@ -201,28 +195,28 @@ public class RecuperacaoController implements Serializable {
 
         try {
             recuperacaoDAO.create(recuperacaoParalela);
-            
-            try {
-                // enviar e-mail
-                String curso = this.curso.getDescricao();
-                List<String> emails = new ArrayList<>();
-                if (curso.toLowerCase().contains("inf")) {
-                    Servidor s = servidorDAO.buscarPorTipo("FCC INF");
-                    emails.add(s.getEmail());
-                    //util.JavaMail.emailFccDae(s.getEmail(), recuperacaoParalela.getDisciplina().getDisciplinaPK().getSigla(), recuperacaoParalela.getDisciplina().getNome());
-                    
-                } else if (curso.toLowerCase().contains("mec")) {
-                    Servidor s = servidorDAO.buscarPorTipo("FCC MEC");
-                    emails.add(s.getEmail());
-                    //util.JavaMail.emailFccDae(s.getEmail(), recuperacaoParalela.getDisciplina().getDisciplinaPK().getSigla(), recuperacaoParalela.getDisciplina().getNome());
-                }
-                util.JavaMail.email(emails, "Novo cadastro de Recuperação Paralela", recuperacaoParalela.getDisciplina().getDisciplinaPK().getSigla(), recuperacaoParalela.getDisciplina().getNome(), "A recuperação paralela foi cadastrada e aguarda sua avaliação.");
-                //Util.addMessageInformation("Um email foi enviado ao Coordenador");
-            } catch (EJBException e) {
-                System.out.println(e);
-                Util.addMessageError("Erro ao enviar o email para o coordenador do curso. Contate o administrador");
-                PrimeFaces.current().ajax().update("form:messages");
-            }
+
+//            try {
+//                // enviar e-mail
+//                String curso = this.curso.getDescricao();
+//                List<String> emails = new ArrayList<>();
+//                if (curso.toLowerCase().contains("inf")) {
+//                    Servidor s = servidorDAO.buscarPorTipo("FCC INF");
+//                    emails.add(s.getEmail());
+//                    //util.JavaMail.emailFccDae(s.getEmail(), recuperacaoParalela.getDisciplina().getDisciplinaPK().getSigla(), recuperacaoParalela.getDisciplina().getNome());
+//                    
+//                } else if (curso.toLowerCase().contains("mec")) {
+//                    Servidor s = servidorDAO.buscarPorTipo("FCC MEC");
+//                    emails.add(s.getEmail());
+//                    //util.JavaMail.emailFccDae(s.getEmail(), recuperacaoParalela.getDisciplina().getDisciplinaPK().getSigla(), recuperacaoParalela.getDisciplina().getNome());
+//                }
+//                util.JavaMail.email(emails, "Novo cadastro de Recuperação Paralela", recuperacaoParalela.getDisciplina().getDisciplinaPK().getSigla(), recuperacaoParalela.getDisciplina().getNome(), "A recuperação paralela foi cadastrada e aguarda sua avaliação.");
+//                //Util.addMessageInformation("Um email foi enviado ao Coordenador");
+//            } catch (EJBException e) {
+//                System.out.println(e);
+//                Util.addMessageError("Erro ao enviar o email para o coordenador do curso. Contate o administrador");
+//                PrimeFaces.current().ajax().update("form:messages");
+//            }
             /*
             try {
                 String curso = this.curso.getDescricao();
@@ -239,7 +233,6 @@ public class RecuperacaoController implements Serializable {
                 Util.addMessageError("Erro ao enviar o email para o FCC do Curso. Contate o administrador.");
                 PrimeFaces.current().ajax().update("form:messages");
             }*/
-
             fillRecuperacaoParalelaList();
             Util.addMessageInformation("A recuperação paralela foi enviada para análise");
 
@@ -291,7 +284,9 @@ public class RecuperacaoController implements Serializable {
 //            }
 //        }
         aula.setRecuperacaoParalelaId(recuperacaoParalela);
+        aula.setIdaula(Integer.parseInt(String.valueOf(new Date().getTime()).substring(8)));
         aulas.add(aula);
+        aula = new Aula();
 
         Util.addMessageInformation("Aula Adicionada");
         PrimeFaces.current().ajax().update("form:messages", "form:dt-aulas");
@@ -299,6 +294,7 @@ public class RecuperacaoController implements Serializable {
 
     public void removerAula() {
         aulas.remove(aula);
+        aula = new Aula();
 
         Util.addMessageInformation("Aula Removida");
         PrimeFaces.current().ajax().update("form:messages", "form:dt-aulas");
@@ -311,6 +307,15 @@ public class RecuperacaoController implements Serializable {
         } else {
             turmasCurso = new ArrayList<>();
             disciplinasCurso = new ArrayList<>();
+        }
+    }
+
+    public void onTurmaChange() {
+        if (turma != null) {
+            buscarEstudantesTurma();
+        } else {
+            estudantesTurma = new ArrayList<>();
+            estudantesRP = new ArrayList<>();
         }
     }
 
@@ -591,12 +596,7 @@ public class RecuperacaoController implements Serializable {
             PrimeFaces.current().ajax().update("form:messages", "form:dt-rp");
         }
     }
-    
-    public void teste() {
-        List <RecuperacaoParalela> rp;
-        rp = recuperacaoDAO.buscarTeste();
-    }
-    
+
     public Turma getTurma() {
         return turma;
     }
@@ -732,7 +732,7 @@ public class RecuperacaoController implements Serializable {
     public void setObs(String obs) {
         this.obs = obs;
     }
-    
+
     public List<RecuperacaoParalela> getRecuperacoesParalelasEstudanteAutenticado() {
         // usuario autenticado...
         recuperacoesParalelasEstudanteAutenticado = recuperacaoDAO.buscarPorEstudante("PE3012905");
