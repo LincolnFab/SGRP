@@ -45,7 +45,7 @@
                             </p:column>
 
                             <p:column headerText="Nome" sortBy="#{rphe.estudante.nome}">
-                                <h:outputText value="#{rphe.estudante.nome}"/>
+                                <h:outputText value="#{rphe.estudante.nome}" />
                             </p:column>
 
                             <p:column headerText="Nota Pré" sortBy="#{rphe.notaPre}">
@@ -54,7 +54,10 @@
                                         <h:outputText value="#{rphe.notaPre == 0 ? ''.concat(rphe.notaPre).concat(' - Editar'): rphe.notaPre}"/>
                                     </f:facet>
                                     <f:facet name="input">
-                                        <p:inputText value="#{rphe.notaPre}" style="width:100%;"/>
+                                        <p:inputNumber value="#{rphe.notaPre}" style="width:100%;" 
+                                                       minValue="0" maxValue="10"
+                                                       
+                                                       />
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
@@ -65,7 +68,10 @@
                                         <h:outputText value="#{rphe.notaPre == 0 ? ''.concat(rphe.notaPos).concat(' - Editar'): rphe.notaPos}"/>
                                     </f:facet>
                                     <f:facet name="input">
-                                        <p:inputText value="#{rphe.notaPos}" style="width:100%"/>
+                                        <p:inputNumber value="#{rphe.notaPos}" style="width:100%"
+                                                       minValue="0.00" maxValue="10.00"
+                                                       
+                                                       />
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>

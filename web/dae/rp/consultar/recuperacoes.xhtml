@@ -66,24 +66,38 @@
                                 <p:rowToggler/>
                             </p:column>
                             
-                            <p:column headerText="Disciplina" sortBy="#{recuperacao.disciplina.nome}">
+                            <p:column headerText="Disciplina" sortBy="#{recuperacao.disciplina.nome}"
+                                      filterBy="#{recuperacao.disciplina.nome}" filterMatchMode="contains">
                                 <h:outputText value="#{recuperacao.disciplina.nome}" />
                             </p:column>
 
-                            <p:column headerText="Bimestre" sortBy="#{recuperacao.bimestre}">
+                            <p:column headerText="Bimestre" sortBy="#{recuperacao.bimestre}"
+                                      filterBy="#{recuperacao.bimestre}" filterMatchMode="contains">
                                 <h:outputText value="#{recuperacao.bimestre}" />
                             </p:column>
 
-                            <p:column headerText="Ano Letivo" sortBy="#{recuperacao.dataProposta}">
+                            <p:column headerText="Ano Letivo" sortBy="#{recuperacao.anoLetivo}"
+                                      filterBy="#{recuperacao.anoLetivo}" filterMatchMode="contains">
                                 <h:outputText value="#{recuperacao.anoLetivo}" />
                             </p:column>
 
-                            <p:column headerText="Total Alunos" sortBy="#{recuperacao.quantidadeAlunos}">
+                            <p:column headerText="Total Alunos" sortBy="#{recuperacao.quantidadeAlunos}"
+                                     filterBy="#{recuperacao.quantidadeAlunos}" filterMatchMode="contains"> 
                                 <h:outputText value="#{recuperacao.quantidadeAlunos}" />
                             </p:column>
 
-                            <p:column headerText="Status" filterBy="#{recuperacao.status}" sortBy="#{recuperacao.status}">
-                                <h:outputText value="#{recuperacao.status}" />
+                            <p:column field="status" headerText="Status" filterMatchMode="exact">
+                                <f:facet name="filter">
+                                    <p:selectOneMenu onchange="PF('dtRPs').filter()" styleClass="ui-custom-filter">
+                                        <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItem itemLabel="Aprovada" itemValue="Aprovada"/>
+                                        <f:selectItem itemLabel="Correção" itemValue="Correção"/>
+                                        <f:selectItem itemLabel="Cancelada" itemValue="Cancelada"/>
+                                        <f:selectItem itemLabel="Deferida - FCC" itemValue="Deferida - FCC"/>
+                                        <f:selectItem itemLabel="Finalizada" itemValue="Finalizada"/>
+                                        <f:selectItem itemLabel="Pendente" itemValue="Pendente"/>
+                                    </p:selectOneMenu>
+                                </f:facet>
                             </p:column>
 
                             
@@ -267,11 +281,11 @@
                     </h:form>
                     
                     <h:form id="dialogs">
-                        <p:dialog id="dialogAut" header="Autorizar recuperação paralela?" showEffect="fade" modal="true"
+                        <p:dialog id="dialogAut" header="Autorizar recuperação paralela" showEffect="fade" modal="true"
                                   widgetVar="autRP" responsive="true">
                             <p:outputPanel id="aut-rp-content" class="ui-fluid">
                                 <p:panelGrid columns="2" layout="flex" contentStyleClass="align-items-baseline ui-fluid">
-                                    <p:outputLabel for="rp_obsercacoes">Observações: </p:outputLabel>
+                                    <p:outputLabel for="rp_obsercacoes">Observações (opcional): </p:outputLabel>
                                     <p:inputTextarea id="rp_obsercacoes" required="false"
                                                      value="#{recuperacaoController.obs}" 
                                                      autoResize="true"/>
@@ -291,7 +305,7 @@
                                   widgetVar="indefRP" responsive="true">
                             <p:outputPanel id="indef-rp-content" class="ui-fluid">
                                 <p:panelGrid columns="2" layout="flex" contentStyleClass="align-items-baseline ui-fluid">
-                                    <p:outputLabel for="rp_obsercacoes">Observações: </p:outputLabel>
+                                    <p:outputLabel for="rp_obsercacoes">Observações (opcional): </p:outputLabel>
                                     <p:inputTextarea id="rp_obsercacoes_indef" required="false"
                                                      value="#{recuperacaoController.obs}" 
                                                      autoResize="true"/>

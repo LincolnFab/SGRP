@@ -285,13 +285,19 @@ public class RecuperacaoController implements Serializable {
 //                PrimeFaces.current().ajax().update("form:messages");
 //            }
 //        }
-        aula.setRecuperacaoParalelaId(recuperacaoParalela);
-        aula.setIdaula(Integer.parseInt(String.valueOf(new Date().getTime()).substring(8)));
-        aulas.add(aula);
-        aula = new Aula();
 
-        Util.addMessageInformation("Aula Adicionada");
-        PrimeFaces.current().ajax().update("form:messages", "form:dt-aulas");
+        if (aula.getHorarioFim().before(aula.getHorario())) {
+            Util.addMessageError("Horário de término não pode ser inferior ao horário de início");
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-aulas");
+        } else {
+            aula.setRecuperacaoParalelaId(recuperacaoParalela);
+            aula.setIdaula(Integer.parseInt(String.valueOf(new Date().getTime()).substring(8)));
+            aulas.add(aula);
+            aula = new Aula();
+
+            Util.addMessageInformation("Aula Adicionada");
+            PrimeFaces.current().ajax().update("form:messages", "form:dt-aulas");
+        }
     }
 
     public void removerAula() {
