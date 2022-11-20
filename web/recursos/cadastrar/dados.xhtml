@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
     <h:body>
         <p:panelGrid columns="4"
@@ -25,7 +26,7 @@
                 <p:ajax listener="#{recuperacaoController.onCursoChange()}" update="create_rp_disciplina, create_rp_turma"/>
                 <f:selectItem itemLabel="Selecione o Curso" itemValue=""/>
                 <f:selectItems value="#{cursoController.cursos}" var="curso"
-                               itemLabel="#{curso.descricao}" itemValue="#{curso}"/>
+                               itemLabel="#{fn:substring(curso.descricao, 10, 22)}" itemValue="#{curso}"/>
             </p:selectOneMenu>
 
             <p:outputLabel for="create_rp_disciplina ">Disciplina</p:outputLabel>
@@ -46,7 +47,7 @@
                 <p:ajax listener="#{recuperacaoController.onTurmaChange()}" update="dt-estudantes"/>
                 <f:selectItem itemLabel="Selecione a Turma" itemValue=""/>
                 <f:selectItems value="#{recuperacaoController.turmasCurso}" var="turmaId"
-                               itemLabel="#{turmaId.descricao}" itemValue="#{turmaId}"/>
+                               itemLabel=" #{fn:substring(turmaId.descricao, 69, 102)}" itemValue="#{turmaId}"/>
             </p:selectOneMenu>
 
             <p:outputLabel for="create_rp_bimestre">Bimestre</p:outputLabel>
