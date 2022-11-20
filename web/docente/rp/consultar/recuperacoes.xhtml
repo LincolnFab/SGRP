@@ -46,23 +46,28 @@
                                 <p:rowToggler/>
                             </p:column>
 
-                            <p:column headerText="Disciplina" sortBy="#{recuperacao.disciplina.nome}">
+                            <p:column headerText="Disciplina" sortBy="#{recuperacao.disciplina.nome}"
+                                      filterBy="#{recuperacao.disciplina.nome}" filterMatchMode="contains">
                                 <h:outputText value="#{recuperacao.disciplina.nome}" />
                             </p:column>
 
-                            <p:column headerText="Bimestre" sortBy="#{recuperacao.bimestre}">
+                            <p:column headerText="Bimestre" sortBy="#{recuperacao.bimestre}"
+                                      filterBy="#{recuperacao.bimestre}" filterMatchMode="contains">
                                 <h:outputText value="#{recuperacao.bimestre}" />
                             </p:column>
 
-                            <p:column headerText="Ano Letivo" sortBy="#{recuperacao.dataProposta}">
+                            <p:column headerText="Ano Letivo" sortBy="#{recuperacao.anoLetivo}"
+                                      filterBy="#{recuperacao.anoLetivo}" filterMatchMode="contains">
                                 <h:outputText value="#{recuperacao.anoLetivo}" />
                             </p:column>
 
-                            <p:column headerText="Total Alunos" sortBy="#{recuperacao.quantidadeAlunos}">
+                            <p:column headerText="Total Alunos" sortBy="#{recuperacao.quantidadeAlunos}"
+                                      filterBy="#{recuperacao.quantidadeAlunos}" filterMatchMode="contains">
                                 <h:outputText value="#{recuperacao.quantidadeAlunos}" />
                             </p:column>
 
-                            <p:column headerText="Status" sortBy="#{recuperacao.status}">
+                            <p:column headerText="Status" sortBy="#{recuperacao.status}"
+                                      filterBy="#{recuperacao.status}" filterMatchMode="contains">
                                 <h:outputText value="#{recuperacao.status}" />
                             </p:column>
 
@@ -214,7 +219,8 @@
                                     <p:commandButton id="cancelar" icon="pi pi-times" class="rounded-button" style="margin-left: 7px" styleClass="rounded-button ui-button-danger"
                                                      update=":dialogs:cancelar-content"
                                                      oncomplete="PF('cancelarRP').show()"
-                                                     process="@this">
+                                                     process="@this"
+                                                     disabled="#{recuperacao.status == 'Finalizada'}">
                                         <f:setPropertyActionListener value="#{recuperacao}" target="#{recuperacaoController.recuperacaoParalela}"/>
                                         <p:resetInput target=":dialogs:cancelar-content"/>
                                     </p:commandButton>
@@ -233,6 +239,7 @@
                                                          action="#{recuperacaoController.cancelarRP()}"
                                                          styleClass="ui-button-danger rounded-button" icon="pi pi-times"
                                                          style="margin-left: 7px;"
+                                                         disabled="#{recuperacao.status == 'Finalizada'}"
                                                          >
                                             <f:setPropertyActionListener value="#{recuperacao}" target="#{recuperacaoController.recuperacaoParalela}"/>
                                             <p:confirm header="Cancelar Recuperação Paralela" message="Deseja cancelar a recuperacao paralela?" icon="pi pi-exclamation-triangle"/>

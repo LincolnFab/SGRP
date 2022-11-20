@@ -43,7 +43,7 @@
 
                         <p:breadCrumb>
                             <p:menuitem outcome="/fcc/home" value="Home"/>
-                            <p:menuitem outcome="/fcc/rp/consultar/recuperacoes" value="Consultar Recuperação Paralela"/>
+                            <p:menuitem outcome="/fcc/rp/consultar/recuperacoes" value="Consultar Todas Recuperação Paralela"/>
                         </p:breadCrumb>
 
                         <p:dataTable id="dt-rp" widgetVar="dtRPs" var="recuperacao" value="#{recuperacaoController.recuperacoesParalelas}"
@@ -66,19 +66,23 @@
                                 <p:rowToggler/>
                             </p:column>
                             
-                            <p:column headerText="Disciplina" sortBy="#{recuperacao.disciplina.nome}">
+                            <p:column headerText="Disciplina" sortBy="#{recuperacao.disciplina.nome}"
+                                      filterBy="#{recuperacao.disciplina.nome}" filterMatchMode="contains">
                                 <h:outputText value="#{recuperacao.disciplina.nome}" />
                             </p:column>
 
-                            <p:column headerText="Bimestre" sortBy="#{recuperacao.bimestre}">
+                            <p:column headerText="Bimestre" sortBy="#{recuperacao.bimestre}"
+                                filterBy="#{recuperacao.bimestre}" filterMatchMode="contains">
                                 <h:outputText value="#{recuperacao.bimestre}" />
                             </p:column>
 
-                            <p:column headerText="Ano Letivo" sortBy="#{recuperacao.dataProposta}">
+                            <p:column headerText="Ano Letivo" sortBy="#{recuperacao.anoLetivo}"
+                                      filterBy="#{recuperacao.anoLetivo}" filterMatchMode="contains">
                                 <h:outputText value="#{recuperacao.anoLetivo}" />
                             </p:column>
 
-                            <p:column headerText="Total Alunos" sortBy="#{recuperacao.quantidadeAlunos}">
+                            <p:column headerText="Total Alunos" sortBy="#{recuperacao.quantidadeAlunos}"
+                                      filterBy="#{recuperacao.quantidadeAlunos}" filterMatchMode="contains">
                                 <h:outputText value="#{recuperacao.quantidadeAlunos}" />
                             </p:column>
 
@@ -280,7 +284,7 @@
                                   widgetVar="autRP" responsive="true">
                             <p:outputPanel id="aut-rp-content" class="ui-fluid">
                                 <p:panelGrid columns="2" layout="flex" contentStyleClass="align-items-baseline ui-fluid">
-                                    <p:outputLabel for="rp_obsercacoes">Observações: </p:outputLabel>
+                                    <p:outputLabel for="rp_obsercacoes">Observações (opcional): </p:outputLabel>
                                     <p:inputTextarea id="rp_obsercacoes" required="false"
                                                      value="#{recuperacaoController.obs}" 
                                                      autoResize="true"/>
@@ -301,7 +305,7 @@
                                   widgetVar="indefRP" responsive="true">
                             <p:outputPanel id="indef-rp-content" class="ui-fluid">
                                 <p:panelGrid columns="2" layout="flex" contentStyleClass="align-items-baseline ui-fluid">
-                                    <p:outputLabel for="rp_obsercacoes">Observações: </p:outputLabel>
+                                    <p:outputLabel for="rp_obsercacoes">Observações (opcional): </p:outputLabel>
                                     <p:inputTextarea id="rp_obsercacoes_indef" required="false"
                                                      value="#{recuperacaoController.obs}" 
                                                      autoResize="true"/>

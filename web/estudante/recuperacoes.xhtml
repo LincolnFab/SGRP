@@ -70,11 +70,13 @@
                                 <h:outputText value="#{recuperacao.disciplina.nome}" />
                             </p:column>
 
-                            <p:column headerText="Bimestre" sortBy="#{recuperacao.bimestre}">
+                            <p:column headerText="Bimestre" sortBy="#{recuperacao.bimestre}"
+                                      filterBy="#{recuperacao.bimestre}" filterMatchMode="contains">
                                 <h:outputText value="#{recuperacao.bimestre}" />
                             </p:column>
 
-                            <p:column headerText="Ano Letivo" sortBy="#{recuperacao.dataProposta}">
+                            <p:column headerText="Ano Letivo" sortBy="#{recuperacao.anoLetivo}"
+                                      filterBy="#{recuperacao.anoLetivo}" filterMatchMode="contains">
                                 <h:outputText value="#{recuperacao.anoLetivo}" />
                             </p:column>
 
