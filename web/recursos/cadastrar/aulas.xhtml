@@ -89,7 +89,7 @@
         </p:dataTable>
 
         <div align="right">
-            <p:commandButton id="submitBtn" value="Finalizar" actionListener="#{recuperacaoController.cadastrarRecuperacao()}" style="margin-right: 30px; margin-top: 10px"/>
+            <p:commandButton id="submitBtn" value="Finalizar" action="#{recuperacaoController.cadastrarRecuperacao()}" style="margin-right: 30px; margin-top: 10px"/>
             <p:blockUI block="form" trigger="submitBtn">
                 <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
             </p:blockUI>

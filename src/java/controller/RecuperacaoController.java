@@ -238,14 +238,16 @@ public class RecuperacaoController implements Serializable {
 
             PrimeFaces.current().ajax().update("form:messages");
             openNew();
-            return "../home.xhtml?faces-redirect=true";
+
+//            return "/docente/rp/consultar/recuperacoes?faces-redirect=true";
+            return "";
         } catch (Exception e) {
             System.out.println(e);
             Util.addMessageError("Erro ao cadastrar a recuperação paralela.");
 
             PrimeFaces.current().ajax().update("form:messages");
+            return "";
         }
-        return "";
     }
 
     public void editarRecuperacao(RecuperacaoParalela rp, String message, boolean email) {
@@ -377,7 +379,7 @@ public class RecuperacaoController implements Serializable {
             fillRecuperacaoParalelaList();
             Util.addMessageInformation("Recuperacao paralela deferida");
             PrimeFaces.current().ajax().update("form:messages", "form:dt-rp");
-
+            recuperacaoParalela = new RecuperacaoParalela();
         } catch (EJBException e) {
             PrimeFaces.current().executeScript("PF('autRP').hide()");
             Util.addMessageError("Não foi possível deferir a recuperação paralela");
@@ -482,6 +484,7 @@ public class RecuperacaoController implements Serializable {
             fillRecuperacaoParalelaList();
             Util.addMessageInformation("Recuperação paralela deferida");
             PrimeFaces.current().ajax().update("form:messages", "form:dt-rp");
+            recuperacaoParalela = new RecuperacaoParalela();
         } catch (EJBException e) {
             PrimeFaces.current().executeScript("PF('autRP').hide()");
             Util.addMessageError("Não foi possível deferir a recuperação paralela");
@@ -520,6 +523,7 @@ public class RecuperacaoController implements Serializable {
             fillRecuperacaoParalelaList();
             Util.addMessageInformation("Recuperação paralela indeferida");
             PrimeFaces.current().ajax().update("form:messages", "form:dt-rp");
+            recuperacaoParalela = new RecuperacaoParalela();
         } catch (EJBException e) {
             PrimeFaces.current().executeScript("PF('indefRP').hide()");
             Util.addMessageError("Não foi possível indeferir a recuperação paralela");
@@ -562,6 +566,7 @@ public class RecuperacaoController implements Serializable {
             Util.addMessageInformation("Recuperação paralela cancelada");
             fillRecuperacaoParalelaList();
             PrimeFaces.current().ajax().update("form:messages", "form:dt-rp");
+            recuperacaoParalela = new RecuperacaoParalela();
         } catch (EJBException e) {
             PrimeFaces.current().executeScript("PF('cancelarRP').hide()");
             Util.addMessageError("Não foi possível indeferir a recuperação paralela");
@@ -590,6 +595,7 @@ public class RecuperacaoController implements Serializable {
             Util.addMessageInformation("Recuperação paralela finalizada");
             fillRecuperacaoParalelaList();
             PrimeFaces.current().ajax().update("form:messages", "form:dt-rp");
+            recuperacaoParalela = new RecuperacaoParalela();
         } catch (EJBException e) {
             PrimeFaces.current().executeScript("PF('finalizarRP').hide()");
             Util.addMessageError("Não foi possível indeferir a recuperação paralela");
