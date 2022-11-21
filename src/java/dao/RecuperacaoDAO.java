@@ -35,7 +35,7 @@ public class RecuperacaoDAO extends AbstractDAO<RecuperacaoParalela> {
 
         List<RecuperacaoParalela> rps = new ArrayList<>();
         rps = getEntityManager()
-                .createQuery("SELECT rp FROM Estudante e JOIN e.recuperacaoParalelaHasEstudanteCollection rphe ON e = rphe.estudante JOIN rphe.recuperacaoParalela rp ON rphe.recuperacaoParalela = rp JOIN rp.aulaCollection a ON rp = a.recuperacaoParalelaId WHERE e.prontuario = :prontuario", RecuperacaoParalela.class)
+                .createQuery("SELECT rp FROM Estudante e JOIN e.recuperacaoParalelaHasEstudanteCollection rphe ON e = rphe.estudante JOIN rphe.recuperacaoParalela rp ON rphe.recuperacaoParalela = rp WHERE e.prontuario = :prontuario", RecuperacaoParalela.class)
                 .setParameter("prontuario", prontuario)
                 .getResultList();
         System.out.println("rps......." + rps);
@@ -48,5 +48,21 @@ public class RecuperacaoDAO extends AbstractDAO<RecuperacaoParalela> {
          */
     }
 
+    public List<RecuperacaoParalela> buscarPorDocente(String prontuario) {
+
+        List<RecuperacaoParalela> rps = new ArrayList<>();
+        rps = getEntityManager()
+                .createQuery("SELECT rpc FROM Servidor s JOIN s.recuperacaoParalelaCollection rpc ON s = rpc.servidorCollection WHERE s.prontuario = :prontuario", RecuperacaoParalela.class)
+                .setParameter("prontuario", prontuario)
+                .getResultList();
+        System.out.println("rps......." + rps);
+
+        return rps;
+        /*return getEntityManager()
+                .createQuery("SELECT rp FROM Estudante e JOIN e.recuperacaoParalelaHasEstudanteCollection rphe ON e = rphe.estudante JOIN rphe.recuperacaoParalela rp ON rphe.recuperacaoParalela = rp JOIN rp.aulaCollection a ON rp = a.recuperacaoParalelaId WHERE e.prontuario = :prontuario", RecuperacaoParalela.class)
+                .setParameter("prontuario", prontuario)
+                .getResultList();
+         */
+    }
     
 }

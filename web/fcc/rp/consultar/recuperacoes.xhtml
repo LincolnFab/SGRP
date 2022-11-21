@@ -46,7 +46,7 @@
                             <p:menuitem outcome="/fcc/rp/consultar/recuperacoes" value="Consultar Todas Recuperação Paralela"/>
                         </p:breadCrumb>
 
-                        <p:dataTable id="dt-rp" widgetVar="dtRPs" var="recuperacao" value="#{recuperacaoController.recuperacoesParalelas}"
+                        <p:dataTable id="dt-rp" widgetVar="dtRPs" var="recuperacao" value="#{recuperacaoController.allRecuperacoesParalelas}"
                                      emptyMessage="Nenhuma recuperação encontrada" rowKey="#{recuperacao.id}" styleClass="recuperacao-table"
                                      style="margin-top: 10px" paginator="true" rows="10" paginatorPosition="bottom">
 

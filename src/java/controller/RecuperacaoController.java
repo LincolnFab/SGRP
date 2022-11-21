@@ -58,6 +58,9 @@ public class RecuperacaoController implements Serializable {
     @Inject
     private ServidorDAO servidorDAO;
 
+    @Inject
+    private LoginController loginController;
+
     private Date minTime;
     private Date maxTime;
     private Date minDate;
@@ -67,7 +70,6 @@ public class RecuperacaoController implements Serializable {
     private Curso curso;
     private Aula aula;
     private Disciplina disciplina;
-    private LoginController loginController;
 
     private List<Turma> turmasCurso;
     private List<Disciplina> disciplinasCurso;
@@ -78,16 +80,26 @@ public class RecuperacaoController implements Serializable {
     private RecuperacaoParalela recuperacaoParalela;
     private RecuperacaoParalela recuperacaoParalelaAux;
     private List<RecuperacaoParalela> recuperacoesParalelas;
-    private List<RecuperacaoParalela> recuperacoesParalelasEstudanteAutenticado;
+    private List<RecuperacaoParalela> allRecuperacoesParalelas;
 
     private String obs;
 
     @PostConstruct
     public void fillRecuperacaoParalelaList() {
-        recuperacoesParalelas = recuperacaoDAO.buscarTodas();
+        if (loginController.getServidorAutenticado() != null) {
+            recuperacoesParalelas = recuperacaoDAO.buscarPorDocente(loginController.getServidorAutenticado().getProntuario());
+            if (loginController.getServidorAutenticado().getTipo().contains("FCC")
+                    || loginController.getServidorAutenticado().getTipo().contains("DAE")
+                    || loginController.getServidorAutenticado().getTipo().contains("TAE")) {
+                allRecuperacoesParalelas = recuperacaoDAO.buscarTodas();
+            }
+        } else if (loginController.getEstudanteAutenticado() != null) {
+            recuperacoesParalelas = recuperacaoDAO.buscarPorEstudante(loginController.getEstudanteAutenticado().getProntuario());
+        }
         //recuperacoesParalelas = recuperacaoDAO.buscarPorEstudante("PE3012905");
         setMinMaxTime();
         setMinMaxDate();
+        System.out.println();
     }
 
     public RecuperacaoController() {
@@ -589,16 +601,16 @@ public class RecuperacaoController implements Serializable {
         try {
             recuperacaoDAO.update(recuperacaoParalela);
 
-//            // enviar email csp
-//            //emails.add("csp.pep@ifsp.edu.br");
-//            try {
-//                util.JavaMail.email(emails, "Recuperação Paralela", recuperacaoParalela.getDisciplina().getDisciplinaPK().getSigla(), recuperacaoParalela.getDisciplina().getNome(), "A recuperação paralela foi finalizada.");
-//                //util.JavaMail.finalizarRP(emails, recuperacaoParalela.getDisciplina().getDisciplinaPK().getSigla(), recuperacaoParalela.getDisciplina().getNome());
-//                //Util.addMessageInformation("Email enviado para o(a) responsável pela recuperação paralela");
-//            } catch (EJBException e) {
-//                //Util.addMessageError("Erro ao enviar o email para o(a) responsável pela recuperação paralela. Contate o administrador.");
-//                //PrimeFaces.current().ajax().update("form:messages");
-//            }
+            // enviar email csp
+            //emails.add("csp.pep@ifsp.edu.br");
+            try {
+                util.JavaMail.email(emails, "Recuperação Paralela", recuperacaoParalela.getDisciplina().getDisciplinaPK().getSigla(), recuperacaoParalela.getDisciplina().getNome(), "A recuperação paralela foi finalizada.");
+                //util.JavaMail.finalizarRP(emails, recuperacaoParalela.getDisciplina().getDisciplinaPK().getSigla(), recuperacaoParalela.getDisciplina().getNome());
+                //Util.addMessageInformation("Email enviado para o(a) responsável pela recuperação paralela");
+            } catch (EJBException e) {
+                //Util.addMessageError("Erro ao enviar o email para o(a) responsável pela recuperação paralela. Contate o administrador.");
+                //PrimeFaces.current().ajax().update("form:messages");
+            }
             PrimeFaces.current().executeScript("PF('finalizarRP').hide()");
             Util.addMessageInformation("Recuperação paralela finalizada");
             fillRecuperacaoParalelaList();
@@ -747,14 +759,12 @@ public class RecuperacaoController implements Serializable {
         this.obs = obs;
     }
 
-    public List<RecuperacaoParalela> getRecuperacoesParalelasEstudanteAutenticado() {
-        // usuario autenticado...
-        recuperacoesParalelasEstudanteAutenticado = recuperacaoDAO.buscarPorEstudante("PE3012905");
-        return recuperacoesParalelasEstudanteAutenticado;
+    public List<RecuperacaoParalela> getAllRecuperacoesParalelas() {
+        return allRecuperacoesParalelas;
     }
 
-    public void setRecuperacoesParalelasEstudanteAutenticado(List<RecuperacaoParalela> recuperacoesParalelasEstudanteAutenticado) {
-        this.recuperacoesParalelasEstudanteAutenticado = recuperacoesParalelasEstudanteAutenticado;
+    public void setAllRecuperacoesParalelas(List<RecuperacaoParalela> allRecuperacoesParalelas) {
+        this.allRecuperacoesParalelas = allRecuperacoesParalelas;
     }
 
 }

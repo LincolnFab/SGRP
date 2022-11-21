@@ -33,6 +33,7 @@ public class LoginController implements Serializable {
 
     @Inject
     private ServidorDAO servidorDAO;
+
     @Inject
     private EstudanteDAO estudanteDAO;
 
@@ -44,47 +45,45 @@ public class LoginController implements Serializable {
     public String autenticador() {
         //login = login.toUpperCase();
 
-        // senha e prontuario iguais
-        if (login.equals(senha)) {
-            /*PrimeFaces.current().executeScript("PF('editSenhaDialog').show()");
-              alterarSenha();
-            */
-        } else {
-            if (servidorAutenticador()) {
-                if (servidorAutenticado.getSenha().equals(senha)) {
-                    if (servidorAutenticado.getTipo().equals("PROFESSOR"))
-                        return "docente/home?faces-redirect=true";
-                    if (servidorAutenticado.getTipo().equals("DAE"))
-                        return "dae/home?faces-redirect=true";
-                    if (servidorAutenticado.getTipo().equals("TAE"))
-                        return "csp/home?faces-redirect=true";
-                    if (servidorAutenticado.getTipo().contains("FCC"))
-                        return "fcc/home?faces-redirect=true";
-                } else {
-                    Util.addMessageError("Senha inválida");
-                    this.login = "";
-                    this.senha="";
+        if (servidorAutenticador()) {
+            if (servidorAutenticado.getSenha().equals(senha)) {
+                System.out.println(servidorAutenticado.toString());
+                if (servidorAutenticado.getTipo().equals("PROFESSOR")) {
+                    return "docente/home?faces-redirect=true";
                 }
-            } else if (estudanteAutenticador() ) {
-                if (estudanteAutenticado.getSenha().equals(senha)) {
-                    return "estudante/home?faces-redirect=true";
-                } else {
-                    System.out.println("senha errada.....");
-                    Util.addMessageError("Senha inválida");
-                    this.login = "";
-                    this.senha="";
+                if (servidorAutenticado.getTipo().equals("DAE")) {
+                    return "dae/home?faces-redirect=true";
+                }
+                if (servidorAutenticado.getTipo().equals("TAE")) {
+                    return "csp/home?faces-redirect=true";
+                }
+                if (servidorAutenticado.getTipo().contains("FCC")) {
+                    return "fcc/home?faces-redirect=true";
                 }
             } else {
-                Util.addMessageError("Login inválido");
+                Util.addMessageError("Senha inválida");
+                this.login = "";
+                this.senha = "";
             }
+        } else if (estudanteAutenticador()) {
+            if (estudanteAutenticado.getSenha().equals(senha)) {
+                return "estudante/home?faces-redirect=true";
+            } else {
+                System.out.println("senha errada.....");
+                Util.addMessageError("Senha inválida");
+                this.login = "";
+                this.senha = "";
+            }
+        } else {
+            Util.addMessageError("Login inválido");
         }
 
         return "login";
         //return null;
     }
-    
+
     public void alterarSenha() {
-        
+
     }
 
     public boolean servidorAutenticador() {
@@ -106,6 +105,11 @@ public class LoginController implements Serializable {
     }
 
     public String logout() {
+        this.login = "";
+        this.senha = "";
+        estudanteAutenticado = null;
+        servidorAutenticado = null;
+
         return "/login?faces-redirect=true";
     }
 
