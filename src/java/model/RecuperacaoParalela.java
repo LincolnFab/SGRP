@@ -12,6 +12,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
@@ -116,7 +117,7 @@ public class RecuperacaoParalela implements Serializable {
     private Collection<Servidor> servidorCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recuperacaoParalelaId")
     private Collection<Aula> aulaCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recuperacaoParalela")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recuperacaoParalela", fetch = FetchType.EAGER)
     private Collection<RecuperacaoParalelaHasEstudante> recuperacaoParalelaHasEstudanteCollection;
     @JoinColumns({
         @JoinColumn(name = "disciplina_sigla", referencedColumnName = "sigla", nullable = false),
@@ -298,5 +299,5 @@ public class RecuperacaoParalela implements Serializable {
     public String toString() {
         return "model.RecuperacaoParalela[ id=" + id + " ]";
     }
-    
+
 }

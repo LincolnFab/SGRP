@@ -61,8 +61,8 @@
         <div align="right" style="margin-top: 10px">
             <p:commandButton id="voltar_n" value="Voltar" onclick="PF('tabPanel').select(0)"
                              style="margin-right: 7px;"/>
-            <p:commandButton id="notas" icon="pi pi-check" value="Lançar notas"
-                             actionListener="#{recuperacaoController.editarRecuperacao(recuperacaoController.recuperacaoParalelaAux, 'Notas Lançadas', false)}" />
+            <p:commandButton icon="pi pi-check" value="Lançar notas" update="messages" process="@this"
+                             action="#{recuperacaoController.editarRecuperacao(recuperacaoController.recuperacaoParalelaAux, 'Notas Lançadas', false)}" />
         </div>
 
     </h:body>

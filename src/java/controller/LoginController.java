@@ -9,6 +9,7 @@ import dao.EstudanteDAO;
 import dao.ServidorDAO;
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import model.Estudante;
@@ -24,8 +25,8 @@ import util.Util;
 @SessionScoped
 public class LoginController implements Serializable {
 
-    private String login;
-    private String senha;
+    private String login = "";
+    private String senha = "";
     private String novaSenha;
     private String tipoUsuario;
     private Servidor servidorAutenticado;
@@ -109,6 +110,8 @@ public class LoginController implements Serializable {
         this.senha = "";
         estudanteAutenticado = null;
         servidorAutenticado = null;
+
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 
         return "/login?faces-redirect=true";
     }

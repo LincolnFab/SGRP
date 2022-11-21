@@ -251,7 +251,7 @@ public class RecuperacaoController implements Serializable {
             PrimeFaces.current().ajax().update("form:messages");
             openNew();
 
-//            return "/docente/rp/consultar/recuperacoes?faces-redirect=true";
+//            return "/user/rp/consultar/recuperacoes?faces-redirect=true";
             return "";
         } catch (Exception e) {
             System.out.println(e);
