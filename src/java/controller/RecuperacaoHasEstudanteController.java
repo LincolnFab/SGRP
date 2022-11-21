@@ -13,7 +13,6 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import model.RecuperacaoParalelaHasEstudante;
-import model.RecuperacaoParalelaHasEstudante_;
 
 /**
  *
@@ -21,19 +20,19 @@ import model.RecuperacaoParalelaHasEstudante_;
  */
 @Named
 @SessionScoped
-public class RecuperacaoHasEstudanteController implements Serializable{
+public class RecuperacaoHasEstudanteController implements Serializable {
 
     @Inject
     private RecuperacaoHasEstudanteDAO recuperacaoHasEstudanteDAO;
-    
+
     private List<RecuperacaoParalelaHasEstudante> recuperacoesHasEstudantes;
-    
+
     private RecuperacaoParalelaHasEstudante recuperacaoParalelaHasEstudante;
-    
+
     @PostConstruct
     public void fillRecuperacaoParalelaList() {
         recuperacoesHasEstudantes = recuperacaoHasEstudanteDAO.buscarTodos();
-        
+
     }
 
     public List<RecuperacaoParalelaHasEstudante> getRecuperacoesHasEstudantes() {
@@ -51,8 +50,5 @@ public class RecuperacaoHasEstudanteController implements Serializable{
     public void setRecuperacaoParalelaHasEstudante(RecuperacaoParalelaHasEstudante recuperacaoParalelaHasEstudante) {
         this.recuperacaoParalelaHasEstudante = recuperacaoParalelaHasEstudante;
     }
-    
-    
-    
-    
+
 }
