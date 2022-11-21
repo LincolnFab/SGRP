@@ -1,0 +1,286 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <h:body>
+        <p:dataTable id="dt-rp" widgetVar="dtRPs" var="recuperacao" value="#{recuperacaoController.recuperacoesParalelas}"
+                     emptyMessage="Nenhuma recuperação encontrada" rowKey="#{recuperacao.id}" styleClass="recuperacao-table"
+                     style="margin-top: 10px" paginator="true" rows="10" paginatorPosition="bottom">
+
+            <f:facet name="header">
+                <div class="p-d-flex p-ai-center p-jc-between">
+                    <span>Recuperações Paralelas</span>
+                    <div>
+                        <p:commandButton id="toggler" type="button" value="Campos" icon="pi pi-align-justify"/>
+                        <p:columnToggler datasource="dt-rp" trigger="toggler">
+                            <p:ajax />
+                        </p:columnToggler>
+                    </div>
+                </div>
+            </f:facet>
+
+            <p:column style="width:2rem">
+                <p:rowToggler/>
+            </p:column>
+
+            <p:column headerText="Turma" sortBy="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.turmaIdturma.descricao}"
+                      filterBy="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.turmaIdturma.descricao}" filterMatchMode="contains">
+                <h:outputText
+                    value="#{fn:substring(recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.turmaIdturma.descricao, 10, 22)}
+                    #{fn:substring(recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.turmaIdturma.descricao, 69, 102)}" />
+            </p:column>
+
+            <p:column headerText="Disciplina" sortBy="#{recuperacao.disciplina.nome}"
+                      filterBy="#{recuperacao.disciplina.nome}" filterMatchMode="contains">
+                <h:outputText value="#{recuperacao.disciplina.nome}" />
+            </p:column>
+
+            <p:column headerText="Bimestre" sortBy="#{recuperacao.bimestre}" sortOrder="desc"
+                      filterBy="#{recuperacao.bimestre}" filterMatchMode="contains">
+                <h:outputText value="#{recuperacao.bimestre}" />
+            </p:column>
+
+            <p:column headerText="Data Proposta" sortBy="#{recuperacao.dataProposta}" sortOrder="desc"
+                      filterBy="#{recuperacao.dataProposta}" filterMatchMode="contains">
+                <h:outputText value="#{recuperacao.dataProposta}" >
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:outputText>
+            </p:column>
+
+            <p:column headerText="Total Alunos" sortBy="#{recuperacao.quantidadeAlunos}"
+                      filterBy="#{recuperacao.quantidadeAlunos}" filterMatchMode="contains">
+                <h:outputText value="#{recuperacao.quantidadeAlunos}" />
+            </p:column>
+
+            <p:column headerText="Status" sortBy="#{recuperacao.status}"
+                      filterBy="#{recuperacao.status}" filterMatchMode="contains">
+                <h:outputText value="#{recuperacao.status}" />
+            </p:column>
+
+            <p:rowExpansion>
+                <p:tabView>
+                    <p:tab title="Dados">
+                        <p:panelGrid columns="4"
+                                     columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
+                                     layout="grid"
+                                     styleClass="ui-panelgrid-blank ui-fluid"
+                                     style="border:0px none; background-color:transparent;">
+
+                            <p:outputLabel>Curso:</p:outputLabel>
+                            <p:inputTextarea disabled="true" value="#{recuperacao.disciplina.curso.descricao}"/>
+
+                            <p:outputLabel>Turma:</p:outputLabel>
+                            <p:inputTextarea disabled="true" value="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.turmaIdturma.descricao}"/>
+
+                            <p:outputLabel>Sigla:</p:outputLabel>
+                            <p:inputText disabled="true" value="#{recuperacao.disciplina.disciplinaPK.sigla}"/>
+
+                            <p:outputLabel>Disciplina:</p:outputLabel>
+                            <p:inputText disabled="true" value="#{recuperacao.disciplina.nome}"/>
+
+                            <p:outputLabel>Bimestre: </p:outputLabel>
+                            <p:selectOneButton id="create_rp_bimestre" disabled="true"
+                                               value="#{recuperacao.bimestre}"
+                                               required="true" requiredMessage="Selecione o bimestre">
+                                <f:selectItem itemLabel="1" itemValue="1"/>
+                                <f:selectItem itemLabel="2" itemValue="2"/>
+                                <f:selectItem itemLabel="3" itemValue="3"/>
+                                <f:selectItem itemLabel="4" itemValue="4"/>
+                            </p:selectOneButton>
+
+                            <p:outputLabel>Ano Letivo:</p:outputLabel>
+                            <p:inputText disabled="true" value="#{recuperacao.anoLetivo}"/>
+
+                            <p:outputLabel>Docente(s):</p:outputLabel>
+                            <p:selectCheckboxMenu value="#{recuperacao.servidorCollection}"
+                                                  converter="servidorConverter"  required="true"
+                                                  disabled="#{recuperacao.status eq 'Aprovada' || recuperacao.status eq 'Cancelada' || recuperacao.status eq 'Finalizada'}"
+                                                  requiredMessage="Selecione ao menos um professor" 
+                                                  multiple="true" filter="true" filterMatchMode="contains" panelStyle="width: 30rem" scrollHeight="250"
+                                                  emptyLabel="Selecione um servidor" updateLabel="true">
+                                <f:selectItems value="#{servidorController.servidores}" var="servidor" itemLabel="#{servidor.nome}"
+                                               itemValue="#{servidor}"/>
+                            </p:selectCheckboxMenu>
+                        </p:panelGrid>
+
+                        <p:panelGrid columns="2"
+                                     columnClasses="ui-grid-col-3,ui-grid-col-9"
+                                     layout="grid"
+                                     styleClass="ui-panelgrid-blank ui-fluid"
+                                     style="border:0px none; background-color:transparent;">
+
+                            <p:row id="my-row-id" styleClass="my-heading-row" style="font-weight: bold">
+                                Informações Adicionais
+                            </p:row>
+
+                            <p:outputLabel>Justificativa:</p:outputLabel>
+                            <p:inputTextarea rows="7" cols="40" value="#{recuperacao.justificativa}" required="true"
+                                             disabled="#{recuperacao.status eq 'Aprovada' || recuperacao.status eq 'Cancelada' || recuperacao.status eq 'Finalizada'}"/>
+
+                            <p:outputLabel>Objetivo Geral:</p:outputLabel>
+                            <p:inputTextarea rows="7" cols="40" value="#{recuperacao.objetivoGeral}" required="true"
+                                             disabled="#{recuperacao.status eq 'Aprovada' || recuperacao.status eq 'Cancelada' || recuperacao.status eq 'Finalizada'}"/>
+
+                            <p:outputLabel>Atividades propostas:</p:outputLabel>
+                            <p:inputTextarea rows="7" cols="40" value="#{recuperacao.atividadesPropostas}" required="true"
+                                             disabled="#{recuperacao.status eq 'Aprovada' || recuperacao.status eq 'Cancelada' || recuperacao.status eq 'Finalizada'}"/>
+
+                            <p:outputLabel>Procedimentos avaliativos:</p:outputLabel>
+                            <p:inputTextarea rows="7" cols="40" value="#{recuperacao.procedimentosAvaliativos}" required="true"
+                                             disabled="#{recuperacao.status eq 'Aprovada' || recuperacao.status eq 'Cancelada' || recuperacao.status eq 'Finalizada'}"/>
+
+                            <p:outputLabel>Observações:</p:outputLabel>
+                            <p:inputTextarea rows="7" cols="40" value="#{recuperacao.observacoes}"
+                                             disabled="#{recuperacao.status == 'Cancelada' || recuperacao.status eq 'Finalizada'}"/>
+                        </p:panelGrid>
+                    </p:tab>
+                    <p:tab title="Alunos">
+                        <p:dataTable id="dt-alunos-rp" widgetVar="dtAlunosRp" value="#{recuperacao.recuperacaoParalelaHasEstudanteCollection}"
+                                     var="rphe" emptyMessage="Nenhum estudante encontrado"
+                                     rowKey="#{rphe.estudante.prontuario}" styleClass="alunos-table"
+                                     style="margin-top: 10px" paginator="false" >
+                            <p:column headerText="Prontuário" sortBy="#{rphe.estudante.prontuario}">
+                                <h:outputText value="#{rphe.estudante.prontuario}" />
+                            </p:column>
+
+                            <p:column headerText="Nome" sortBy="#{rphe.estudante.nome}">
+                                <h:outputText value="#{rphe.estudante.nome}" />
+                            </p:column>
+
+                            <p:column headerText="Nota Bimestre" sortBy="#{rphe.notaPre}">
+                                <h:outputText value="#{rphe.notaPre}" />
+                            </p:column>
+
+                            <p:column headerText="Nota da Recuperação">
+                                <h:outputText value="#{rphe.notaPos}" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:tab>
+                    <p:tab title="Aulas">
+                        <p:dataTable id="dt-aulas" widgetVar="dtAulas" var="aula" value="#{recuperacao.aulaCollection}"
+                                     emptyMessage="Nenhuma aula encontrada" rowKey="#{aula.idaula}" styleClass="aulas-table"
+                                     style="margin-top: 10px" paginator="false">
+
+                            <p:column headerText="Data" sortBy="#{aula.dia}">
+                                <h:outputText value="#{aula.dia}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column headerText="Hora de início" sortBy="#{aula.horario}">
+                                <h:outputText value="#{aula.horario}" >
+                                    <f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column headerText="Hora de término" sortBy="#{aula.horarioFim}">
+                                <h:outputText value="#{aula.horarioFim}" >
+                                    <f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column headerText="Sala" sortBy="#{aula.saladeaulaidSala.idSala}">
+                                <h:outputText value="#{aula.saladeaulaidSala.idSala}" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:tab>
+                </p:tabView>
+                <div align="right">
+                    <p:commandButton value="Editar RP" icon="pi pi-check" actionListener="#{recuperacaoController.editarRecuperacao(recuperacao, 'Recuperação Paralela Editada', false)}"
+                                     update="messages"/>
+                </div>
+            </p:rowExpansion>
+
+            <p:column headerText="Ações" exportable="false">
+                <p:panelGrid columns="4" layout="grid" styleClass="showcase-text-align-center"
+                             columnClasses="ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3">
+
+                    <p:commandButton id="presencas" icon="pi pi-gift" class="rounded-button"
+                                     onclick="PF('tabPanel').select(2)" update="form:tabView:dt-notas, form:tabView:dt-aulas, tooltips"
+                                     action="#{recuperacaoController.setRecuperacaoParalelaAux(recuperacao)}" 
+                                     disabled="#{recuperacao.status != 'Aprovada'}"
+                                     />
+
+
+                    <p:commandButton id="notas" icon="pi pi-book" class="rounded-button" 
+                                     onclick="PF('tabPanel').select(1)" update="form:tabView:dt-notas, form:tabView:dt-aulas, tooltips"
+                                     action="#{recuperacaoController.setRecuperacaoParalelaAux(recuperacao)}" 
+                                     disabled="#{recuperacao.status != 'Aprovada'}"
+                                     />
+
+
+                    <p:commandButton id="cancelar" icon="pi pi-times" class="rounded-button" styleClass="rounded-button ui-button-danger"
+                                     update="form:tabView:cancelar-content, tooltips"
+                                     oncomplete="PF('cancelarRP').show()"
+                                     process="@this"
+                                     disabled="#{recuperacao.status eq 'Aprovada' || recuperacao.status eq 'Cancelada' || recuperacao.status eq 'Finalizada'}">
+                        <f:setPropertyActionListener value="#{recuperacao}" target="#{recuperacaoController.recuperacaoParalela}"/>
+                        <p:resetInput target="form:tabView:cancelar-content"/>
+                    </p:commandButton>
+
+                    <p:commandButton id="finalizar" icon="pi pi-check-circle" class="rounded-button" styleClass="rounded-button ui-button-success"
+                                     update="form:tabView:finalizar-content, tooltips"
+                                     oncomplete="PF('finalizarRP').show()"
+                                     process="@this"
+                                     disabled="#{recuperacao.status != 'Aprovada'}">
+                        <f:setPropertyActionListener value="#{recuperacao}" target="#{recuperacaoController.recuperacaoParalela}"/>
+                        <p:resetInput target="form:tabView:finalizar-content"/>
+                    </p:commandButton>
+                </p:panelGrid>
+                <p:panelGrid id="tooltips" columns="4" layout="grid" styleClass="showcase-text-align-center">
+                    <p:tooltip for="presencas" value="Lançar Presenças" position="left"/>
+                    <p:tooltip for="notas" value="Lançar Notas" position="left"/>
+                    <p:tooltip for="cancelar" value="Cancelar RP" position="left"/>
+                    <p:tooltip for="finalizar" value="Finalizar RP" position="left"/>
+                </p:panelGrid>
+            </p:column>
+        </p:dataTable>
+
+            <p:dialog id="dialogCancelar" header="Cancelar recuperação paralela"
+                      showEffect="fade" modal="true"
+                      widgetVar="cancelarRP" responsive="true">
+                <p:outputPanel id="cancelar-content" class="ui-fluid">
+
+                    <i class="pi pi-exclamation-triangle"></i>
+                    <p:outputLabel> Deseja cancelar a recuperação paralela?</p:outputLabel>
+
+                </p:outputPanel>
+
+                <f:facet name="footer">
+                    <p:commandButton value="Não" icon="pi pi-times" onclick="PF('cancelarRP').hide()"
+                                     class="ui-button-secondary"/>
+                    <p:commandButton id="simBtn" value="Sim" icon="pi pi-check" actionListener="#{recuperacaoController.cancelarRP()}"
+                                     update="cancelar-content, dt-rp" process="cancelar-content @this"/>
+                </f:facet>
+                <p:blockUI block="dialogCancelar" trigger="simBtn">
+                    <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
+                </p:blockUI>
+            </p:dialog>
+
+            <p:dialog id="dialogFinalizar" header="Finalizar recuperação paralela"
+                      showEffect="fade" modal="true"
+                      widgetVar="finalizarRP" responsive="true">
+                <p:outputPanel id="finalizar-content" class="ui-fluid">
+
+                    <i class="pi pi-exclamation-triangle"></i>
+                    <p:outputLabel> Deseja finalizar a recuperação paralela?</p:outputLabel>
+
+                </p:outputPanel>
+
+                <f:facet name="footer">
+                    <p:commandButton value="Não" icon="pi pi-times" onclick="PF('finalizarRP').hide()"
+                                     class="ui-button-secondary"/>
+                    <p:commandButton id="simBtnFinalizar" value="Sim" icon="pi pi-check" actionListener="#{recuperacaoController.finalizarRp()}"
+                                     update="finalizar-content, dt-rp" process="finalizar-content @this"/>
+                </f:facet>
+                <p:blockUI block="dialogFinalizar" trigger="simBtnFinalizar">
+                    <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
+                </p:blockUI>
+            </p:dialog>
+    </h:body>
+</html>

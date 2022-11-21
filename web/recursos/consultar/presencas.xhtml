@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:body>
+        <p:dataTable id="dt-aulas" widgetVar="dtPresencas" var="aula" value="#{recuperacaoController.recuperacaoParalelaAux.aulaCollection}"
+                     emptyMessage="Nenhuma aula encontrada" rowKey="#{aula.dia}" styleClass="recuperacao-table"
+                     style="margin-top: 10px" paginator="false">
+
+            <f:facet name="header">
+                <div class="p-d-flex p-ai-center p-jc-between">
+                    <span>Aulas</span>
+                </div>
+            </f:facet>
+
+            <p:column style="width:2rem">
+                <p:rowToggler/>
+            </p:column>
+            <p:column headerText="Dia" sortBy="#{aula.dia}">
+                <h:outputText value="#{aula.dia}" >
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:outputText>
+            </p:column>
+
+            <p:column headerText="Hora de início" sortBy="#{aula.horario}">
+                <h:outputText value="#{aula.horario}" >
+                    <f:convertDateTime pattern="HH:mm" timeZone="GMT-3"/>
+                </h:outputText>
+            </p:column>
+
+            <p:column headerText="Hora de término" sortBy="#{aula.horarioFim}">
+                <h:outputText value="#{aula.horarioFim}" >
+                    <f:convertDateTime pattern="HH:mm" timeZone="GMT-3"/>
+                </h:outputText>
+            </p:column>
+
+            <p:column headerText="Sala" sortBy="#{aula.saladeaulaidSala.idSala}">
+                <h:outputText value="#{aula.saladeaulaidSala.idSala}" >
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:outputText>
+            </p:column>
+
+            <p:rowExpansion>
+                <p:dataTable id="dt-alunos-aula" widgetVar="dtAlunosRp" value="#{aula.frequenciaCollection}"
+                             var="frequencia" emptyMessage="Nenhum estudante encontrado" styleClass="alunos-table"
+                             style="margin-top: 10px" paginator="false" >
+                    <f:facet name="header">
+                        <div class="p-d-flex p-ai-center p-jc-between">
+                            <span>Alunos</span>
+                        </div>
+                    </f:facet>
+
+                    <p:column headerText="Prontuário">
+                        <h:outputText value="#{frequencia.estudante.prontuario}" />
+                    </p:column>
+
+                    <p:column headerText="Nome">
+                        <h:outputText value="#{frequencia.estudante.nome}" />
+                    </p:column>
+
+                    <p:column headerText="Presença">
+                        <p:selectBooleanCheckbox value="#{frequencia.frequencia}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:rowExpansion>
+        </p:dataTable>
+
+        <div align="right" style="margin-top: 10px">
+            <p:commandButton id="voltar_p" value="Voltar" onclick="PF('tabPanel').select(0)"
+                             style="margin-right: 7px;"/>
+            <p:commandButton id="presencas" icon="pi pi-check" value="Lançar presenças"
+                             actionListener="#{recuperacaoController.editarRecuperacao(recuperacaoController.recuperacaoParalelaAux, 'Frequências Lançadas', false) }" />
+        </div>
+    </h:body>
+</html>
