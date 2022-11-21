@@ -265,12 +265,14 @@ public class RecuperacaoController implements Serializable {
         Util.addMessageInformation(message);
 
         PrimeFaces.current().ajax().update("form:messages");
+        recuperacaoParalela = new RecuperacaoParalela();
     }
 
     public void removerRecuperacao() {
         try {
             recuperacaoDAO.remove(recuperacaoParalela);
             fillRecuperacaoParalelaList();
+            recuperacaoParalela = new RecuperacaoParalela();
         } catch (EJBException e) {
             return;
         }
@@ -587,16 +589,16 @@ public class RecuperacaoController implements Serializable {
         try {
             recuperacaoDAO.update(recuperacaoParalela);
 
-            // enviar email csp
-            //emails.add("csp.pep@ifsp.edu.br");
-            try {
-                util.JavaMail.email(emails, "Recuperação Paralela", recuperacaoParalela.getDisciplina().getDisciplinaPK().getSigla(), recuperacaoParalela.getDisciplina().getNome(), "A recuperação paralela foi finalizada.");
-                //util.JavaMail.finalizarRP(emails, recuperacaoParalela.getDisciplina().getDisciplinaPK().getSigla(), recuperacaoParalela.getDisciplina().getNome());
-                //Util.addMessageInformation("Email enviado para o(a) responsável pela recuperação paralela");
-            } catch (EJBException e) {
-                //Util.addMessageError("Erro ao enviar o email para o(a) responsável pela recuperação paralela. Contate o administrador.");
-                //PrimeFaces.current().ajax().update("form:messages");
-            }
+//            // enviar email csp
+//            //emails.add("csp.pep@ifsp.edu.br");
+//            try {
+//                util.JavaMail.email(emails, "Recuperação Paralela", recuperacaoParalela.getDisciplina().getDisciplinaPK().getSigla(), recuperacaoParalela.getDisciplina().getNome(), "A recuperação paralela foi finalizada.");
+//                //util.JavaMail.finalizarRP(emails, recuperacaoParalela.getDisciplina().getDisciplinaPK().getSigla(), recuperacaoParalela.getDisciplina().getNome());
+//                //Util.addMessageInformation("Email enviado para o(a) responsável pela recuperação paralela");
+//            } catch (EJBException e) {
+//                //Util.addMessageError("Erro ao enviar o email para o(a) responsável pela recuperação paralela. Contate o administrador.");
+//                //PrimeFaces.current().ajax().update("form:messages");
+//            }
             PrimeFaces.current().executeScript("PF('finalizarRP').hide()");
             Util.addMessageInformation("Recuperação paralela finalizada");
             fillRecuperacaoParalelaList();
@@ -604,7 +606,7 @@ public class RecuperacaoController implements Serializable {
             recuperacaoParalela = new RecuperacaoParalela();
         } catch (EJBException e) {
             PrimeFaces.current().executeScript("PF('finalizarRP').hide()");
-            Util.addMessageError("Não foi possível indeferir a recuperação paralela");
+            Util.addMessageError("Não foi possível finalizar a recuperação paralela");
             PrimeFaces.current().ajax().update("form:messages", "form:dt-rp");
         }
     }
