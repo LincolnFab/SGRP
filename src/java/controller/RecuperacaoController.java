@@ -178,7 +178,7 @@ public class RecuperacaoController implements Serializable {
         recuperacaoParalela.setDisciplina(new Disciplina());
     }
 
-    public String cadastrarRecuperacao() {
+    public String cadastrarRecuperacao(String path) {
         Date date = new Date();
 
         recuperacaoParalela.setId(recuperacaoParalela.getDisciplina().getNome() + " " + recuperacaoParalela.getBimestre() + " " + turma.getIdturma());
@@ -251,8 +251,8 @@ public class RecuperacaoController implements Serializable {
             PrimeFaces.current().ajax().update("form:messages");
             openNew();
 
-//            return "/user/rp/consultar/recuperacoes?faces-redirect=true";
-            return "";
+            return "/" + path + "/rp/consultar/index.xhtml?faces-redirect=true";
+//            return "";
         } catch (Exception e) {
             System.out.println(e);
             Util.addMessageError("Erro ao cadastrar a recuperação paralela.");

@@ -50,15 +50,19 @@ public class LoginController implements Serializable {
             if (servidorAutenticado.getSenha().equals(senha)) {
                 System.out.println(servidorAutenticado.toString());
                 if (servidorAutenticado.getTipo().equals("PROFESSOR")) {
+                    tipoUsuario = "docente";
                     return "docente/home?faces-redirect=true";
                 }
                 if (servidorAutenticado.getTipo().equals("DAE")) {
+                    tipoUsuario = "dae";
                     return "dae/home?faces-redirect=true";
                 }
                 if (servidorAutenticado.getTipo().equals("TAE")) {
+                    tipoUsuario = "csp";
                     return "csp/home?faces-redirect=true";
                 }
                 if (servidorAutenticado.getTipo().contains("FCC")) {
+                    tipoUsuario = "fcc";
                     return "fcc/home?faces-redirect=true";
                 }
             } else {
