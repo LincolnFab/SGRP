@@ -93,6 +93,8 @@ public class RecuperacaoController implements Serializable {
                     || loginController.getServidorAutenticado().getTipo().contains("TAE")) {
                 allRecuperacoesParalelas = recuperacaoDAO.buscarTodas();
             }
+            recuperacaoParalela.setServidorCollection(new ArrayList<>());
+            recuperacaoParalela.getServidorCollection().add(loginController.getServidorAutenticado());
         } else if (loginController.getEstudanteAutenticado() != null) {
             recuperacoesParalelas = recuperacaoDAO.buscarPorEstudante(loginController.getEstudanteAutenticado().getProntuario());
         }
@@ -176,6 +178,10 @@ public class RecuperacaoController implements Serializable {
         recuperacaoParalela = new RecuperacaoParalela();
         estudantesTurma = new ArrayList<>();
         recuperacaoParalela.setDisciplina(new Disciplina());
+        if (loginController != null) {
+            recuperacaoParalela.setServidorCollection(new ArrayList<>());
+            recuperacaoParalela.getServidorCollection().add(loginController.getServidorAutenticado());
+        }
     }
 
     public String cadastrarRecuperacao(String path) {
