@@ -267,6 +267,10 @@ public class RecuperacaoController implements Serializable {
         rp.getServidorCollection().isEmpty();
         rp.getAulaCollection().isEmpty();
 
+        if (rp.getStatus().equals("Correção")) {
+            rp.setStatus("Pendente");
+        }
+
         recuperacaoDAO.update(rp);
 
         if (email) {
