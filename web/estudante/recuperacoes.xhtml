@@ -45,8 +45,8 @@
                             <p:menuitem outcome="/estudante/home" value="Home"/>
                             <p:menuitem outcome="/estudante/recuperacoes" value="Consultar Recuperação Paralela"/>
                         </p:breadCrumb>
-                        
-                        <p:dataTable id="dt-rp" widgetVar="dtRPs" var="recuperacao" value="#{recuperacaoController.recuperacoesParalelasEstudanteAutenticado}"
+
+                        <p:dataTable id="dt-rp" widgetVar="dtRPs" var="recuperacao" value="#{recuperacaoController.recuperacoesParalelas}"
                                      emptyMessage="Nenhuma recuperação encontrada" rowKey="#{recuperacao.id}" styleClass="recuperacao-table"
                                      style="margin-top: 10px" paginator="true" rows="10" paginatorPosition="bottom">
 
@@ -54,10 +54,16 @@
                                 <div class="p-d-flex p-ai-center p-jc-between">
                                     <span>Recuperações Paralelas</span>
                                     <div>
+                                        <p:commandButton id="refresh"  action="#{recuperacaoController.fillRecuperacaoParalelaList()}" style="margin-right: 7px"
+                                                         process="@this" update="form:dt-rp" icon="pi pi-replay" styleClass="rounded-button" />
+
                                         <p:commandButton id="toggler" type="button" value="Campos" icon="pi pi-align-justify"/>
                                         <p:columnToggler datasource="dt-rp" trigger="toggler">
                                             <p:ajax />
                                         </p:columnToggler>
+
+                                        <p:tooltip for="refresh" value="Recarregar Tabela" position="top"/>
+                                        <p:tooltip for="toggler" value="Campos da Tabela" position="top"/>
                                     </div>
                                 </div>
                             </f:facet>

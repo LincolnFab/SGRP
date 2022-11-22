@@ -54,25 +54,30 @@
                                 <div class="p-d-flex p-ai-center p-jc-between">
                                     <span>Recuperações Paralelas</span>
                                     <div>
+                                        <p:commandButton id="refresh"  action="#{recuperacaoController.fillRecuperacaoParalelaList()}" style="margin-right: 7px"
+                                                         process="@this" update="form:dt-rp" icon="pi pi-replay" styleClass="rounded-button" />
                                         <p:commandButton id="toggler" type="button" value="Campos" icon="pi pi-align-justify"/>
                                         <p:columnToggler datasource="dt-rp" trigger="toggler">
                                             <p:ajax />
                                         </p:columnToggler>
+
+                                        <p:tooltip for="refresh" value="Recarregar Tabela" position="top"/>
+                                        <p:tooltip for="toggler" value="Campos da Tabela" position="top"/>
                                     </div>
                                 </div>
                             </f:facet>
-                            
+
                             <p:column style="width:2rem">
                                 <p:rowToggler/>
                             </p:column>
-                            
+
                             <p:column headerText="Disciplina" sortBy="#{recuperacao.disciplina.nome}"
                                       filterBy="#{recuperacao.disciplina.nome}" filterMatchMode="contains">
                                 <h:outputText value="#{recuperacao.disciplina.nome}" />
                             </p:column>
 
                             <p:column headerText="Bimestre" sortBy="#{recuperacao.bimestre}"
-                                filterBy="#{recuperacao.bimestre}" filterMatchMode="contains">
+                                      filterBy="#{recuperacao.bimestre}" filterMatchMode="contains">
                                 <h:outputText value="#{recuperacao.bimestre}" />
                             </p:column>
 
@@ -239,7 +244,7 @@
                                             <p:column headerText="Nota Bimestre" sortBy="#{rphe.notaPre}">
                                                 <h:outputText value="#{rphe.notaPre}" />
                                             </p:column>
-                                            
+
                                             <p:column headerText="Nota da Recuperação">
                                                 <h:outputText value="#{rphe.notaPos}" />
                                             </p:column>
@@ -291,8 +296,8 @@
                                 </p:panelGrid>
                             </p:outputPanel>
                             <f:facet name="footer">
-                                
-                               
+
+
                                 <p:commandButton id="simBtn" value="Salvar" icon="pi pi-check" actionListener="#{recuperacaoController.deferirRpFcc()}"
                                                  update="aut-rp-content" process="aut-rp-content @this"/>
                             </f:facet>
@@ -312,7 +317,7 @@
                                 </p:panelGrid>
                             </p:outputPanel>
                             <f:facet name="footer">
-                                
+
                                 <p:commandButton id="simBtnIndef" value="Salvar" icon="pi pi-check" actionListener="#{recuperacaoController.indeferirRp()}"
                                                  update="indef-rp-content" process="indef-rp-content @this"/>
                             </f:facet>

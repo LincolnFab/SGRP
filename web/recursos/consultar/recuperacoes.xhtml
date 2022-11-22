@@ -16,10 +16,15 @@
                 <div class="p-d-flex p-ai-center p-jc-between">
                     <span>Recuperações Paralelas</span>
                     <div>
+                        <p:commandButton id="refresh"  action="#{recuperacaoController.fillRecuperacaoParalelaList()}" style="margin-right: 7px"
+                                         process="@this" update="form:tabView:dt-rp" icon="pi pi-replay" styleClass="rounded-button" />
                         <p:commandButton id="toggler" type="button" value="Campos" icon="pi pi-align-justify"/>
                         <p:columnToggler datasource="dt-rp" trigger="toggler">
                             <p:ajax />
                         </p:columnToggler>
+
+                        <p:tooltip for="refresh" value="Recarregar Tabela" position="top"/>
+                        <p:tooltip for="toggler" value="Campos da Tabela" position="top"/>
                     </div>
                 </div>
             </f:facet>
@@ -40,12 +45,12 @@
                 <h:outputText value="#{recuperacao.disciplina.nome}" />
             </p:column>
 
-            <p:column headerText="Bimestre" sortBy="#{recuperacao.bimestre}" sortOrder="desc"
+            <p:column headerText="Bimestre" sortBy="#{recuperacao.bimestre}"
                       filterBy="#{recuperacao.bimestre}" filterMatchMode="contains">
                 <h:outputText value="#{recuperacao.bimestre}" />
             </p:column>
 
-            <p:column headerText="Data Proposta" sortBy="#{recuperacao.dataProposta}" sortOrder="desc"
+            <p:column headerText="Data Proposta" sortBy="#{recuperacao.dataProposta}"
                       filterBy="#{recuperacao.dataProposta}" filterMatchMode="contains">
                 <h:outputText value="#{recuperacao.dataProposta}" >
                     <f:convertDateTime pattern="dd/MM/yyyy" />
@@ -241,46 +246,46 @@
             </p:column>
         </p:dataTable>
 
-            <p:dialog id="dialogCancelar" header="Cancelar recuperação paralela"
-                      showEffect="fade" modal="true"
-                      widgetVar="cancelarRP" responsive="true">
-                <p:outputPanel id="cancelar-content" class="ui-fluid">
+        <p:dialog id="dialogCancelar" header="Cancelar recuperação paralela"
+                  showEffect="fade" modal="true"
+                  widgetVar="cancelarRP" responsive="true">
+            <p:outputPanel id="cancelar-content" class="ui-fluid">
 
-                    <i class="pi pi-exclamation-triangle"></i>
-                    <p:outputLabel> Deseja cancelar a recuperação paralela?</p:outputLabel>
+                <i class="pi pi-exclamation-triangle"></i>
+                <p:outputLabel> Deseja cancelar a recuperação paralela?</p:outputLabel>
 
-                </p:outputPanel>
+            </p:outputPanel>
 
-                <f:facet name="footer">
-                    <p:commandButton value="Não" icon="pi pi-times" onclick="PF('cancelarRP').hide()"
-                                     class="ui-button-secondary"/>
-                    <p:commandButton id="simBtn" value="Sim" icon="pi pi-check" actionListener="#{recuperacaoController.cancelarRP()}"
-                                     update="cancelar-content, dt-rp" process="cancelar-content @this"/>
-                </f:facet>
-                <p:blockUI block="dialogCancelar" trigger="simBtn">
-                    <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
-                </p:blockUI>
-            </p:dialog>
+            <f:facet name="footer">
+                <p:commandButton value="Não" icon="pi pi-times" onclick="PF('cancelarRP').hide()"
+                                 class="ui-button-secondary"/>
+                <p:commandButton id="simBtn" value="Sim" icon="pi pi-check" actionListener="#{recuperacaoController.cancelarRP()}"
+                                 update="cancelar-content, dt-rp" process="cancelar-content @this"/>
+            </f:facet>
+            <p:blockUI block="dialogCancelar" trigger="simBtn">
+                <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
+            </p:blockUI>
+        </p:dialog>
 
-            <p:dialog id="dialogFinalizar" header="Finalizar recuperação paralela"
-                      showEffect="fade" modal="true"
-                      widgetVar="finalizarRP" responsive="true">
-                <p:outputPanel id="finalizar-content" class="ui-fluid">
+        <p:dialog id="dialogFinalizar" header="Finalizar recuperação paralela"
+                  showEffect="fade" modal="true"
+                  widgetVar="finalizarRP" responsive="true">
+            <p:outputPanel id="finalizar-content" class="ui-fluid">
 
-                    <i class="pi pi-exclamation-triangle"></i>
-                    <p:outputLabel> Deseja finalizar a recuperação paralela?</p:outputLabel>
+                <i class="pi pi-exclamation-triangle"></i>
+                <p:outputLabel> Deseja finalizar a recuperação paralela?</p:outputLabel>
 
-                </p:outputPanel>
+            </p:outputPanel>
 
-                <f:facet name="footer">
-                    <p:commandButton value="Não" icon="pi pi-times" onclick="PF('finalizarRP').hide()"
-                                     class="ui-button-secondary"/>
-                    <p:commandButton id="simBtnFinalizar" value="Sim" icon="pi pi-check" actionListener="#{recuperacaoController.finalizarRp()}"
-                                     update="finalizar-content, dt-rp" process="finalizar-content @this"/>
-                </f:facet>
-                <p:blockUI block="dialogFinalizar" trigger="simBtnFinalizar">
-                    <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
-                </p:blockUI>
-            </p:dialog>
+            <f:facet name="footer">
+                <p:commandButton value="Não" icon="pi pi-times" onclick="PF('finalizarRP').hide()"
+                                 class="ui-button-secondary"/>
+                <p:commandButton id="simBtnFinalizar" value="Sim" icon="pi pi-check" actionListener="#{recuperacaoController.finalizarRp()}"
+                                 update="finalizar-content, dt-rp" process="finalizar-content @this"/>
+            </f:facet>
+            <p:blockUI block="dialogFinalizar" trigger="simBtnFinalizar">
+                <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
+            </p:blockUI>
+        </p:dialog>
     </h:body>
 </html>
