@@ -68,6 +68,14 @@ public class ServidorController implements Serializable {
         PrimeFaces.current().ajax().update("form:messages", "form:dt-servidores");
     }
 
+    public void editarServidor(Servidor servidor) {
+        servidorDAO.update(servidor);
+        Util.addMessageInformation("Servidor Editado");
+
+        PrimeFaces.current().executeScript("PF('editServidorDialog').hide()");
+        PrimeFaces.current().ajax().update("form:messages", "form:dt-servidores");
+    }
+
     public void removerServidor() {
         try {
             servidorDAO.remove(servidor);
@@ -160,7 +168,7 @@ public class ServidorController implements Serializable {
 
     public boolean isLoading() {
         return loading;
-}
+    }
 
     public void setLoading(boolean loading) {
         this.loading = loading;

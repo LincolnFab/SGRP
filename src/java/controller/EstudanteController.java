@@ -70,6 +70,14 @@ public class EstudanteController implements Serializable {
         PrimeFaces.current().ajax().update("form:messages", "form:dt-estudantes");
     }
 
+    public void editarEstudante(Estudante estudante) {
+        estudanteDAO.update(estudante);
+        Util.addMessageInformation("Estudante Editado");
+
+        PrimeFaces.current().executeScript("PF('editEstudanteDialog').hide()");
+        PrimeFaces.current().ajax().update("form:messages", "form:dt-estudantes");
+    }
+
     public void removerEstudante() {
         try {
             estudanteDAO.remove(estudante);
@@ -83,25 +91,25 @@ public class EstudanteController implements Serializable {
         PrimeFaces.current().executeScript("PF('editEstudanteDialog').hide()");
         PrimeFaces.current().ajax().update("form:messages", "form:dt-estudantes");
     }
-    
+
     public void importarEstudantes() {
         if (file != null) {
             List<Estudante> planilha = new ArrayList<Estudante>();
             List<Estudante> estudantesBanco = new ArrayList<Estudante>();
             List<Turma> turmas = new ArrayList<Turma>();
-            
+
             estudantesBanco = estudanteDAO.buscarTodos();
             turmas = turmaDAO.buscarTodos();
             int error = 0;
             int update = 0;
             int create = 0;
-        
+
             File newFile = UploadFileToFile.uploadedFileToFileConverter(file);
             planilha = util.ReadExcel.estudanteExcelData(newFile, turmas);
-            
+
             for (Estudante e : planilha) {
                 if (estudantesBanco.contains(e)) {
-                    try{
+                    try {
                         e.setSenha(estudantesBanco.get(estudantesBanco.indexOf(e)).getSenha());
                         estudanteDAO.update(e);
                         update += 1;
@@ -112,7 +120,7 @@ public class EstudanteController implements Serializable {
                     try {
                         estudanteDAO.create(e);
                         create += 1;
-                    } catch(Exception ex) {
+                    } catch (Exception ex) {
                         error += 1;
                     }
                 }
@@ -123,7 +131,7 @@ public class EstudanteController implements Serializable {
             util.Util.addMessageWarning(update + " registro(s) atualizado(s)");
             util.Util.addMessageWarning(create + " registro(s) inserido(s)");
             util.Util.addMessageWarning(error + " registro(s) não foram importado(s)");
-            
+
         } else {
             PrimeFaces.current().executeScript("PF('importarEstudante').hide()");
             PrimeFaces.current().ajax().update("form:fileupload", "form:messages", "form:dt-estudantes");
@@ -131,7 +139,7 @@ public class EstudanteController implements Serializable {
             util.Util.addMessageError("Arquivo inválido");
         }
     }
-    
+
     public Estudante getEstudante() {
         return estudante;
     }

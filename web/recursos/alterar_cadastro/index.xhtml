@@ -1,0 +1,171 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <!-- Editar Dados Servidor -->
+
+        <p:dialog header="Editar Cadastro" showEffect="fade" modal="true"
+                  widgetVar="editServidorCadastroDialog" responsive="true" fitViewport="true">
+            <p:outputPanel id="edit-servidor-content" class="ui-fluid">
+                <p:outputPanel rendered="#{not empty loginController.servidorAutenticado}">
+
+                    <div class="p-field">
+                        <p:outputLabel for="prontuario_servidor_edit">Prontuário</p:outputLabel>
+                        <p:inputMask id="prontuario_servidor_edit" value="#{loginController.servidorAutenticado.prontuario}" mask="AA-9999999" disabled="true"/>
+                    </div>
+
+                    <div class="p-field">
+                        <p:outputLabel for="nome_servidor_edit">Nome</p:outputLabel>
+                        <p:inputText id="nome_servidor_edit" value="#{loginController.servidorAutenticado.nome}" required="true" disabled="true"/>
+                    </div>
+
+                    <div class="p-field">
+                        <p:outputLabel for="email_servidor_edit">Email</p:outputLabel>
+                        <p:inputText id="email_servidor_edit" value="#{loginController.servidorAutenticado.email}" required="true"/>
+                    </div>
+
+                    <div class="p-field">
+                        <p:outputLabel for="tipo_servidor_edit">Tipo</p:outputLabel>
+                        <p:selectOneMenu id="tipo_servidor_edit" value="#{loginController.servidorAutenticado.tipo}" required="true" disabled="true">
+                            <f:selectItem itemLabel="Selecione um Tipo" itemValue=""/>
+                            <f:selectItem itemLabel="PROFESSOR" itemValue="PROFESSOR"/>
+                            <f:selectItem itemLabel="TAE" itemValue="TAE"/>
+                            <f:selectItem itemLabel="FCC INF" itemValue="FCC INF"/>
+                            <f:selectItem itemLabel="FCC MEC" itemValue="FCC MEC"/>
+                            <f:selectItem itemLabel="DAE" itemValue="DAE"/>
+                        </p:selectOneMenu>
+                    </div>
+                </p:outputPanel>
+            </p:outputPanel>
+
+            <f:facet name="footer">
+                <p:commandButton value="Editar" icon="pi pi-check" actionListener="#{servidorController.editarServidor(loginController.servidorAutenticado)}"
+                                 update="edit-servidor-content, messages" process="edit-servidor-content @this"/>
+                <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('editServidorCadastroDialog').hide()"
+                                 class="ui-button-secondary"/>
+            </f:facet>
+        </p:dialog>
+
+        <p:dialog header="Editar Senha" showEffect="fade" modal="true"
+                  widgetVar="editSenhaServidorDialog" responsive="true" fitViewport="true">
+            <p:outputPanel id="edit-servidor-senha-content" class="ui-fluid">
+                <p:outputPanel rendered="#{not empty loginController.servidorAutenticado}">
+
+                    <div class="p-field">
+                        <p:outputLabel for="senha_servidor_edit_nova" value="Nova Senha" />
+                        <p:password id="senha_servidor_edit_nova" match="senha_servidor_edit_confirm"
+                                    value="#{loginController.senha}" required="false"
+                                    redisplay="true" maxlength="25">
+                            <f:validateLength minimum="8" ></f:validateLength>
+                        </p:password>
+                    </div>
+
+                    <div class="p-field">
+                        <p:outputLabel for="senha_servidor_edit_confirm" value="Confirmar Nova Senha" />
+                        <p:password id="senha_servidor_edit_confirm" required="false"
+                                    value="#{loginController.novaSenha}"
+                                    redisplay="true" maxlength="25">
+                            <f:validateLength minimum="8" ></f:validateLength>
+                        </p:password>
+                    </div>
+                </p:outputPanel>
+            </p:outputPanel>
+
+            <f:facet name="footer">
+                <p:commandButton value="Editar" icon="pi pi-check" actionListener="#{loginController.alterarSenha()}"
+                                 update="edit-servidor-senha-content, messages" process="edit-servidor-senha-content @this"/>
+                <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('editSenhaServidorDialog').hide()"
+                                 class="ui-button-secondary"/>
+            </f:facet>
+        </p:dialog>
+
+
+
+        <!-- Editar Dados Estudante -->
+
+        <p:dialog header="Editar Cadastro" showEffect="fade" modal="true"
+                  widgetVar="editEstudanteCadastroDialog" responsive="true" fitViewport="true">
+            <p:outputPanel rendered="#{not empty loginController.estudanteAutenticado}"
+                           id="edit-estudante-content" class="ui-fluid">
+                <div class="p-field">
+                    <p:outputLabel for="prontuario_estudante_edit">Prontuário</p:outputLabel>
+                    <p:inputMask id="prontuario_estudante_edit" value="#{loginController.estudanteAutenticado.prontuario}" mask="AA-9999999" disabled="true"/>
+                </div>
+
+                <div class="p-field">
+                    <p:outputLabel for="nome_estudante_edit">Nome</p:outputLabel>
+                    <p:inputText id="nome_estudante_edit" value="#{loginController.estudanteAutenticado.nome}" required="true" disabled="true"/>
+                </div>
+
+                <div class="p-field">
+                    <p:outputLabel for="email_pessoal_estudante_edit">Email Pessoal</p:outputLabel>
+                    <p:inputText id="email_pessoal_estudante_edit" value="#{loginController.estudanteAutenticado.emailPessoal}" required="true"/>
+                </div>
+
+                <div class="p-field">
+                    <p:outputLabel for="email_institucional_estudante_edit">Email Istitucional</p:outputLabel>
+                    <p:inputText id="email_institucional_estudante_edit" value="#{loginController.estudanteAutenticado.emailAluno}" required="false" disabled="true"/>
+                </div>
+
+                <div class="p-field">
+                    <p:outputLabel for="email_responsavel_estudante_edit">Email Responsável</p:outputLabel>
+                    <p:inputText id="email_responsavel_estudante_edit" value="#{loginController.estudanteAutenticado.emailResponsavel}" required="false" disabled="true"/>
+                </div>
+
+                <div class="p-field">
+                    <p:outputLabel for="turma_estudante_edit">Turma</p:outputLabel>
+                    <p:selectOneMenu id="turma_estudante_edit" value="#{loginController.estudanteAutenticado.turmaIdturma}"
+                                     required="true" requiredMessage="Selecione uma Turma" converter="#{turmaId}" disabled="true">
+                        <f:selectItem itemLabel="Selecione a Turma" itemValue="" />
+                        <f:selectItems value="#{turmaController.turmas}" var="turmaId"
+                                       itemLabel="#{turmaId.descricao}" itemValue="#{turmaId}"/>
+                    </p:selectOneMenu>
+                </div>
+            </p:outputPanel>
+
+            <f:facet name="footer">
+                <p:commandButton value="Editar" icon="pi pi-check" actionListener="#{estudanteController.editarEstudante(loginController.estudanteAutenticado)}"
+                                 update="edit-estudante-content" process="edit-estudante-content @this"/>
+                <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('editEstudanteCadastroDialog').hide()"
+                                 class="ui-button-secondary"/>
+            </f:facet>
+        </p:dialog>
+
+        <p:dialog header="Editar Senha" showEffect="fade" modal="true"
+                  widgetVar="editSenhaEstudanteDialog" responsive="true" fitViewport="true">
+            <p:outputPanel id="edit-estudante-senha-content" class="ui-fluid">
+                <p:outputPanel rendered="#{not empty loginController.estudanteAutenticado}">
+
+                    <div class="p-field">
+                        <p:outputLabel for="senha_estudante_edit_nova" value="Nova Senha" />
+                        <p:password id="senha_estudante_edit_nova" match="senha_estudante_edit_confirm"
+                                    value="#{loginController.senha}" required="false"
+                                    redisplay="true" maxlength="25">
+                            <f:validateLength minimum="8"></f:validateLength>
+                        </p:password>
+                    </div>
+
+                    <div class="p-field">
+                        <p:outputLabel for="senha_estudante_edit_confirm" value="Confirmar Nova Senha" />
+                        <p:password id="senha_estudante_edit_confirm" required="false"
+                                    value="#{loginController.novaSenha}"
+                                    redisplay="true" maxlength="25">
+                            <f:validateLength minimum="8"></f:validateLength>
+                        </p:password>
+                    </div>
+                </p:outputPanel>
+            </p:outputPanel>
+
+            <f:facet name="footer">
+                <p:commandButton value="Editar" icon="pi pi-check" actionListener="#{loginController.alterarSenha()}"
+                                 update="edit-estudante-senha-content, messages" process="edit-estudante-senha-content @this"/>
+                <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('editSenhaEstudanteDialog').hide()"
+                                 class="ui-button-secondary"/>
+            </f:facet>
+        </p:dialog>
+    </h:body>
+</html>

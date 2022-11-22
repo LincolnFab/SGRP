@@ -43,20 +43,27 @@
         </div>
 
         <div id="content" class="left_content">
-            <h:form>
+            <h:form id="form_data">
                 <p:menubar style="max-height: 3.5rem !important; margin-bottom: 10px;">
                     <p:clock />
                     <p:menuitem >
                     </p:menuitem>
 
                     <f:facet name="options">
-                        <p:menuButton value="Usuário" icon="pi pi-user" buttonStyleClass="ui-button-flat ui-button-plain">
-                            <p:menuitem value="Sair" icon="pi pi-power-off" action="#{loginController.logout()}"/>
+                        <p:menuButton value="#{loginController.servidorAutenticado.nome}" icon="pi pi-user" buttonStyleClass="ui-button-flat ui-button-plain">
+                            <p:menuitem value="Sair" icon="pi pi-power-off" immediate="true" action="#{loginController.logout()}"/>
                             <p:divider />
-                            <p:menuitem value="Alterar Senha" icon="pi pi-unlock"/>
+                            <p:menuitem value="Alterar Cadastro" icon="pi pi-id-card"
+                                        update="edit-servidor-content"
+                                        oncomplete="PF('editServidorCadastroDialog').show()" process="@this"/>
+
+                            <p:menuitem value="Alterar Senha" icon="pi pi-unlock"
+                                        update="edit-servidor-senha-content"
+                                        oncomplete="PF('editSenhaServidorDialog').show()" process="@this"/>
                         </p:menuButton>
                     </f:facet>
                 </p:menubar>
+                <ui:include src="/recursos/alterar_cadastro/index.xhtml"/>
             </h:form>
             <ui:insert name="content">
                 <h:form>
