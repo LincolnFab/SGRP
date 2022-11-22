@@ -88,13 +88,6 @@
             </p:column>
         </p:dataTable>
 
-        <div align="right">
-            <p:commandButton id="submitBtn" value="Finalizar" action="#{recuperacaoController.cadastrarRecuperacao(loginController.tipoUsuario)}" style="margin-right: 30px; margin-top: 10px"/>
-            <p:blockUI block="form" trigger="submitBtn">
-                <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
-            </p:blockUI>
-        </div>
-
         <p:confirmDialog widgetVar="deleteAulaDialog" showEffect="fade" width="300"
                          message="Deseja remover esta aula?" header="Confirmação" severity="warn">
             <p:commandButton value="Sim" icon="pi pi-check" actionListener="#{recuperacaoController.removerAula()}"
