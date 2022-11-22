@@ -159,18 +159,19 @@
                                         </ui:repeat>
                                     </p:tab>
                                     <p:tab title="Nota">
-                                        <p:dataTable id="dt-rphe" widgetVar="dtRphe" var="rphe" value="#{recuperacao.recuperacaoParalelaHasEstudanteCollection}"
-                                                     emptyMessage="Nota não encontrada" styleClass="rphe-table"
-                                                     style="margin-top: 10px" paginator="false">
+                                        <ui:repeat value="#{recuperacao.recuperacaoParalelaHasEstudanteCollection}" var="rphe">
+                                            <p:panelGrid columns="2"
+                                                             columnClasses="ui-grid-col-3,ui-grid-col-9"
+                                                             layout="grid"
+                                                             styleClass="ui-panelgrid-blank ui-fluid"
+                                                             style="border:0px none; background-color:transparent;"
+                                                             rendered="#{rphe.recuperacaoParalelaHasEstudantePK.estudanteProntuario == loginController.estudanteAutenticado.prontuario}">
 
-                                            <p:column headerText="Nota do Bimestre">
-                                                <h:outputText value="#{rphe.notaPre}" />
-                                            </p:column>
+                                                    <h:outputText value="Nota do Bimestre: #{rphe.notaPre}" />
 
-                                            <p:column headerText="Nota da Recuperação">
-                                                <h:outputText value="#{rphe.notaPos}" />
-                                            </p:column>
-                                        </p:dataTable>
+                                                    <h:outputText value="Nota da Recuperação: #{rphe.notaPos}" />
+                                            </p:panelGrid>
+                                        </ui:repeat>
                                     </p:tab>
                                 </p:tabView>
                             </p:rowExpansion>

@@ -7,6 +7,7 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -25,6 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "recuperacao_paralela_has_estudante")
 @XmlRootElement
+@Cacheable(false)
 @NamedQueries({
     @NamedQuery(name = "RecuperacaoParalelaHasEstudante.findAll", query = "SELECT r FROM RecuperacaoParalelaHasEstudante r"),
     @NamedQuery(name = "RecuperacaoParalelaHasEstudante.findByRecuperacaoParalelaId", query = "SELECT r FROM RecuperacaoParalelaHasEstudante r WHERE r.recuperacaoParalelaHasEstudantePK.recuperacaoParalelaId = :recuperacaoParalelaId"),

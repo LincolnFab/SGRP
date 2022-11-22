@@ -97,6 +97,7 @@ public class RecuperacaoController implements Serializable {
             recuperacaoParalela.getServidorCollection().add(loginController.getServidorAutenticado());
         } else if (loginController.getEstudanteAutenticado() != null) {
             recuperacoesParalelas = recuperacaoDAO.buscarPorEstudante(loginController.getEstudanteAutenticado().getProntuario());
+            System.out.println();
         }
         //recuperacoesParalelas = recuperacaoDAO.buscarPorEstudante("PE3012905");
         setMinMaxTime();
