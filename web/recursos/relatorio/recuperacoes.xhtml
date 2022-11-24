@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <h:body>
+        <style>
+            /* reset on the showcase style*/
+            body .ui-panelgrid .ui-panelgrid-cell {
+                background-color: transparent;
+            }
+
+            /* example use of styles for your form */
+            .my-heading-row {
+                background-color: var(--surface-c);
+                font-weight: bold;
+                margin-top: 0.5em;
+            }
+            .ui-panelgrid.showcase-text-align-center .ui-grid-responsive .ui-panelgrid-cell {
+                text-align: center;
+            }
+
+            .customPanelGrid .ui-panelgrid-content {
+                align-items: center;
+            }
+        </style>
+        <div class="flex justify-content-between">
+            <div>
+                <p:commandButton value="XLSX" styleClass="mr-2 mb-2" >
+                    <p:dataExporter type="xlsxstream" target="dt-rp" fileName="relatorio" pageOnly="true"/>
+                </p:commandButton>
+            </div>
+        </div>
+
+        <p:dataTable id="dt-rp" widgetVar="dtRPs" var="recuperacao" value="#{recuperacaoController.allRecuperacoesParalelas}"
+                     emptyMessage="Nenhuma recuperação encontrada" rowKey="#{recuperacao.id}" styleClass="recuperacao-table"
+                     style="margin-top: 10px"
+                     scrollable="true"
+                     scrollWidth="98%"
+                     scrollHeight="500"
+                     >
+
+            <f:facet name="header">
+                <div class="p-d-flex p-ai-center p-jc-between">
+                    <span>Recuperações Paralelas</span>
+                    <div>
+                        <p:commandButton id="toggler" type="button" value="Campos" icon="pi pi-align-justify"/>
+                        <p:columnToggler datasource="dt-rp" trigger="toggler">
+                            <p:ajax />
+                        </p:columnToggler>
+                    </div>
+                </div>
+            </f:facet>
+
+            <p:column headerText="Curso" sortBy="#{recuperacao.disciplina.curso}"
+                      filterBy="#{recuperacao.disciplina.curso}" filterMatchMode="contains">
+                <h:outputText value="#{recuperacao.disciplina.curso}" />
+            </p:column>
+
+            <p:column headerText="Turma" sortBy="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.turmaIdturma.descricao}"
+                      filterBy="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.turmaIdturma.descricao}" filterMatchMode="contains">
+                <h:outputText
+                    value="#{fn:substring(recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.turmaIdturma.descricao, 10, 22)}
+                    #{fn:substring(recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.turmaIdturma.descricao, 69, 102)}" />
+            </p:column>
+
+            <p:column headerText="Sigla" sortBy="#{recuperacao.disciplina.disciplinaPK.sigla}"
+                      filterBy="#{recuperacao.disciplina.disciplinaPK.sigla}" filterMatchMode="contains">
+                <h:outputText value="#{recuperacao.disciplina.nome}" />
+            </p:column>
+
+            <p:column headerText="Disciplina" sortBy="#{recuperacao.disciplina.nome}"
+                      filterBy="#{recuperacao.disciplina.nome}" filterMatchMode="contains">
+                <h:outputText value="#{recuperacao.disciplina.nome}" />
+            </p:column>
+
+            <p:column headerText="Docente" sortBy="#{recuperacao.servidorCollection[0].nome}"
+                      filterBy="#{recuperacao.servidorCollection[0].nome}" filterMatchMode="contains">
+                    <h:outputText value="#{recuperacao.servidorCollection[0].nome}" />
+            </p:column>
+
+            <p:column headerText="Data da Proposta" sortBy="#{recuperacao.dataProposta}"
+                      filterBy="#{recuperacao.dataProposta}" filterMatchMode="contains">
+                <h:outputText value="#{recuperacao.dataProposta}">
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:outputText>
+            </p:column>
+
+            <p:column headerText="Bimestre" sortBy="#{recuperacao.bimestre}"
+                      filterBy="#{recuperacao.bimestre}" filterMatchMode="contains">
+                <h:outputText value="#{recuperacao.bimestre}" />
+            </p:column>
+
+            <p:column headerText="Ano Letivo" sortBy="#{recuperacao.anoLetivo}"
+                      filterBy="#{recuperacao.anoLetivo}" filterMatchMode="contains">
+                <h:outputText value="#{recuperacao.anoLetivo}" />
+            </p:column>
+
+            <p:column headerText="Total Alunos" sortBy="#{recuperacao.quantidadeAlunos}"
+                      filterBy="#{recuperacao.quantidadeAlunos}" filterMatchMode="contains">
+                <h:outputText value="#{recuperacao.quantidadeAlunos}" />
+            </p:column>
+
+            <p:column headerText="Total Aulas" sortBy="#{recuperacao.quantidadeAulas}"
+                      filterBy="#{recuperacao.quantidadeAulas}" filterMatchMode="contains">
+                <h:outputText value="#{recuperacao.quantidadeAulas}" />
+            </p:column>
+
+            <p:column headerText="Status" sortBy="#{recuperacao.status}"
+                      filterBy="#{recuperacao.status}" filterMatchMode="contains">
+                <h:outputText value="#{recuperacao.status} " />
+            </p:column>
+
+            <p:column headerText="Atividades Propostas" sortBy="#{recuperacao.atividadesPropostas}"
+                      visible="false">
+                <h:outputText value="#{recuperacao.atividadesPropostas} " />
+            </p:column>
+
+            <p:column headerText="Justificativa" sortBy="#{recuperacao.justificativa}"
+                      visible="false">
+                <h:outputText value="#{recuperacao.justificativa} " />
+            </p:column>
+
+            <p:column headerText="Objetivo Geral" sortBy="#{recuperacao.objetivoGeral}"
+                      visible="false">
+                <h:outputText value="#{recuperacao.objetivoGeral} " />
+            </p:column>
+
+            <p:column headerText="Procedimentos Avaliativos" sortBy="#{recuperacao.procedimentosAvaliativos}"
+                      visible="false">
+                <h:outputText value="#{recuperacao.procedimentosAvaliativos} " />
+            </p:column>
+
+            <p:column headerText="Observações" sortBy="#{recuperacao.observacoes}"
+                      visible="false">
+                <h:outputText value="#{recuperacao.observacoes} " />
+            </p:column>
+        </p:dataTable>
+    </h:body>
+</html>

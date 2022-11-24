@@ -47,7 +47,8 @@ public class Autorizacao implements PhaseListener {
                     || request.equals("/csp/gerenciamento/servidores.xhtml")
                     || request.equals("/csp/gerenciamento/turmas.xhtml")
                     || request.equals("/csp/relatorio/disciplinas.xhtml")
-                    || request.equals("/csp/relatorio/estudantes.xhtml")) {
+                    || request.equals("/csp/relatorio/estudantes.xhtml")
+                    || request.equals("/csp/relatorio/recuperacoes.xhtml")) {
                 return true;
             }
         }
@@ -55,7 +56,8 @@ public class Autorizacao implements PhaseListener {
             if (request.equals("/dae/home.xhtml")
                     || request.equals("/dae/rp/cadastrar/index.xhtml")
                     || request.equals("/dae/rp/consultar/index.xhtml")
-                    || request.equals("/dae/rp/consultar/recuperacoes.xhtml")) {
+                    || request.equals("/dae/rp/consultar/recuperacoes.xhtml")
+                    || request.equals("/dae/rp/relatorio/recuperacoes.xhtml")) {
                 return true;
             }
         }
@@ -63,7 +65,8 @@ public class Autorizacao implements PhaseListener {
             if (request.equals("/fcc/home.xhtml")
                     || request.equals("/fcc/rp/cadastrar/index.xhtml")
                     || request.equals("/fcc/rp/consultar/index.xhtml")
-                    || request.equals("/fcc/rp/consultar/recuperacoes.xhtml")) {
+                    || request.equals("/fcc/rp/consultar/recuperacoes.xhtml")
+                    || request.equals("/fcc/rp/relatorio/recuperacoes.xhtml")) {
                 return true;
             }
         }

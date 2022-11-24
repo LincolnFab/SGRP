@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="css/cssLayout.css"/>
+        <h:outputStylesheet name="css/primeflex.min.css"/>
+
+        <title>IFSP - SGRP</title>
+    </h:head>
+
+    <h:body>
+        <ui:composition template="/fcc/home.xhtml">
+            <ui:define name="content">
+                <div class="card">
+                    <h:form id="form">
+                        <p:growl id="messages" showDetail="true"/>
+
+                        <p:breadCrumb>
+                            <p:menuitem outcome="/fcc/home" value="Home"/>
+                            <p:menuitem outcome="/fcc/rp/relatorio/recuperacoes" value="Relatório Recuperação Paralela"/>
+                        </p:breadCrumb>
+
+                        <ui:include src="/recursos/relatorio/recuperacoes.xhtml"></ui:include>
+                    </h:form>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
