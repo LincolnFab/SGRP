@@ -12,7 +12,6 @@ import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import static jdk.internal.joptsimple.internal.Messages.message;
 import model.Servidor;
 
 /*
