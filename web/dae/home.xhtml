@@ -50,7 +50,7 @@
 
                     <f:facet name="options">
                         <p:menuButton value="#{loginController.servidorAutenticado.nome}" icon="pi pi-user" buttonStyleClass="ui-button-flat ui-button-plain">
-                            <p:menuitem value="Sair" icon="pi pi-power-off" immediate="true" actionListener="#{loginController.logout()}"/>
+                            <p:menuitem value="Sair" icon="pi pi-power-off" immediate="true" action="#{loginController.logout()}"/>
                             <p:divider />
                             <p:menuitem value="Alterar Cadastro" icon="pi pi-id-card"
                                         update="edit-servidor-content"
