@@ -202,6 +202,11 @@
                                                        itemLabel="#{turmaId.descricao}" itemValue="#{turmaId}"/>
                                     </p:selectOneMenu>
                                 </div>
+                                
+                                <div class="p-field">
+                                    <p:outputLabel for="senha_edit">Senha</p:outputLabel>
+                                    <p:password id="senha_edit" value="#{estudanteController.estudante.senha}" required="false" />
+                                </div>
                             </p:outputPanel>
 
                             <f:facet name="footer">

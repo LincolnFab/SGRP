@@ -173,6 +173,11 @@
                                             <f:selectItem itemLabel="DAE" itemValue="DAE"/>
                                         </p:selectOneMenu>
                                     </div>
+                                    
+                                    <div class="p-field">
+                                        <p:outputLabel for="senha_edit">Senha</p:outputLabel>
+                                        <p:password id="senha_edit" value="#{servidorController.servidor.senha}" required="false"/>
+                                    </div>
                                 </p:outputPanel>
                             </p:outputPanel>
 
