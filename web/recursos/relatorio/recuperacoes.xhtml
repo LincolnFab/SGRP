@@ -70,7 +70,7 @@
 
             <p:column headerText="Sigla" sortBy="#{recuperacao.disciplina.disciplinaPK.sigla}"
                       filterBy="#{recuperacao.disciplina.disciplinaPK.sigla}" filterMatchMode="contains">
-                <h:outputText value="#{recuperacao.disciplina.nome}" />
+                <h:outputText value="#{recuperacao.disciplina.disciplinaPK.sigla}" />
             </p:column>
 
             <p:column headerText="Disciplina" sortBy="#{recuperacao.disciplina.nome}"

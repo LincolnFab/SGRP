@@ -591,6 +591,11 @@ public class RecuperacaoController implements Serializable {
 
     public void cancelarRP() {
         recuperacaoParalela.setStatus("Cancelada");
+        if (recuperacaoParalela.getObservacoes() != null) {
+            recuperacaoParalela.setObservacoes(recuperacaoParalela.getObservacoes() + "\n");
+        }
+        recuperacaoParalela.setObservacoes(recuperacaoParalela.getObservacoes() + "Cancelada em: " + getDateTime());
+
         try {
             recuperacaoDAO.update(recuperacaoParalela);
             PrimeFaces.current().executeScript("PF('cancelarRP').hide()");
@@ -607,6 +612,11 @@ public class RecuperacaoController implements Serializable {
 
     public void finalizarRp() {
         recuperacaoParalela.setStatus("Finalizada");
+
+        if (recuperacaoParalela.getObservacoes() != null) {
+            recuperacaoParalela.setObservacoes(recuperacaoParalela.getObservacoes() + "\n");
+        }
+        recuperacaoParalela.setObservacoes(recuperacaoParalela.getObservacoes() + "Finalizada em " + getDateTime());
         List<String> emails = new ArrayList<>();
 
         try {

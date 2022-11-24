@@ -5,14 +5,12 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
-import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import model.Servidor;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -45,7 +43,6 @@ public class Autorizacao implements PhaseListener {
                     || request.equals("/csp/gerenciamento/salas.xhtml")
                     || request.equals("/csp/gerenciamento/servidores.xhtml")
                     || request.equals("/csp/gerenciamento/turmas.xhtml")
-                    || request.equals("/csp/relatorio/disciplinas.xhtml")
                     || request.equals("/csp/relatorio/estudantes.xhtml")
                     || request.equals("/csp/relatorio/recuperacoes.xhtml")) {
                 return true;
