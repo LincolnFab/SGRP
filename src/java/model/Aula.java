@@ -50,17 +50,14 @@ public class Aula implements Serializable {
     @Column(name = "idaula", nullable = false)
     private Integer idaula;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "dia", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date dia;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "horario", nullable = false)
     @Temporal(TemporalType.TIME)
     private Date horario;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "horario_fim", nullable = false)
     @Temporal(TemporalType.TIME)
     private Date horarioFim;

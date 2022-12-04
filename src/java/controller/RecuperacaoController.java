@@ -186,33 +186,48 @@ public class RecuperacaoController implements Serializable {
     }
 
     public String cadastrarRecuperacao(String path) {
-        Date date = new Date();
 
-        recuperacaoParalela.setId(recuperacaoParalela.getDisciplina().getNome() + " " + recuperacaoParalela.getBimestre() + " " + turma.getIdturma());
-        recuperacaoParalela.setAulaCollection(new ArrayList<Aula>());
-        recuperacaoParalela.setRecuperacaoParalelaHasEstudanteCollection(new ArrayList<RecuperacaoParalelaHasEstudante>());
+        if (estudantesRP.isEmpty()) {
+            Util.addMessageError("Selecione ao menos um estudante na Recuperação Paralela");
 
-        recuperacaoParalela.setDataProposta(date);
-        recuperacaoParalela.setAnoLetivo(new GregorianCalendar().get(Calendar.YEAR));
-        recuperacaoParalela.setQuantidadeAlunos(estudantesRP.size());
-        recuperacaoParalela.setQuantidadeAulas(aulas.size());
-        recuperacaoParalela.setStatus("Pendente");
-
-        for (Estudante e : estudantesRP) {
-            RecuperacaoParalelaHasEstudante rphe = new RecuperacaoParalelaHasEstudante();
-            rphe.setEstudante(e);
-            rphe.setNotaPos(0.0f);
-            rphe.setRecuperacaoParalela(recuperacaoParalela);
-            rphe.setRecuperacaoParalelaHasEstudantePK(new RecuperacaoParalelaHasEstudantePK(recuperacaoParalela.getId(), e.getProntuario()));
-            recuperacaoParalela.getRecuperacaoParalelaHasEstudanteCollection().add(rphe);
+            PrimeFaces.current().ajax().update("form:messages");
+            return "";
         }
 
-        for (Aula a : aulas) {
-            a.setRecuperacaoParalelaId(recuperacaoParalela);
-            recuperacaoParalela.getAulaCollection().add(a);
+        if (aulas.isEmpty()) {
+            Util.addMessageError("Adicione ao menos uma aula na Recuperação Paralela");
+
+            PrimeFaces.current().ajax().update("form:messages");
+            return "";
         }
 
         try {
+            Date date = new Date();
+
+            recuperacaoParalela.setId(recuperacaoParalela.getDisciplina().getNome() + " " + recuperacaoParalela.getBimestre() + " " + turma.getIdturma());
+            recuperacaoParalela.setAulaCollection(new ArrayList<Aula>());
+            recuperacaoParalela.setRecuperacaoParalelaHasEstudanteCollection(new ArrayList<RecuperacaoParalelaHasEstudante>());
+
+            recuperacaoParalela.setDataProposta(date);
+            recuperacaoParalela.setAnoLetivo(new GregorianCalendar().get(Calendar.YEAR));
+            recuperacaoParalela.setQuantidadeAlunos(estudantesRP.size());
+            recuperacaoParalela.setQuantidadeAulas(aulas.size());
+            recuperacaoParalela.setStatus("Pendente");
+
+            for (Estudante e : estudantesRP) {
+                RecuperacaoParalelaHasEstudante rphe = new RecuperacaoParalelaHasEstudante();
+                rphe.setEstudante(e);
+                rphe.setNotaPos(0.0f);
+                rphe.setRecuperacaoParalela(recuperacaoParalela);
+                rphe.setRecuperacaoParalelaHasEstudantePK(new RecuperacaoParalelaHasEstudantePK(recuperacaoParalela.getId(), e.getProntuario()));
+                recuperacaoParalela.getRecuperacaoParalelaHasEstudanteCollection().add(rphe);
+            }
+
+            for (Aula a : aulas) {
+                a.setRecuperacaoParalelaId(recuperacaoParalela);
+                recuperacaoParalela.getAulaCollection().add(a);
+            }
+
             recuperacaoDAO.create(recuperacaoParalela);
 
 //            try {

@@ -17,28 +17,28 @@
             </p:row>
 
             <p:outputLabel for="create_rp_data" value="Data"/>
-            <p:datePicker id="create_rp_data" value="#{recuperacaoController.aula.dia}" requiredMessage="Informe uma Data"
+            <p:datePicker id="create_rp_data" value="#{recuperacaoController.aula.dia}"
                           mindate="#{recuperacaoController.minDate}" maxdate="#{recuperacaoController.maxDate}"
-                          required="true" readonlyInput="true"/>
+                          readonlyInput="true"/>
 
             <p:outputLabel for="create_rp_sala">Sala</p:outputLabel>
             <p:selectOneMenu id="create_rp_sala" converter="#{salaConverter}"
-                             value="#{recuperacaoController.aula.saladeaulaidSala}" requiredMessage="Selecione uma sala"
-                             required="true" filter="true" filterMatchMode="startsWith">
+                             value="#{recuperacaoController.aula.saladeaulaidSala}"
+                             filter="true" filterMatchMode="startsWith">
                 <f:selectItem itemLabel="Selecione a Sala" itemValue=""/>
                 <f:selectItems value="#{salaController.salasDeAula}" var="sala"
                                itemLabel="#{sala.idSala}" itemValue="#{sala}"/>
             </p:selectOneMenu>
 
             <p:outputLabel for="create_rp_horario_ini">Horário de Início</p:outputLabel>
-            <p:datePicker id="create_rp_horario_ini" value="#{recuperacaoController.aula.horario}" requiredMessage="Informe um horário de início"
+            <p:datePicker id="create_rp_horario_ini" value="#{recuperacaoController.aula.horario}"
                           mindate="#{recuperacaoController.minTime}" maxdate="#{recuperacaoController.maxTime}"
-                          required="true" timeOnly="true" pattern="HH:mm"/>
+                          timeOnly="true" pattern="HH:mm"/>
 
             <p:outputLabel for="create_rp_horario_fim">Horário de Término</p:outputLabel>
-            <p:datePicker id="create_rp_horario_fim" value="#{recuperacaoController.aula.horarioFim}" requiredMessage="Informe um horário de término"
+            <p:datePicker id="create_rp_horario_fim" value="#{recuperacaoController.aula.horarioFim}"
                           mindate="#{recuperacaoController.minTime}" maxdate="#{recuperacaoController.maxTime}"
-                          required="true" timeOnly="true" pattern="HH:mm"/>
+                          timeOnly="true" pattern="HH:mm"/>
 
         </p:panelGrid>
         <div align="right">
@@ -95,5 +95,19 @@
             <p:commandButton value="Não" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
                              onclick="PF('deleteAulaDialog').hide()"/>
         </p:confirmDialog>
+
+        <div align="right" style="margin-right: 30px; margin-top: 10px">
+            <p:commandButton value="Resetar o Formulário" update="tabView"
+                             process="@this" styleClass="ui-button-warning"
+                             action="#{recuperacaoController.openNew()}" style="margin-right: 7px"/>
+
+            <p:commandButton id="submitBtn"
+                             value="Finalizar Cadastro da Recuperação Paralela"
+                             update="tabView, messages"
+                             action="#{recuperacaoController.cadastrarRecuperacao(loginController.tipoUsuario)}" />
+            <p:blockUI block="form" trigger="submitBtn">
+                <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
+            </p:blockUI>
+        </div>
     </h:body>
 </html>

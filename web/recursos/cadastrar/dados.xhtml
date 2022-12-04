@@ -26,7 +26,7 @@
                 <p:ajax listener="#{recuperacaoController.onCursoChange()}" update="create_rp_disciplina, create_rp_turma"/>
                 <f:selectItem itemLabel="Selecione o Curso" itemValue=""/>
                 <f:selectItems value="#{cursoController.cursos}" var="curso"
-                               itemLabel="#{fn:substring(curso.descricao, 10, 22)}" itemValue="#{curso}"/>
+                               itemLabel="#{curso.descricao}" itemValue="#{curso}"/>
             </p:selectOneMenu>
 
             <p:outputLabel for="create_rp_disciplina ">Disciplina</p:outputLabel>
@@ -47,7 +47,7 @@
                 <p:ajax listener="#{recuperacaoController.onTurmaChange()}" update="dt-estudantes"/>
                 <f:selectItem itemLabel="Selecione a Turma" itemValue=""/>
                 <f:selectItems value="#{recuperacaoController.turmasCurso}" var="turmaId"
-                               itemLabel=" #{fn:substring(turmaId.descricao, 69, 102)}" itemValue="#{turmaId}"/>
+                               itemLabel=" #{turmaId.descricao}" itemValue="#{turmaId}"/>
             </p:selectOneMenu>
 
             <p:outputLabel for="create_rp_bimestre">Bimestre</p:outputLabel>

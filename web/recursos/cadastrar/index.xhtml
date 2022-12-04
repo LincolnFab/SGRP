@@ -44,17 +44,5 @@
                 <ui:include src="/recursos/cadastrar/aulas.xhtml"></ui:include>
             </p:tab>
         </p:tabView>
-
-        <div align="right" style="margin-right: 30px;">
-            <p:commandButton value="Resetar o Formulário" update="tabView"
-                             process="@this" styleClass="ui-button-warning"
-                             action="#{recuperacaoController.openNew()}" style="margin-right: 7px"/>
-
-            <p:commandButton id="submitBtn" value="Finalizar Cadastro da Recuperação Paralela"
-                             action="#{recuperacaoController.cadastrarRecuperacao(loginController.tipoUsuario)}" />
-            <p:blockUI block="form" trigger="submitBtn">
-                <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
-            </p:blockUI>
-        </div>
     </h:body>
 </html>
