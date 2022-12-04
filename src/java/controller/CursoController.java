@@ -45,17 +45,25 @@ public class CursoController implements Serializable {
     }
 
     public void cadastrarCurso() {
-        cursoDAO.create(curso);
-        fillCursoList();
-        Util.addMessageInformation("Curso Cadastrado");
+        try {
+            cursoDAO.create(curso);
+            fillCursoList();
+            Util.addMessageInformation("Curso Cadastrado");
+        } catch (EJBException e) {
+            Util.addMessageError("Erro ao cadastrar curso. Verifique se o curso já existe");
+        }
 
         PrimeFaces.current().executeScript("PF('createCursoDialog').hide()");
         PrimeFaces.current().ajax().update("form:messages", "form:dt-cursos");
     }
 
     public void editarCurso() {
-        cursoDAO.update(curso);
-        Util.addMessageInformation("Curso Editado");
+        try {
+            cursoDAO.update(curso);
+            Util.addMessageInformation("Curso Editado");
+        } catch (EJBException e) {
+            Util.addMessageInformation("Erro ao editar curso");
+        }
 
         PrimeFaces.current().executeScript("PF('editCursoDialog').hide()");
         PrimeFaces.current().ajax().update("form:messages", "form:dt-cursos");
