@@ -144,6 +144,16 @@
                                         <p:inputText id="descricao_edit" value="#{turmaController.turma.descricao}" required="true"/>
                                     </div>
 
+                                    <div class="p-field">
+                                        <p:outputLabel for="curso_edit">Curso</p:outputLabel>
+                                        <p:selectOneMenu id="curso_edit" value="#{turmaController.turma.cursoId}"
+                                                         required="true" requiredMessage="Selecione um Curso" converter="#{cursoId}">
+                                            <f:selectItem itemLabel="Selecione o Curso" itemValue=""/>
+                                            <f:selectItems value="#{cursoController.cursos}" var="cursoId"
+                                                           itemLabel="#{cursoId.descricao}" itemValue="#{cursoId}"/>
+                                        </p:selectOneMenu>
+                                    </div>
+
                                 </p:outputPanel>
                             </p:outputPanel>
 
