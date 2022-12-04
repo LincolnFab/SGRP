@@ -57,8 +57,7 @@
                             <p:column headerText="Turma" sortBy="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.turmaIdturma.descricao}"
                                       filterBy="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.turmaIdturma.descricao}" filterMatchMode="contains">
                                 <h:outputText
-                                    value="#{fn:substring(recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.turmaIdturma.descricao, 10, 22)}
-                                    #{fn:substring(recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.turmaIdturma.descricao, 69, 102)}" />
+                                    value="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.turmaIdturma.descricao}" />
                             </p:column>
 
                             <p:column headerText="Disciplina" sortBy="#{recuperacao.disciplina.nome}" 
