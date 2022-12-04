@@ -52,17 +52,25 @@ public class ServidorController implements Serializable {
     }
 
     public void cadastrarServidor() {
-        servidorDAO.create(servidor);
-        fillServidorList();
-        Util.addMessageInformation("Servidor Cadastrado");
+        try {
+            servidorDAO.create(servidor);
+            fillServidorList();
+            Util.addMessageInformation("Servidor Cadastrado");
+        } catch (Exception e) {
+            Util.addMessageError("Erro ao cadastrar servidor. Verifique se o servidor já existe.");
+        }
 
         PrimeFaces.current().executeScript("PF('createServidorDialog').hide()");
         PrimeFaces.current().ajax().update("form:messages", "form:dt-servidores");
     }
 
     public void editarServidor() {
-        servidorDAO.update(servidor);
-        Util.addMessageInformation("Servidor Editado");
+        try {
+            servidorDAO.update(servidor);
+            Util.addMessageInformation("Servidor Editado");
+        } catch (Exception e) {
+            Util.addMessageError("Erro ao editar servidor");
+        }
 
         PrimeFaces.current().executeScript("PF('editServidorDialog').hide()");
         PrimeFaces.current().ajax().update("form:messages", "form:dt-servidores");
@@ -78,7 +86,6 @@ public class ServidorController implements Serializable {
 
     public void removerServidor() {
         try {
-            servidorDAO.remove(servidor);
             servidorDAO.remove(servidor);
             fillServidorList();
         } catch (EJBException e) {

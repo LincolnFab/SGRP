@@ -50,7 +50,7 @@ public class CursoController implements Serializable {
             fillCursoList();
             Util.addMessageInformation("Curso Cadastrado");
         } catch (EJBException e) {
-            Util.addMessageError("Erro ao cadastrar curso. Verifique se o curso já existe");
+            Util.addMessageError("Erro ao cadastrar curso. Verifique se o curso já existe.");
         }
 
         PrimeFaces.current().executeScript("PF('createCursoDialog').hide()");

@@ -56,7 +56,7 @@ public class SalaController implements Serializable {
             fillSalaList();
             Util.addMessageInformation("Sala Cadastrada");
         } catch (EJBException e) {
-            Util.addMessageError("Erro ao cadastrar sala (verifique se a sala já existe)");
+            Util.addMessageError("Erro ao cadastrar sala. Verifique se a sala já existe.");
         }
 
         PrimeFaces.current().executeScript("PF('createSalaDialog').hide()");

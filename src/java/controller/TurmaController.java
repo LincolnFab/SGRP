@@ -39,7 +39,7 @@ public class TurmaController implements Serializable {
     private Turma turma;
     private List<Turma> turmas;
     private UploadedFile file;
-    
+
     @PostConstruct
     public void fillTurmaList() {
         turmas = turmaDAO.buscarTodos();
@@ -55,17 +55,25 @@ public class TurmaController implements Serializable {
     }
 
     public void cadastrarTurma() {
-        turmaDAO.create(turma);
-        fillTurmaList();
-        Util.addMessageInformation("Turma Cadastrada");
+        try {
+            turmaDAO.create(turma);
+            fillTurmaList();
+            Util.addMessageInformation("Turma Cadastrada");
+        } catch (Exception e) {
+            Util.addMessageError("Erro ao cadastrar turma. Verifique se a turma já existe.");
+        }
 
         PrimeFaces.current().executeScript("PF('createTurmaDialog').hide()");
         PrimeFaces.current().ajax().update("form:messages", "form:dt-turmas");
     }
 
     public void editarTurma() {
-        turmaDAO.update(turma);
-        Util.addMessageInformation("Turma Editada");
+        try {
+            turmaDAO.update(turma);
+            Util.addMessageInformation("Turma Editada");
+        } catch (Exception e) {
+            Util.addMessageError("Erro ao editaar turma");
+        }
 
         PrimeFaces.current().executeScript("PF('editTurmaDialog').hide()");
         PrimeFaces.current().ajax().update("form:messages", "form:dt-turmas");
@@ -73,7 +81,6 @@ public class TurmaController implements Serializable {
 
     public void removerTurma() {
         try {
-            turmaDAO.remove(turma);
             turmaDAO.remove(turma);
             fillTurmaList();
         } catch (EJBException e) {
@@ -85,35 +92,35 @@ public class TurmaController implements Serializable {
         PrimeFaces.current().executeScript("PF('editTurmaDialog').hide()");
         PrimeFaces.current().ajax().update("form:messages", "form:dt-turmas");
     }
-    
+
     public void importarTurma() {
         if (file != null) {
             List<Turma> planilha = new ArrayList<Turma>();
             List<Turma> turmaBanco = new ArrayList<Turma>();
             List<Curso> cursos = new ArrayList<Curso>();
-            
+
             turmaBanco = turmaDAO.buscarTodos();
             cursos = cursoDAO.buscarTodos();
             int error = 0;
             int update = 0;
             int create = 0;
-            
+
             File newFile = UploadFileToFile.uploadedFileToFileConverter(file);
             planilha = util.ReadExcel.turmaExcelData(newFile, cursos);
             //System.out.println("planilha....." + planilha);
             for (Turma t : planilha) {
                 if (turmaBanco.contains(t)) {
-                    try {    
+                    try {
                         turmaDAO.update(t);
-                        update +=1;
+                        update += 1;
                     } catch (Exception e) {
                         error += 1;
                     }
                 } else {
-                    try{
+                    try {
                         turmaDAO.create(t);
                         create += 1;
-                    }catch (Exception e) {
+                    } catch (Exception e) {
                         //System.out.println("exception......" + e);
                         error += 1;
                     }
@@ -123,12 +130,11 @@ public class TurmaController implements Serializable {
             PrimeFaces.current().executeScript("PF('importarTurma').hide()");
             fillTurmaList();
             PrimeFaces.current().ajax().update("form:messages", "form:dt-turmas");
-            
+
             util.Util.addMessageWarning(update + " registro(s) atualizado(s)");
             util.Util.addMessageWarning(create + " registro(s) inserido(s)");
             util.Util.addMessageWarning(error + " registro(s) não foram importado(s)");
-            
-                
+
         } else {
             PrimeFaces.current().executeScript("PF('importarTurma').hide()");
             fillTurmaList();
@@ -160,7 +166,5 @@ public class TurmaController implements Serializable {
     public void setFile(UploadedFile file) {
         this.file = file;
     }
-    
-    
 
 }

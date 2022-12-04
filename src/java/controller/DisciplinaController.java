@@ -66,7 +66,7 @@ public class DisciplinaController implements Serializable {
             fillCursoList();
             Util.addMessageInformation("Disciplina Cadastrada");
         } catch (EJBException ex) {
-            Util.addMessageError("Sigla de disciplina já existe");
+            Util.addMessageError("Erro ao cadastrar disciplina. Verifique se a disciplina já existe.");
             PrimeFaces.current().ajax().update("form:messages");
         }
 
@@ -75,8 +75,12 @@ public class DisciplinaController implements Serializable {
     }
 
     public void editarDisciplina() {
-        disciplinaDAO.update(disciplina);
-        Util.addMessageInformation("Disciplina Editada");
+        try {
+            disciplinaDAO.update(disciplina);
+            Util.addMessageInformation("Disciplina Editada");
+        } catch (Exception e) {
+            Util.addMessageInformation("Erro ao editar disciplina");
+        }
 
         PrimeFaces.current().executeScript("PF('editDisciplinaDialog').hide()");
         PrimeFaces.current().ajax().update("form:messages", "form:dt-disciplinas");
@@ -95,44 +99,44 @@ public class DisciplinaController implements Serializable {
         PrimeFaces.current().executeScript("PF('editDisciplinaDialog').hide()");
         PrimeFaces.current().ajax().update("form:messages", "form:dt-disciplinas");
     }
-    
+
     public void importarDisciplina() {
         if (file != null) {
             List<Disciplina> planilha = new ArrayList<Disciplina>();
             List<Disciplina> disciplinaBanco = new ArrayList<Disciplina>();
             List<Curso> cursos = new ArrayList<Curso>();
-            
+
             disciplinaBanco = disciplinaDAO.buscarTodos();
             cursos = cursoDAO.buscarTodos();
             int error = 0;
             int update = 0;
             int create = 0;
-            
+
             File newFile = UploadFileToFile.uploadedFileToFileConverter(file);
             planilha = util.ReadExcel.disciplinaExcelData(newFile, cursos);
-        
+
             for (Disciplina d : planilha) {
                 if (disciplinaBanco.contains(d)) {
-                    try{
+                    try {
                         disciplinaDAO.update(d);
                         update += 1;
-                    }catch (Exception e) {
+                    } catch (Exception e) {
                         error += 1;
                     }
                 } else {
                     try {
-                       disciplinaDAO.create(d);
+                        disciplinaDAO.create(d);
                         create += 1;
-                    } catch(Exception e) {
+                    } catch (Exception e) {
                         error += 1;
                     }
                 }
             }
-            
+
             PrimeFaces.current().executeScript("PF('importarDisciplina').hide()");
             PrimeFaces.current().ajax().update("form:messages", "form:dt-disciplinas");
             fillCursoList();
-            
+
             util.Util.addMessageWarning(update + " registro(s) atualizado(s)");
             util.Util.addMessageWarning(create + " registro(s) inserido(s)");
             util.Util.addMessageWarning(error + " registro(s) não foram importado(s)");
@@ -167,6 +171,5 @@ public class DisciplinaController implements Serializable {
     public void setFile(UploadedFile file) {
         this.file = file;
     }
-    
-    
+
 }
