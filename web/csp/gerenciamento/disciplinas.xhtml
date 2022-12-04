@@ -39,6 +39,8 @@
                                         <p:columnToggler datasource="dt-disciplinas" trigger="toggler">
                                             <p:ajax />
                                         </p:columnToggler>
+                                        
+                                        <p:tooltip for="toggler" value="Campos da Tabela" position="top"/>
                                     </div>
                                 </div>
                             </f:facet>
@@ -62,13 +64,13 @@
                                     <f:setPropertyActionListener value="#{disciplina}" target="#{disciplinaController.disciplina}"/>
                                     <p:resetInput target=":dialogs:edit-disciplina-content"/>
                                 </p:commandButton>
-                                <p:tooltip for="editar" value="Editar RP" position="left"/>
+                                <p:tooltip for="editar" value="Editar Disciplina" position="left"/>
                                 <p:commandButton id="deletar" icon="pi pi-times" style="margin-left: 7px;"
                                                  oncomplete="PF('deleteDisciplinaDialog').show()" 
                                                  styleClass="ui-button-danger rounded-button" process="@this">
                                     <f:setPropertyActionListener value="#{disciplina}" target="#{disciplinaController.disciplina}"/>
                                 </p:commandButton>
-                                <p:tooltip for="deletar" value="Deletar RP" position="left"/>
+                                <p:tooltip for="deletar" value="Deletar Disciplina" position="left"/>
                             </p:column>
                         </p:dataTable>
                     </h:form>

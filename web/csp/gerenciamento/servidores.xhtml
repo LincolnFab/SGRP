@@ -39,6 +39,8 @@
                                         <p:columnToggler datasource="dt-servidores" trigger="toggler">
                                             <p:ajax />
                                         </p:columnToggler>
+
+                                        <p:tooltip for="toggler" value="Campos da Tabela" position="top"/>
                                     </div>
                                 </div>
                             </f:facet>
@@ -60,18 +62,20 @@
                             </p:column>
 
                             <p:column headerText="Ações" exportable="false">
-                                <p:commandButton icon="pi pi-pencil" update=":dialogs:edit-servidor-content"
+                                <p:commandButton icon="pi pi-pencil" id="editar" update=":dialogs:edit-servidor-content"
                                                  oncomplete="PF('editServidorDialog').show()"
                                                  styleClass="edit-button rounded-button" process="@this">
                                     <f:setPropertyActionListener value="#{servidor}" target="#{servidorController.servidor}"/>
                                     <p:resetInput target=":dialogs:edit-servidor-content"/>
                                 </p:commandButton>
+                                <p:tooltip for="editar" value="Editar Servidor" position="left"/>
 
-                                <p:commandButton icon="pi pi-times" style="margin-left: 7px;"
+                                <p:commandButton icon="pi pi-times" id="deletar" style="margin-left: 7px;"
                                                  oncomplete="PF('deleteServidorDialog').show()" 
                                                  styleClass="ui-button-danger rounded-button" process="@this">
                                     <f:setPropertyActionListener value="#{servidor}" target="#{servidorController.servidor}"/>
                                 </p:commandButton>
+                                <p:tooltip for="deletar" value="Deletar Servidor" position="left"/>
                             </p:column>
                         </p:dataTable>
                     </h:form>
@@ -82,7 +86,7 @@
                                           allowTypes="/(\.|\/)(xls|xlsx)$/"
                                           validateContentType="true" accept=".xls,.xlsx"
                                           mode="simple" skinSimple="true" label="Planilha"/>
-                           
+
                             <f:facet name="footer">
                                 <p:commandButton id="submitBtn" value="Enviar" action="#{servidorController.importarServidores()}"/>
                                 <p:blockUI block="dialogImport" trigger="submitBtn">
@@ -173,7 +177,7 @@
                                             <f:selectItem itemLabel="DAE" itemValue="DAE"/>
                                         </p:selectOneMenu>
                                     </div>
-                                    
+
                                     <div class="p-field">
                                         <p:outputLabel for="senha_edit">Senha</p:outputLabel>
                                         <p:password id="senha_edit" value="#{servidorController.servidor.senha}" required="false"/>

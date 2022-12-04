@@ -39,6 +39,8 @@
                                         <p:columnToggler datasource="dt-estudantes" trigger="toggler">
                                             <p:ajax />
                                         </p:columnToggler>
+
+                                        <p:tooltip for="toggler" value="Campos da Tabela" position="top"/>
                                     </div>
                                 </div>
                             </f:facet>
@@ -80,14 +82,14 @@
                                     <f:setPropertyActionListener value="#{estudante}" target="#{estudanteController.estudante}"/>
                                     <p:resetInput target=":dialogs:edit-estudante-content"/>
                                 </p:commandButton>
-                                <p:tooltip for="editar" value="Editar RP" position="left"/>
-                                
+                                <p:tooltip for="editar" value="Editar Estudante" position="left"/>
+
                                 <p:commandButton id="deletar" icon="pi pi-times" style="margin-left: 7px;"
                                                  oncomplete="PF('deleteEstudanteDialog').show()" 
                                                  styleClass="ui-button-danger rounded-button" process="@this">
                                     <f:setPropertyActionListener value="#{estudante}" target="#{estudanteController.estudante}"/>
                                 </p:commandButton>
-                                <p:tooltip for="deletar" value="Deletar RP" position="left"/>
+                                <p:tooltip for="deletar" value="Deletar Estudante" position="left"/>
                             </p:column>
                         </p:dataTable>
                     </h:form>
@@ -130,7 +132,7 @@
                                 </div>
 
                                 <div class="p-field">
-                                    <p:outputLabel for="email_institucional_create">Email Istitucional</p:outputLabel>
+                                    <p:outputLabel for="email_institucional_create">Email Institucional</p:outputLabel>
                                     <p:inputText id="email_institucional_create" value="#{estudanteController.estudante.emailAluno}" required="false"/>
                                 </div>
 
@@ -202,7 +204,7 @@
                                                        itemLabel="#{turmaId.descricao}" itemValue="#{turmaId}"/>
                                     </p:selectOneMenu>
                                 </div>
-                                
+
                                 <div class="p-field">
                                     <p:outputLabel for="senha_edit">Senha</p:outputLabel>
                                     <p:password id="senha_edit" value="#{estudanteController.estudante.senha}" required="false" />

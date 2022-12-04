@@ -56,6 +56,8 @@
                                         <p:columnToggler datasource="dt-rp" trigger="toggler">
                                             <p:ajax />
                                         </p:columnToggler>
+
+                                        <p:tooltip for="toggler" value="Campos da Tabela" position="top"/>
                                     </div>
                                 </div>
                             </f:facet>
@@ -85,7 +87,7 @@
                                       filterBy="#{recuperacao.estudante.nome}" filterMatchMode="contains">
                                 <h:outputText value="#{recuperacao.estudante.nome}" />
                             </p:column>
-                            
+
                             <p:column headerText="Recuperação Paralela" visible="false"
                                       filterBy="#{recuperacao.recuperacaoParalela.id}" filterMatchMode="contains">
                                 <h:outputText value="#{recuperacao.recuperacaoParalela.id}"  />

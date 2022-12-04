@@ -38,6 +38,8 @@
                                         <p:columnToggler datasource="dt-estudantes" trigger="toggler">
                                             <p:ajax />
                                         </p:columnToggler>
+
+                                        <p:tooltip for="toggler" value="Campos da Tabela" position="top"/>
                                     </div>
                                 </div>
                             </f:facet>
@@ -91,7 +93,7 @@
                                                      var="rp" emptyMessage="Nenhuma recuperação paralela cadastrada"
                                                      rowKey="#{rp.recuperacaoParalela.id}" styleClass="rp-table"
                                                      style="margin-top: 10px" paginator="false">
-                                            
+
                                             <p:column headerText="Id" sortBy="#{rp.recuperacaoParalela.id}"
                                                       filterBy="#{rp.recuperacaoParalela.id}" filterMatchMode="contains">
                                                 <h:outputText value="#{rp.recuperacaoParalela.id}" />
@@ -112,11 +114,11 @@
                                                       filterBy="#{rp.recuperacaoParalela.bimestre}" filterMatchMode="contains" >
                                                 <h:outputText value="#{rp.recuperacaoParalela.bimestre}" />
                                             </p:column>
-                                            
+
                                             <p:column headerText="Nota do Bimestre">
                                                 <h:outputText value="#{rp.recuperacaoParalela.recuperacaoParalelaHasEstudanteCollection[0].notaPre}" />
                                             </p:column>
-                                            
+
                                             <p:column headerText="Nota da Recuperação">
                                                 <h:outputText value="#{rp.recuperacaoParalela.recuperacaoParalelaHasEstudanteCollection[0].notaPos}" />
                                             </p:column>

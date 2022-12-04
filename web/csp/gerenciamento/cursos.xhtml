@@ -31,11 +31,13 @@
                                                          style="margin-right: .5rem">
                                             <p:resetInput target=":dialogs:create-curso-content"/>
                                         </p:commandButton>
-                                        
+
                                         <p:commandButton id="toggler" type="button" value="Campos" icon="pi pi-align-justify"/>
                                         <p:columnToggler datasource="dt-cursos" trigger="toggler">
                                             <p:ajax />
                                         </p:columnToggler>
+
+                                        <p:tooltip for="toggler" value="Campos da Tabela" position="top"/>
                                     </div>
                                 </div>
                             </f:facet>
@@ -55,14 +57,14 @@
                                     <f:setPropertyActionListener value="#{curso}" target="#{cursoController.curso}"/>
                                     <p:resetInput target=":dialogs:edit-curso-content"/>
                                 </p:commandButton>
-                                <p:tooltip for="editar" value="Editar RP" position="left"/>
+                                <p:tooltip for="editar" value="Editar Curso" position="left"/>
 
                                 <p:commandButton id="deletar" icon="pi pi-times" style="margin-left: 7px;"
                                                  oncomplete="PF('deleteCursoDialog').show()" 
                                                  styleClass="ui-button-danger rounded-button" process="@this">
                                     <f:setPropertyActionListener value="#{curso}" target="#{cursoController.curso}"/>
                                 </p:commandButton>
-                                <p:tooltip for="deletar" value="Deletar RP" position="left"/>
+                                <p:tooltip for="deletar" value="Deletar Curso" position="left"/>
                             </p:column>
                         </p:dataTable>
                     </h:form>
@@ -72,7 +74,7 @@
                                   widgetVar="createCursoDialog" responsive="true" fitViewport="true">
                             <p:outputPanel id="create-curso-content" class="ui-fluid">
                                 <p:outputPanel rendered="#{not empty cursoController.curso}">
-                                    
+
                                     <div class="p-field">
                                         <p:outputLabel for="id_create">ID do Curso</p:outputLabel>
                                         <p:inputText id="id_create" value="#{cursoController.curso.id}" required="true"/>

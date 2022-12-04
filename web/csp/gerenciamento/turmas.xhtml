@@ -34,11 +34,13 @@
                                                          style="margin-right: .5rem">
                                             <p:resetInput target=":dialogs:create-turma-content"/>
                                         </p:commandButton>
-                                        
+
                                         <p:commandButton id="toggler" type="button" value="Campos" icon="pi pi-align-justify"/>
                                         <p:columnToggler datasource="dt-turmas" trigger="toggler">
                                             <p:ajax />
                                         </p:columnToggler>
+
+                                        <p:tooltip for="toggler" value="Campos da Tabela" position="top"/>
                                     </div>
                                 </div>
                             </f:facet>
@@ -62,18 +64,18 @@
                                     <f:setPropertyActionListener value="#{turma}" target="#{turmaController.turma}"/>
                                     <p:resetInput target=":dialogs:edit-turma-content"/>
                                 </p:commandButton>
-                                <p:tooltip for="editar" value="Editar RP" position="left"/>
-                                
+                                <p:tooltip for="editar" value="Editar Turma" position="left"/>
+
                                 <p:commandButton id="deletar" icon="pi pi-times" style="margin-left: 7px;"
                                                  oncomplete="PF('deleteTurmaDialog').show()" 
                                                  styleClass="ui-button-danger rounded-button" process="@this">
                                     <f:setPropertyActionListener value="#{turma}" target="#{turmaController.turma}"/>
                                 </p:commandButton>
-                                <p:tooltip for="deletar" value="Deletar RP" position="left"/>
+                                <p:tooltip for="deletar" value="Deletar Turma" position="left"/>
                             </p:column>
                         </p:dataTable>
                     </h:form>
-                    
+
                     <h:form enctype="multipart/form-data">
                         <p:dialog id="dialogImport" header="Importar turma" widgetVar="importarTurma" showEffect="fade" modal="true" responsive="true">
                             <p:fileUpload value="#{turmaController.file}"
@@ -95,7 +97,7 @@
                                   widgetVar="createTurmaDialog" responsive="true" fitViewport="true">
                             <p:outputPanel id="create-turma-content" class="ui-fluid">
                                 <p:outputPanel rendered="#{not empty turmaController.turma}">
-                                    
+
                                     <div class="p-field">
                                         <p:outputLabel for="id_create">ID da Turma</p:outputLabel>
                                         <p:inputText id="id_create" value="#{turmaController.turma.idturma}" required="true" onblur="value = value.toUpperCase()"/>
@@ -131,7 +133,7 @@
                                   widgetVar="editTurmaDialog" responsive="true" fitViewport="true">
                             <p:outputPanel id="edit-turma-content" class="ui-fluid">
                                 <p:outputPanel rendered="#{not empty turmaController.turma}">
-                                    
+
                                     <div class="p-field">
                                         <p:outputLabel for="id_edit">ID</p:outputLabel>
                                         <p:inputText id="id_edit" value="#{turmaController.turma.idturma}" disabled="true"/>
