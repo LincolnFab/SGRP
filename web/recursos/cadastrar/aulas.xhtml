@@ -10,7 +10,7 @@
                      columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
                      layout="grid"
                      styleClass="ui-panelgrid-blank ui-fluid"
-                     style="border:0px none; background-color:transparent;">
+                     style="border:0px none; background-color:transparent;" id="aulas-panel">
 
             <p:row styleClass="my-heading-row">
                 Adicionar Aulas
@@ -42,7 +42,7 @@
 
         </p:panelGrid>
         <div align="right">
-            <p:commandButton process="@parent" value="Adicionar aula" update="messages, dt-aulas" action="#{recuperacaoController.adicionarAula()}" style="margin-right: 30px"/>
+            <p:commandButton process="@parent" value="Adicionar aula" update="messages, dt-aulas, aulas-panel" action="#{recuperacaoController.adicionarAula()}" style="margin-right: 30px"/>
         </div>
 
         <p:separator style="margin-bottom: 2em; margin-top: 2em"/>
