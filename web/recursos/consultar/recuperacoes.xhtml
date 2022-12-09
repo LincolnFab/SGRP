@@ -204,21 +204,24 @@
                 <p:panelGrid columns="4" layout="grid" styleClass="showcase-text-align-center"
                              columnClasses="ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-3">
 
-                    <p:commandButton id="presencas" icon="pi pi-gift" class="rounded-button"
+                    <p:commandButton id="presencas" icon="pi pi-gift"
+                                     styleClass="#{recuperacao.status != 'Aprovada' ? 'rounded-button ui-button-secondary' :  'rounded-button'}"
                                      onclick="PF('tabPanel').select(2)" update="form:tabView:dt-notas, form:tabView:dt-aulas, tooltips"
                                      action="#{recuperacaoController.setRecuperacaoParalelaAux(recuperacao)}" 
                                      disabled="#{recuperacao.status != 'Aprovada'}"
                                      />
 
 
-                    <p:commandButton id="notas" icon="pi pi-book" class="rounded-button" 
+                    <p:commandButton id="notas" icon="pi pi-book" 
+                                     styleClass="#{recuperacao.status != 'Aprovada' ? 'rounded-button ui-button-secondary' :  'rounded-button'}"
                                      onclick="PF('tabPanel').select(1)" update="form:tabView:dt-notas, form:tabView:dt-aulas, tooltips"
                                      action="#{recuperacaoController.setRecuperacaoParalelaAux(recuperacao)}" 
                                      disabled="#{recuperacao.status != 'Aprovada'}"
                                      />
 
 
-                    <p:commandButton id="cancelar" icon="pi pi-times" class="rounded-button" styleClass="rounded-button ui-button-danger"
+                    <p:commandButton id="cancelar" icon="pi pi-times" 
+                                     styleClass="#{recuperacao.status eq 'Aprovada' || recuperacao.status eq 'Cancelada' || recuperacao.status eq 'Finalizada' ? 'rounded-button ui-button-secondary' :  'rounded-button ui-button-danger'}"
                                      update="form:tabView:cancelar-content, tooltips"
                                      oncomplete="PF('cancelarRP').show()"
                                      process="@this"
@@ -227,7 +230,8 @@
                         <p:resetInput target="form:tabView:cancelar-content"/>
                     </p:commandButton>
 
-                    <p:commandButton id="finalizar" icon="pi pi-check-circle" class="rounded-button" styleClass="rounded-button ui-button-success"
+                    <p:commandButton id="finalizar" icon="pi pi-check-circle" 
+                                     styleClass="#{recuperacao.status != 'Aprovada' ? 'rounded-button ui-button-secondary' :  'rounded-button ui-button-success'}"
                                      update="form:tabView:finalizar-content, tooltips"
                                      oncomplete="PF('finalizarRP').show()"
                                      process="@this"
