@@ -22,7 +22,7 @@
             <p:selectOneMenu id="create_rp_curso" converter="#{cursoConverter}"
                              value="#{recuperacaoController.curso}" style="max-width: 22rem"
                              required="true" requiredMessage="Selecione um Curso"
-                             filter="true" filterMatchMode="startsWith">
+                             filter="true" filterMatchMode="contains">
                 <p:ajax listener="#{recuperacaoController.onCursoChange()}" update="create_rp_disciplina, create_rp_turma"/>
                 <f:selectItem itemLabel="Selecione o Curso" itemValue=""/>
                 <f:selectItems value="#{cursoController.cursos}" var="curso"
@@ -43,7 +43,7 @@
             <p:selectOneMenu id="create_rp_turma" style="max-width: 22rem"
                              value="#{recuperacaoController.turma}"
                              required="true" requiredMessage="Selecione uma Turma"
-                             filter="true" filterMatchMode="startsWith">
+                             filter="true" filterMatchMode="contains">
                 <p:ajax listener="#{recuperacaoController.onTurmaChange()}" update="dt-estudantes"/>
                 <f:selectItem itemLabel="Selecione a Turma" itemValue=""/>
                 <f:selectItems value="#{recuperacaoController.turmasCurso}" var="turmaId"

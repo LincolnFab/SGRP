@@ -24,7 +24,7 @@
             <p:outputLabel for="create_rp_sala">Sala</p:outputLabel>
             <p:selectOneMenu id="create_rp_sala" converter="#{salaConverter}"
                              value="#{recuperacaoController.aula.saladeaulaidSala}"
-                             filter="true" filterMatchMode="startsWith">
+                             filter="true" filterMatchMode="contains">
                 <f:selectItem itemLabel="Selecione a Sala" itemValue=""/>
                 <f:selectItems value="#{salaController.salasDeAula}" var="sala"
                                itemLabel="#{sala.idSala}" itemValue="#{sala}"/>
