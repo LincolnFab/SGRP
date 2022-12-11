@@ -58,9 +58,9 @@
                 </div>
             </f:facet>
 
-            <p:column headerText="Curso" sortBy="#{recuperacao.disciplina.curso}"
-                      filterBy="#{recuperacao.disciplina.curso}" filterMatchMode="contains">
-                <h:outputText value="#{recuperacao.disciplina.curso}" />
+            <p:column headerText="Curso" sortBy="#{recuperacao.disciplina.curso.descricao}"
+                      filterBy="#{recuperacao.disciplina.curso.descricao}" filterMatchMode="contains">
+                <h:outputText value="#{recuperacao.disciplina.curso.descricao}" />
             </p:column>
 
             <p:column headerText="Turma" sortBy="#{recuperacao.recuperacaoParalelaHasEstudanteCollection[0].estudante.turmaIdturma.descricao}"

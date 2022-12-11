@@ -149,7 +149,8 @@
 
                                 <p:commandButton id="deferir" icon="pi pi-check" update=":dialogs:aut-rp-content"
                                                  oncomplete="PF('autRP').show()"
-                                                 styleClass="rounded-button" process="@this"
+                                                 styleClass="#{recuperacao.status != 'pendente' and recuperacao.status != 'Pendente' ? 'rounded-button ui-button-secondary' :  'rounded-button'}"
+                                                 process="@this"
                                                  title="Deferir"
                                                  disabled="#{recuperacao.status != 'pendente' and recuperacao.status != 'Pendente'}"
                                                  >
@@ -161,7 +162,8 @@
                                 <p:commandButton id="indeferir" icon="pi pi-times" update=":dialogs:aut-rp-content"
                                                  style="margin-left: 7px;"
                                                  oncomplete="PF('indefRP').show()"
-                                                 styleClass="ui-button-danger rounded-button" process="@this"
+                                                 styleClass="#{recuperacao.status != 'pendente' and recuperacao.status != 'Pendente' ? 'rounded-button ui-button-secondary' :  'ui-button-danger rounded-button'}"
+                                                 process="@this"
                                                  title="Indeferir"
                                                  disabled="#{recuperacao.status != 'pendente' and recuperacao.status != 'Pendente'}"
                                                  >

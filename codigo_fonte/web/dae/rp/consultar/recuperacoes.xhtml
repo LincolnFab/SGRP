@@ -117,7 +117,8 @@
                             <p:column headerText="Ações" exportable="false">
                                 <ui:remove>
                                     <p:commandButton action="#{recuperacaoController.deferirRpDae()}"
-                                                     styleClass="rounded-button"  icon="pi pi-check"
+                                                     styleClass="#{recuperacao.status != 'Deferida - FCC' ? 'rounded-button ui-button-secondary' :  'rounded-button'}"
+                                                     icon="pi pi-check"
                                                      title="Deferir"
                                                      disabled="#{recuperacao.status != 'Deferida - FCC'}"
                                                      >
@@ -126,7 +127,8 @@
                                     </p:commandButton>
 
                                     <p:commandButton action="#{recuperacaoController.indeferirRp}"
-                                                     styleClass="ui-button-danger rounded-button" icon="pi pi-times"
+                                                     styleClass="#{recuperacao.status != 'Deferida - FCC' ? 'rounded-button ui-button-secondary' :  'ui-button-danger rounded-button'}"
+                                                     icon="pi pi-times"
                                                      title="Indeferir"
                                                      style="margin-left: 7px;"
                                                      disabled="#{recuperacao.status != 'Deferida - FCC'}"
@@ -151,7 +153,8 @@
 
                                 <p:commandButton id="deferir" icon="pi pi-check" update=":dialogs:aut-rp-content"
                                                  oncomplete="PF('autRP').show()"
-                                                 styleClass="rounded-button" process="@this"
+                                                 styleClass="#{recuperacao.status != 'Deferida - FCC' ? 'rounded-button ui-button-secondary' :  'rounded-button'}"
+                                                 process="@this"
                                                  title="Deferir"
                                                  disabled="#{recuperacao.status != 'Deferida - FCC'}"
                                                  >
@@ -163,7 +166,8 @@
                                 <p:commandButton id="indeferir" icon="pi pi-times" update=":dialogs:aut-rp-content"
                                                  style="margin-left: 7px;"
                                                  oncomplete="PF('indefRP').show()"
-                                                 styleClass="ui-button-danger rounded-button" process="@this"
+                                                 styleClass="#{recuperacao.status != 'Deferida - FCC' ? 'rounded-button ui-button-secondary' :  'ui-button-danger rounded-button'}"
+                                                 process="@this"
                                                  title="Indeferir"
                                                  disabled="#{recuperacao.status != 'Deferida - FCC'}"
                                                  >
