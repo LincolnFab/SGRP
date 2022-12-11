@@ -96,10 +96,19 @@
                              onclick="PF('deleteAulaDialog').hide()"/>
         </p:confirmDialog>
 
+        <p:confirmDialog widgetVar="resetFromDialog" showEffect="fade" width="300"
+                         message="Deseja resetar o formulátio?" header="Confirmação" severity="warn">
+            <p:commandButton value="Sim" icon="pi pi-check" action="#{recuperacaoController.openNew()}"
+                             process="@this" oncomplete="PF('resetFromDialog').hide()" update="tabView"/>
+            <p:commandButton value="Não" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                             onclick="PF('resetFromDialog').hide()"/>
+        </p:confirmDialog>
+
         <div align="right" style="margin-right: 30px; margin-top: 10px">
-            <p:commandButton value="Resetar o Formulário" update="tabView"
+            <p:commandButton value="Resetar o Formulário"
                              process="@this" styleClass="ui-button-warning"
-                             action="#{recuperacaoController.openNew()}" style="margin-right: 7px"/>
+                             oncomplete="PF('resetFromDialog').show()" 
+                             style="margin-right: 7px"/>
 
             <p:commandButton id="submitBtn"
                              value="Finalizar Cadastro da Recuperação Paralela"
